@@ -3,7 +3,7 @@
 <table class="tg">
   <thead>
     <tr>
-      <th class="tg-c3ow" colspan="15">Results</th>
+      <th class="tg-c3ow" colspan="16">Radio Isotope Inventory</th>
     </tr>
   </thead>
   <tbody>
@@ -20,27 +20,32 @@
       <td class="tg-phtq">Ativity Now</td>
       <td class="tg-phtq">Type</td>
       <td class="tg-phtq">Acc</td>
-      <td class="tg-phtq">Half life</td>
       <td class="tg-phtq">A/D value</td>
       <td class="tg-phtq">Security Group</td>
+      <td class="tg-phtq">Last Used</td>
     </tr>
-    <tr>
-      <td class="tg-0pky">S333PH</td>
-      <td class="tg-0pky">Physics</td>
-      <td class="tg-dvpl">1:30</td>
-      <td class="tg-dvpl">2:05</td>
-      <td class="tg-dvpl">1:15</td>
-      <td class="tg-dvpl">1:41</td>
-    </tr>
+
+      {% for source in sources %}
+      <tr>
+      <td class="tg-0pky">{{ source.uso }}</td>
+      <td class="tg-0pky">{{ source.department }}</td>
+      <td class="tg-0pky">{{ source.serial_number }}</td>
+      <td class="tg-0pky">{{ source.isotope }}</td>
+      <td class="tg-0pky">{{ source.laboratory }}</td>
+      <td class="tg-0pky">{{ source.location }}</td>
+      <td class="tg-0pky">{{ source.original_activity }} {{source.original_activity_units}}</td>
+      <td class="tg-0pky">{{ source.activation_date }}</td>
+      <td class="tg-0pky">{{ source.half_life }} {{source.half_life_units}}</td>
+      <td class="tg-0pky">{{ source.activity_now }} {{source.activity_now_units}}</td>
+      <td class="tg-0pky">{{ source.type }}</td>
+      <td class="tg-0pky">{{ source.acc }} {{source.acc_units}}</td>
+      <td class="tg-0pky">{{ source.a_d_value }}</td>
+      <td class="tg-0pky">{{ source.security_group }} </td>
+      <td class="tg-0pky">{{ source.last_used }}</td>
+      </tr>
+      {% endfor %}
 
   </tbody>
 </table>
-{% for source in sources %}
-  {{ source.uso }}<br>
-  {{ source.department }}<br>
-  {{ source.serial_number }}<br>
-  {{ source.isotope }}<br>
-  {{ source.laboratory }}<br>
-{% endfor %}
 
 {% endblock %}

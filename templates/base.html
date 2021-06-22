@@ -44,19 +44,19 @@
         </ul>
 
         <ul id="inventory-dropdown" class="dropdown-content">
-            <li><a href="#!">Full Inventory</a></li>
-            <li><a href="#!">Usage Report</a></li>
+            <li><a href="inventory.html">Full Inventory</a></li>
+            <li><a href="usageReport.html">Usage Report</a></li>
             <li><a href="#!">Approve Request</a></li>
         </ul>
 
         <ul id="inventory-dropdown2" class="dropdown-content">
             <li><a href="#!"><i class="fas solid fa-period"></i>Full Inventory</a></li>
-            <li><a href="#!">Usage Report</a></li>
+            <li><a href="usageReport.html">Usage Report</a></li>
             <li><a href="#!">Approve Request</a></li>
         </ul>
         <nav class="nav-extended">
             <div class="nav-wrapper indigo darken-2">
-                <a href="#" class="brand-logo" style="margin-left:10px"><i class="fas fa-atom"> Faculty of
+                <a href="#" class="brand-logo logo-shift"><i class="fas fa-atom"> Faculty of
                         Physics</i></a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
@@ -70,7 +70,7 @@
                     <li><a class="dropdown-trigger" href="#!" data-target="user-dropdown2">User <i
                                 class="fas fa-caret-down"></i></a></li>
                 </ul>
-                <div class="nav-title" style="margin:10px; text-align:center">Radio Isotope Inventory</div>
+                <div class="nav-title logo-shift text-align:center">Radio Isotope Inventory</div>
             </div>
         </nav>
         <!-- mobile sidenav -->
@@ -123,9 +123,7 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script> $(document).ready(function () {
-            $('.sidenav').sidenav(); $(".dropdown-trigger").dropdown();
-        });</script>
+
     {% block scripts %}
     {% endblock %}
 </body>
