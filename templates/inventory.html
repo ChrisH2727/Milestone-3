@@ -25,46 +25,47 @@
         <td class="tg-ul38">Security Group</td>
         <td class="tg-ul38">Last Used</td>
       </tr>
-
+      {% set cycle = 'odd' %}
       {% for source in sources %}
-      {% cycle 'odd' 'even' %}
-      {% if cycle == 'odd' %}
-      <tr>
-        <td class="tg-hmp3">{{ source.uso }}</td>
-        <td class="tg-hmp3">{{ source.department }}</td>
-        <td class="tg-hmp3">{{ source.serial_number }}</td>
-        <td class="tg-hmp3">{{ source.isotope }}</td>
-        <td class="tg-hmp3">{{ source.laboratory }}</td>
-        <td class="tg-hmp3">{{ source.location }}</td>
-        <td class="tg-hmp3">{{ source.original_activity }} {{source.original_activity_units}}</td>
-        <td class="tg-hmp3">{{ source.activation_date }}</td>
-        <td class="tg-hmp3">{{ source.half_life }} {{source.half_life_units}}</td>
-        <td class="tg-hmp3">{{ source.activity_now }} {{source.activity_now_units}}</td>
-        <td class="tg-hmp3">{{ source.type }}</td>
-        <td class="tg-hmp3">{{ source.acc }} {{source.acc_units}}</td>
-        <td class="tg-hmp3">{{ source.a_d_value }}</td>
-        <td class="tg-hmp3">{{ source.security_group }} </td>
-        <td class="tg-hmp3">{{ source.last_used }}</td>
-      </tr>
-      {% else %}
-      <tr>
-        <td class="tg-0lax">{{ source.uso }}</td>
-        <td class="tg-0lax">{{ source.department }}</td>
-        <td class="tg-0lax">{{ source.serial_number }}</td>
-        <td class="tg-0lax">{{ source.isotope }}</td>
-        <td class="tg-0lax">{{ source.laboratory }}</td>
-        <td class="tg-0lax">{{ source.location }}</td>
-        <td class="tg-0lax">{{ source.original_activity }} {{source.original_activity_units}}</td>
-        <td class="tg-0lax">{{ source.activation_date }}</td>
-        <td class="tg-0lax">{{ source.half_life }} {{source.half_life_units}}</td>
-        <td class="tg-0lax">{{ source.activity_now }} {{source.activity_now_units}}</td>
-        <td class="tg-0lax">{{ source.type }}</td>
-        <td class="tg-0lax">{{ source.acc }} {{source.acc_units}}</td>
-        <td class="tg-0lax">{{ source.a_d_value }}</td>
-        <td class="tg-0lax">{{ source.security_group }} </td>
-        <td class="tg-0lax">{{ source.last_used }}</td>
-      </tr>
-      {% endif %}
+        {% if cycle == 'odd' %}
+          <tr>
+            <td class="tg-hmp3">{{ source.uso }}</td>
+            <td class="tg-hmp3">{{ source.department }}</td>
+            <td class="tg-hmp3">{{ source.serial_number }}</td>
+            <td class="tg-hmp3">{{ source.isotope }}</td>
+            <td class="tg-hmp3">{{ source.laboratory }}</td>
+            <td class="tg-hmp3">{{ source.location }}</td>
+            <td class="tg-hmp3">{{ source.original_activity }} {{source.original_activity_units}}</td>
+            <td class="tg-hmp3">{{ source.activation_date }}</td>
+            <td class="tg-hmp3">{{ source.half_life }} {{source.half_life_units}}</td>
+            <td class="tg-hmp3">{{ source.activity_now }} {{source.activity_now_units}}</td>
+            <td class="tg-hmp3">{{ source.type }}</td>
+            <td class="tg-hmp3">{{ source.acc }} {{source.acc_units}}</td>
+            <td class="tg-hmp3">{{ source.a_d_value }}</td>
+            <td class="tg-hmp3">{{ source.security_group }} </td>
+            <td class="tg-hmp3">{{ source.last_used }}</td>
+          </tr>
+          {% set cycle = 'even' %}
+        {% else %}
+          <tr>
+            <td class="tg-0lax">{{ source.uso }}</td>
+            <td class="tg-0lax">{{ source.department }}</td>
+            <td class="tg-0lax">{{ source.serial_number }}</td>
+            <td class="tg-0lax">{{ source.isotope }}</td>
+            <td class="tg-0lax">{{ source.laboratory }}</td>
+            <td class="tg-0lax">{{ source.location }}</td>
+            <td class="tg-0lax">{{ source.original_activity }} {{source.original_activity_units}}</td>
+            <td class="tg-0lax">{{ source.activation_date }}</td>
+            <td class="tg-0lax">{{ source.half_life }} {{source.half_life_units}}</td>
+            <td class="tg-0lax">{{ source.activity_now }} {{source.activity_now_units}}</td>
+            <td class="tg-0lax">{{ source.type }}</td>
+            <td class="tg-0lax">{{ source.acc }} {{source.acc_units}}</td>
+            <td class="tg-0lax">{{ source.a_d_value }}</td>
+            <td class="tg-0lax">{{ source.security_group }} </td>
+            <td class="tg-0lax">{{ source.last_used }}</td>
+          </tr>
+          {% set cycle = 'odd' %}
+        {% endif %}
       {% endfor %}
 
     </tbody>
