@@ -17,6 +17,52 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 @app.route("/")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
+
+@app.route("/source_request")
+def source_request():
+    return render_template("sourceRequest.html")
+
+
+@app.route("/usage_report")
+def usage_report():
+    return render_template("usageReport.html")
+
+
+@app.route("/approve_request")
+def approve_request():
+    return render_template("approveRequest.html")
+
+
+@app.route("/user_rights")
+def user_rights():
+    return render_template("user.html")
+
+
+@app.route("/add_source")
+def add_source():
+    return render_template("addSource.html")
+
+
+@app.route("/delete_source")
+def delete_source():
+    return render_template("deleteSource.html")
+
+
+@app.route("/update_source")
+def update_source():
+    return render_template("updateSource.html")
+
+
 @app.route("/get_sources")
 def get_sources():
     sources = mongo.db.sources.find()

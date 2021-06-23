@@ -20,39 +20,27 @@
     <header>
         <!-- top navbar -->
         <ul id="source-dropdown" class="dropdown-content">
-            <li><a href="#!">Add Source</a></li>
-            <li><a href="#!">Delete Source</a></li>
-            <li><a href="#!">Edit Source</Source></a></li>
+            <li><a href="{{ url_for('add_source') }}">Add Source</a></li>
+            <li><a href="{{ url_for('delete_source') }}">Delete Source</a></li>
+            <li><a href="{{ url_for('update_source') }}">Update Source</a></li>
         </ul>
 
         <ul id="source-dropdown2" class="dropdown-content">
-            <li><a href="#!">Add Source</a></li>
-            <li><a href="#!">Delete Source</a></li>
-            <li><a href="#!">Edit Source</Source></a></li>
-        </ul>
-
-        <ul id="user-dropdown" class="dropdown-content">
-            <li><a href="#!">Approve User</a></li>
-            <li><a href="#!">Delete User</a></li>
-            <li><a href="#!">Edit User</Source></a></li>
-        </ul>
-
-        <ul id="user-dropdown2" class="dropdown-content">
-            <li><a href="#!">Approve User</a></li>
-            <li><a href="#!">Delete User</a></li>
-            <li><a href="#!">Edit User</Source></a></li>
+            <li><a href="{{ url_for('add_source') }}">Add Source</a></li>
+            <li><a href="{{ url_for('delete_source') }}">Delete Source</a></li>
+            <li><a href="{{ url_for('update_source') }}">Update Source</a></li>
         </ul>
 
         <ul id="inventory-dropdown" class="dropdown-content">
-            <li><a href="inventory.html">Full Inventory</a></li>
-            <li><a href="usageReport.html">Usage Report</a></li>
-            <li><a href="#!">Approve Request</a></li>
+            <li><a href="{{ url_for('get_sources') }}">Full Inventory</a></li>
+            <li><a href=" {{url_for('usage_report') }}">Usage Report</a></li>
+            <li><a href=" {{url_for('approve_request') }}">Approve Request</a></li>
         </ul>
 
         <ul id="inventory-dropdown2" class="dropdown-content">
-            <li><a href="#!"><i class="fas solid fa-period"></i>Full Inventory</a></li>
-            <li><a href="usageReport.html">Usage Report</a></li>
-            <li><a href="#!">Approve Request</a></li>
+            <li><a href=" {{url_for('get_sources') }}"><i class="fas solid fa-period"></i>Full Inventory</a></li>
+            <li><a href=" {{url_for('usage_report') }}">Usage Report</a></li>
+            <li><a href="{{url_for('approve_request') }}">Approve Request</a></li>
         </ul>
         <nav class="nav-extended">
             <div class="nav-wrapper indigo darken-2">
@@ -60,14 +48,13 @@
                         Physics</i></a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="register.html">Register</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="source-request.html">Source Request</a></li>
-                    <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown2">Inventory <i
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
+                    <li><a href="{{ url_for('user_rights') }}">User Access</a></li>
+                    <li><a class="dropdown-trigger" data-target="inventory-dropdown2">Inventory <i
                         class="fas fa-caret-down"></i></a></li>
                     <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown2">Source <i
-                                class="fas fa-caret-down"></i></a></li>
-                    <li><a class="dropdown-trigger" href="#!" data-target="user-dropdown2">User <i
                                 class="fas fa-caret-down"></i></a></li>
                 </ul>
                 <div class="nav-title logo-shift text-align:center">Radio Isotope Inventory</div>
@@ -75,14 +62,13 @@
         </nav>
         <!-- mobile sidenav -->
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="register.html">Register</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="source-request.html">Source Request</a></li>
-            <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown">Inventory <i
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
+            <li><a href="{{ url_for('user_rights') }}">User Access</a></li>
+            <li><a class="dropdown-trigger" data-target="inventory-dropdown">Inventory <i
                 class="fas fa-caret-down"></i></a></li>
             <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown">Source <i
-                        class="fas fa-caret-down"></i></a></li>
-            <li><a class="dropdown-trigger" href="#!" data-target="user-dropdown">User <i
                         class="fas fa-caret-down"></i></a></li>
         </ul>
     </header>
