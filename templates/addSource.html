@@ -1,4 +1,74 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Add Source</h1>
+<div class="row">
+    <form class="col s12">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="serial_number" type="text" class="validate">
+                <label for="serial_number">Serial Number</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="department" type="text" class="validate">
+                <label for="department">Department</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s4">
+                <input id="isotope" type="text" class="validate">
+                <label for="isotope">Isotope</label>
+            </div>
+            <div class="input-field col s4">
+                <input id="half_life" type="text" class="validate">
+                <label for="half_life">Half Life</label>
+            </div>
+            <div class="input-field col s4">
+                <p>
+                    <label>
+                        <input name="group1" type="radio" checked />
+                        <span>Years</span>
+                    </label>
+                    <label>
+                        <input name="group1" type="radio" />
+                        <span>Days</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s4">
+                <input id="original_activity" type="text" class="validate">
+                <label for="original_activity">Original Activity</label>
+            </div>
+            <div class="input-field col s4">
+                <p>
+                    <label>
+                        <input name="group2" type="radio" checked />
+                        <span>kBq</span>
+                    </label>
+                    <label>
+                        <input name="group2" type="radio" />
+                        <span>MBq</span>
+                    </label>
+                </p>
+            </div>
+            <div class="input-field col s4">
+                <input type="text" id="activation_date"class="datepicker">
+                <label for="activation_date">Activation Date</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="department" type="text" class="validate">
+                <label for="department">Department</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="research_group" type="text" class="validate">
+                <label for="research_group">Research Group</label>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

@@ -1,4 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Register</h1>
+
+<div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate">
+          <label for="first_name">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">New password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="repeat_password" type="password" class="validate">
+          <label for="repeat_password">Repeat password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="department" type="text" class="validate">
+          <label for="department">Department</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="research_group" type="text" class="validate">
+          <label for="research_group">Research Group</label>
+        </div>
+      </div>
+    </form>
+  </div>
 {% endblock %}
