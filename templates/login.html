@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row">
-    <div class="col s3">
-        <h2>Login:</h2>
-        <div class="row">
-            <form class="col s12">
+
+  <div class="col s12 m7">
+    
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="static/assets/isotope.jpg" alt="Radio active isotope">
+      </div>
+      <div class="card-stacked ">
+        
+        <div class="card-content ">
+          <h2 class="header">Login:</h2>
+          <div class="row">
+            <form class="col s12 ">
               <div class="row">
                 <div class="input-field col s6">
                   <input placeholder="Placeholder" id="first_name" type="text" class="validate">
@@ -29,9 +37,14 @@
               </div>
             </form>
           </div>
+        </div>
+        <div class="card-action">
+          <button class="btn-large "type="submit" name="action">Submit
+          <i class="fas fa-cloud-upload-alt"></i>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="col s9">
-        <img src="static/assets/isotope.jpg" alt="Radio active isotope" style="max-width: 100%; max-height: fit-content;">
-    </div>
+  </div>
 
-{% endblock %}
+  {% endblock %}

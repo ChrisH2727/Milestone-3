@@ -2,8 +2,6 @@ $(document).ready(function () {
   $('.sidenav').sidenav();
   $(".dropdown-trigger").dropdown();
   $('.datepicker').datepicker();
-  var now = new Date();
-  $("#activity_now_date").innerText = now.toLocaleString();
 
 });
 

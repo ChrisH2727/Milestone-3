@@ -4,13 +4,21 @@
 <div class="row">
     <form class="col s12">
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s3">
                 <input id="serial_number" type="text" class="validate">
                 <label for="serial_number">Serial Number</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s3">
                 <input id="department" type="text" class="validate">
                 <label for="department">Department</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="laboratory" type="text" class="validate">
+                <label for="laboratory">Laboratory</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="location" type="text" class="validate">
+                <label for="location">Location</label>
             </div>
         </div>
         <div class="row">
@@ -41,7 +49,7 @@
                 <input id="original_activity" type="text" class="validate">
                 <label for="original_activity">Original Activity</label>
             </div>
-            <div class="input-field col s4">
+            <div class="input-field col 2">
                 <p>
                     <label>
                         <input name="group2" type="radio" checked />
@@ -54,21 +62,53 @@
                 </p>
             </div>
             <div class="input-field col s4">
-                <input type="text" id="activation_date"class="datepicker">
+                <input type="text" id="activation_date" class="datepicker">
                 <label for="activation_date">Activation Date</label>
             </div>
         </div>
 
+            <div>
+                <p> Encapsulation</p>
+            </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="department" type="text" class="validate">
-                <label for="department">Department</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="research_group" type="text" class="validate">
-                <label for="research_group">Research Group</label>
+                <p>
+                    <label>
+                        <input name="group3" type="radio" checked />
+                        <span>Alpha disk</span>
+                    </label>
+                    <label>
+                        <input name="group3" type="radio" />
+                        <span>Beta disk</span>
+                    </label>
+                    <label>
+                        <input name="group3" type="radio" />
+                        <span>Gamma disk</span>
+                    </label>
+                    <label>
+                        <input name="group3" type="radio" checked />
+                        <span>Alpha capsule</span>
+                    </label>
+                    <label>
+                        <input name="group3" type="radio" />
+                        <span>Beta capsule</span>
+                    </label>
+                    <label>
+                        <input name="group3" type="radio" />
+                        <span>Gamma capsule</span>
+                    </label>
+                </p>
             </div>
         </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <i class="fas fa-cloud-upload-alt"></i>
+        </button>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Clear
+            <i class="fas fa-trash-restore-alt"></i>
+        </button>
+
+        
     </form>
+    
 </div>
 {% endblock %}
