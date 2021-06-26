@@ -4,6 +4,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
 
@@ -26,33 +27,34 @@ def login():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        # check if username already exists in db
+        # check if first_name already exists in db
         existing_user = mongo.db.users.find_one(
-            {"first": request.form.get("first_name").lower()})
-        print(existing_user)
-
+            {"first": request.form.get("first_name").lower(),
+                "last": request.form.get("last_name").lower()})
+        
         if existing_user:
-            flash("Username already exists")
-            print("exiting user")
-            return redirect(url_for("register.html"))
+            print(existing_user)
+            flash("user exists")
+            return redirect(url_for("register"))
 
+        if request.form.get("password") != request.form.get("repeat_password"):
+            flash("Password entries must match")
+            return redirect(url_for("register"))
+        
         register = {
-            "first": request.form.get("first_name").lower()
+            "first": request.form.get("first_name").lower(),
+            "last": request.form.get("last_name").lower(),
+            "email": request.form.get("email").lower(),
+            "password": generate_password_hash(request.form.get("password")),
+            "department": request.form.get("department").lower(),
+            "research_group": request.form.get("research_group").lower(),
+            "approved": "n",
+            "admin": "n"
         }
-        mongo.db.users.insert_one(register)
-
-        flash("Registration Successful!")
-        return redirect(url_for("login.html"))
+        mongo.db.users.insert_one("register")
+        flash("user sucessfully registered")
 
     return render_template("register.html")
-
-
-
-
-
-
-
-
 
 
 @app.route("/source_request")
