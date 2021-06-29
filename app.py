@@ -95,14 +95,18 @@ def approve_request():
     return render_template("approveRequest.html")
 
 
-@app.route("/user")
-def user():
+@app.route("/get_user")
+def get_user():
     print("got here")
     users = mongo.db.users.find()
     print("got here2")
-    print(users)
     return render_template("user.html", users=users)
 
+
+@app.route("/get_sources")
+def get_sources():
+    sources = mongo.db.sources.find()
+    return render_template("inventory.html", sources=sources)
 
 @app.route("/add_source")
 def add_source():
@@ -134,10 +138,7 @@ def userAccount():
     session.pop('_flashes', None)
     return render_template("userAccount.html")
 
-@app.route("/get_sources")
-def get_sources():
-    sources = mongo.db.sources.find()
-    return render_template("inventory.html", sources=sources)
+
 
 
 if __name__ == "__main__":

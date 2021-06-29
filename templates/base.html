@@ -54,7 +54,7 @@
                         <li><a href="{{ url_for('logout') }}">Log out</a></li>
                         <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
                         {% if session.role|lower == "admin"|lower %}
-                            <li><a href="{{ url_for('user') }}">User Access</a></li>
+                            <li><a href="{{ url_for('get_user') }}">User Access</a></li>
                             <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown2">Inventory <i
                                 class="fas fa-caret-down"></i></a></li>
                             <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown2">Source <i
@@ -77,7 +77,7 @@
             <li><a href="{{ url_for('logout') }}">Log out</a></li>
             <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
             {% if session.role|lower == "admin"|lower %}
-                <li><a href="{{ url_for('user') }}">User Access</a></li>
+                <li><a href="{{ url_for('get_user') }}">User Access</a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown">Inventory <i
                     class="fas fa-caret-down"></i></a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown">Source <i
