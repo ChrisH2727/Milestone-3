@@ -17,15 +17,13 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+
+
 @app.route("/")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-
-    # delete any previous session useful when debugging and not logging out 
-    # session.pop("user")
-    
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
             {"first": request.form.get("first_name").lower(),
@@ -115,6 +113,11 @@ def delete_source():
 @app.route("/update_source")
 def update_source():
     return render_template("updateSource.html")
+
+
+@app.route("/logout")
+def logout():
+    return render_template("logout.html")
 
 
 @app.route("/userAccount")

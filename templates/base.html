@@ -48,36 +48,47 @@
                         Physics</i></a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
-                    {% if session.role|lower == "admin"|lower %}
-                        <li><a href="{{ url_for('user_rights') }}">User Access</a></li>
-                    {% endif %}
+                    
                     {% if session.user%}
                         <li><a href="{{ url_for('userAccount') }}">{{session.user}}</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log out</a></li>
+                        <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
+                        {% if session.role|lower == "admin"|lower %}
+                            <li><a href="{{ url_for('user_rights') }}">User Access</a></li>
+                            <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown2">Inventory <i
+                                class="fas fa-caret-down"></i></a></li>
+                            <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown2">Source <i
+                                class="fas fa-caret-down"></i></a></li>
+                            {% endif %}
+                    {% else %}
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
                     {% endif %}
 
-                    <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown2">Inventory <i
-                                class="fas fa-caret-down"></i></a></li>
-                    <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown2">Source <i
-                                class="fas fa-caret-down"></i></a></li>
                 </ul>
                 <div class="nav-title logo-shift text-align:center">Radio Isotope Inventory</div>
             </div>
         </nav>
         <!-- mobile sidenav -->
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="{{ url_for('register') }}">Register</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
+
+            {% if session.user%}
+            <li><a href="{{ url_for('userAccount') }}">{{session.user}}</a></li>
+            <li><a href="{{ url_for('logout') }}">Log out</a></li>
             <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
             {% if session.role|lower == "admin"|lower %}
                 <li><a href="{{ url_for('user_rights') }}">User Access</a></li>
-            {% endif %}
-            <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown">Inventory <i
-                        class="fas fa-caret-down"></i></a></li>
-            <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown">Source <i
-                        class="fas fa-caret-down"></i></a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown">Inventory <i
+                    class="fas fa-caret-down"></i></a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown">Source <i
+                    class="fas fa-caret-down"></i></a></li>
+                {% endif %}
+        {% else %}
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        {% endif %}
+
+
         </ul>
     </header>
 
