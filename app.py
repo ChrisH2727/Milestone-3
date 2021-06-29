@@ -19,8 +19,33 @@ mongo = PyMongo(app)
 
 @app.route("/")
 
-@app.route("/login")
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
+
+    # delete any previous session useful when debugging and not logging out 
+    # session.pop("user")
+    
+    if request.method == "POST":
+        existing_user = mongo.db.users.find_one(
+            {"first": request.form.get("first_name").lower(),
+                "last": request.form.get("last_name").lower(),
+                "email": request.form.get("email").lower(),
+                "password": request.form.get("password").lower()})
+
+        if existing_user:
+            # session cookie for role "admin" or "user"
+            session["role"] = existing_user["role"]
+            # session cookie for users first name
+            session["user"] = existing_user["first"]
+            flash("user exists")
+            return redirect(url_for("userAccount"))
+    
+        else:
+            # invalid password match
+            flash("Incorrect Username and/or Password")
+            return redirect(url_for("login"))
+    
     return render_template("login.html")
 
 
@@ -49,7 +74,7 @@ def register():
             "department": request.form.get("department").lower(),
             "research_group": request.form.get("research_group").lower(),
             "approved": "n",
-            "admin": "n"
+            "role": "user"
         }
         mongo.db.users.insert_one("register")
         flash("user sucessfully registered")
@@ -91,6 +116,11 @@ def delete_source():
 def update_source():
     return render_template("updateSource.html")
 
+
+@app.route("/userAccount")
+def userAccount():
+    session.pop('_flashes', None)
+    return render_template("userAccount.html")
 
 @app.route("/get_sources")
 def get_sources():
