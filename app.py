@@ -117,6 +117,11 @@ def update_source():
 
 @app.route("/logout")
 def logout():
+
+    # remove user from session cookie
+    flash("Goodbye, {}".format(session["user"]), "You have been logged out" )
+    session.pop("user")
+    session.pop("role")
     return render_template("logout.html")
 
 
