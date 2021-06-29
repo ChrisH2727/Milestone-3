@@ -1,4 +1,87 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Approve , Delete, Manage user access rights</h1>
-{% endblock %}
+<div class="tg-wrap">
+    <table class="tg" id="tg-6QsDT">
+        <thead>
+            <tr>
+                <th class="tg-c3ow" colspan="16">Radio Isotope Inventory</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tg-ul38">First name</td>
+                <td class="tg-ul38">Last name</td>
+                <td class="tg-ul38">Email</td>
+                <td class="tg-ul38">Department</td>
+                <td class="tg-ul38">Research group</td>
+                <td class="tg-ul38">Approve</td>
+                <td class="tg-ul38">Role</td>
+            </tr>
+            {% set cycle = 'odd' %}
+            {% for source in sources %}
+            {% if cycle == 'odd' %}
+            <tr>
+                <td class="tg-hmp3">{{ users.first }}</td>
+                <td class="tg-hmp3">{{ users.last }}</td>
+                <td class="tg-hmp3">{{ users.email }}</td>
+                <td class="tg-hmp3">{{ users.department }}</td>
+                <td class="tg-hmp3">{{ users.research_group }}</td>
+                <td class="tg-hmp3">
+                    <div class="switch">
+                        <label>
+                            Off
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                            On
+                        </label>
+                    </div>
+                </td>
+                <td class="tg-hmp3">
+                    <div class="switch">
+                        <label>
+                            Off
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                            On
+                        </label>
+                    </div>
+                </td>
+
+            </tr>
+            {% set cycle = 'even' %}
+            {% else %}
+            <tr>
+                <td class="tg-0lax">{{ users.first }}</td>
+                <td class="tg-0lax">{{ users.last }}</td>
+                <td class="tg-0lax">{{ users.email }}</td>
+                <td class="tg-0lax">{{ users.department }}</td>
+                <td class="tg-0lax">{{ users.research_group }}</td>
+                <td class="tg-0lax">
+                    <div class="switch">
+                        <label>
+                            Off
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                            On
+                        </label>
+                    </div>
+                </td>
+                <td class="tg-0lax">
+                    <div class="switch">
+                        <label>
+                            Off
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                            On
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            {% set cycle = 'odd' %}
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

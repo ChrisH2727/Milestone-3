@@ -95,9 +95,13 @@ def approve_request():
     return render_template("approveRequest.html")
 
 
-@app.route("/user_rights")
-def user_rights():
-    return render_template("user.html")
+@app.route("/user")
+def user():
+    print("got here")
+    users = mongo.db.users.find()
+    print("got here2")
+    print(users)
+    return render_template("user.html", users=users)
 
 
 @app.route("/add_source")
