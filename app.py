@@ -95,11 +95,28 @@ def approve_request():
     return render_template("approveRequest.html")
 
 
-@app.route("/get_user")
+@app.route("/get_user", methods=["GET", "POST"])
 def get_user():
-    print("got here")
     users = mongo.db.users.find()
-    print("got here2")
+    if request.method == "POST":
+        userStatus = request.form.getlist("userApprove")
+        for user in userStatus:
+            print(user)
+            #get user with _id back as a dictionary existing_user_id
+            existing_user_id = mongo.db.users.find_one({"_id": ObjectId(user)})
+            print(existing_user_id["approved"])
+            newquery = {"_id":ObjectId(user)}
+            if existing_user_id["approved"] == "true":
+                submit = {"$set": {"approved" : "false"}}
+                mongo.db.user.update_one(newquery, submit)
+            else:
+                submit = {"$set": {"approved" : "true"}}
+                mongo.db.user.update_one(newquery, submit)
+        users = mongo.db.users.find()
+
+    else:
+        return render_template("user.html", users=users)
+
     return render_template("user.html", users=users)
 
 
