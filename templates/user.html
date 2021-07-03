@@ -30,12 +30,41 @@
                             <td class="tg-hmp3">{{ user.research_group }}</td>
                             <td class="tg-hmp3">
                             <!-- Switch -->
+                                <a href="{{ url_for('get_userb', user_id=user._id) }}" 
+                                    {% if user.approved == 'True' %}
+                                        class ="btn-small  teal lighten-2" tbl_btn_wd>Approve
+                                    {% else %}
+                                        class ="btn-small deep-orange darken-1" tbl_btn_wd>Approved
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td class="tg-hmp3">
+                            <!-- Switch -->
+                                <a href="{{ url_for('get_userc', user_id=user._id) }}" 
+                                    {% if user.role == 'admin' %}
+                                        class ="btn-small  teal lighten-2" tbl_btn_wd>Admin
+                                    {% else %}
+                                        class ="btn-small deep-orange darken-1" tbl_btn_wd>User
+                                    {% endif %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% set cycle = 'even' %}
+                    {% else %}
+                        <tr>
+                            <td class="tg-0lax">{{ user.first }}</td>
+                            <td class="tg-0lax">{{ user.last }}</td>
+                            <td class="tg-0lax">{{ user.email }}</td>
+                            <td class="tg-0lax">{{ user.department }}</td>
+                            <td class="tg-0lax">{{ user.research_group }}</td>
+                            <td class="tg-hmp3">
+                            <!-- Switch -->
                                 <div class="switch">
                                     <label>
                                         No
                                         <input type="checkbox" name="userApprove" id="userApprove" value="{{user._id}}"
-                                        {% if user.approved == 'true' %}
-                                            checked ="true"
+                                        {% if user.approved == 'True' %}
+                                            checked = "true"
                                         {% endif %}>
                                         <span class="lever"></span>
                                         Yes
@@ -57,53 +86,11 @@
                                 </div>
                             </td>
                         </tr>
-                        {% set cycle = 'even' %}
-                    {% else %}
-                        <tr>
-                            <td class="tg-0lax">{{ user.first }}</td>
-                            <td class="tg-0lax">{{ user.last }}</td>
-                            <td class="tg-0lax">{{ user.email }}</td>
-                            <td class="tg-0lax">{{ user.department }}</td>
-                            <td class="tg-0lax">{{ user.research_group }}</td>
-                            <td class="tg-hmp3">
-                            <!-- Switch -->
-                                <div class="switch">
-                                    <label>
-                                        No
-                                        <input type="checkbox" name="userApprove" value="{{user._id}}"
-                                        {% if user.approved == 'true' %}
-                                            checked = "true"
-                                        {% endif %}>
-                                        <span class="lever"></span>
-                                        Yes
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="tg-hmp3">
-                            <!-- Switch -->
-                                <div class="switch">
-                                    <label>
-                                        User
-                                        <input type="checkbox" name="userRole" value="{{user._id}}"
-                                        {% if user.role == 'admin' %}
-                                            checked = "true"
-                                        {% endif %}>
-                                        <span class="lever"></span>
-                                        Admin
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
                         {% set cycle = 'odd' %}
                     {% endif %}
                 {% endfor %}
             </tbody>
         </table>
-        <div class="card-action">
-            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-            <i class="fas fa-cloud-upload-alt"></i>
-            </button>
-        </div>
     </form>
 </div>
 {% endblock %}

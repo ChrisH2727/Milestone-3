@@ -3,6 +3,7 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
+from pymongo import ReturnDocument
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
@@ -49,6 +50,7 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    print(request.method)
     if request.method == "POST":
         # check if first_name already exists in db
         existing_user = mongo.db.users.find_one(
@@ -59,7 +61,8 @@ def register():
             print(existing_user)
             flash("user exists")
             return redirect(url_for("register"))
-
+        print(request.form.get("password"))
+        print(request.form.get("repeat_password"))
         if request.form.get("password") != request.form.get("repeat_password"):
             flash("Password entries must match")
             return redirect(url_for("register"))
@@ -71,10 +74,10 @@ def register():
             "password": generate_password_hash(request.form.get("password")),
             "department": request.form.get("department").lower(),
             "research_group": request.form.get("research_group").lower(),
-            "approved": "n",
+            "approved": "False",
             "role": "user"
         }
-        mongo.db.users.insert_one("register")
+        mongo.db.users.insert_one(register)
         flash("user sucessfully registered")
 
     return render_template("register.html")
@@ -95,29 +98,54 @@ def approve_request():
     return render_template("approveRequest.html")
 
 
-@app.route("/get_user", methods=["GET", "POST"])
+@app.route("/get_userb/<user_id>", methods=["GET", "POST"])
+def get_userb(user_id):
+    if request.method == "GET":
+        existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+        if existing_user["approved"] == "True":
+            submit = {"approved": "False"}
+        else:
+            submit = {"approved": "True"}
+        submit.update({'first':existing_user["first"],
+            'last':existing_user["last"],
+            'email':existing_user["email"],
+            'password':existing_user["password"],
+            'department':existing_user["department"],
+            'research_group':existing_user["research_group"],
+            'role':existing_user["role"]})    
+        mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
+        flash("User Successfully Approved")
+    users = mongo.db.users.find()
+    return render_template("user.html" , users=users)
+
+@app.route("/get_userc/<user_id>", methods=["GET", "POST"])
+def get_userc(user_id):
+    if request.method == "GET":
+        existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+        if existing_user["role"] == "admin":
+            submit = {"role": "user"}
+        else:
+            submit = {"role": "admin"}
+        submit.update({'first':existing_user["first"],
+            'last':existing_user["last"],
+            'email':existing_user["email"],
+            'password':existing_user["password"],
+            'department':existing_user["department"],
+            'research_group':existing_user["research_group"],
+            'approved':existing_user["approved"]})    
+        mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
+        flash("User role successfully updated")
+    users = mongo.db.users.find()
+    return render_template("user.html" , users=users)
+
+
+
+@app.route("/get_user")
 def get_user():
     users = mongo.db.users.find()
-    if request.method == "POST":
-        userStatus = request.form.getlist("userApprove")
-        for user in userStatus:
-            print(user)
-            #get user with _id back as a dictionary existing_user_id
-            existing_user_id = mongo.db.users.find_one({"_id": ObjectId(user)})
-            print(existing_user_id["approved"])
-            newquery = {"_id":ObjectId(user)}
-            if existing_user_id["approved"] == "true":
-                submit = {"$set": {"approved" : "false"}}
-                mongo.db.user.update_one(newquery, submit)
-            else:
-                submit = {"$set": {"approved" : "true"}}
-                mongo.db.user.update_one(newquery, submit)
-        users = mongo.db.users.find()
+    return render_template("user.html", users=users) 
 
-    else:
-        return render_template("user.html", users=users)
 
-    return render_template("user.html", users=users)
 
 
 @app.route("/get_sources")
