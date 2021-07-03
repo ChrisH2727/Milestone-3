@@ -54,26 +54,25 @@ def register():
     if request.method == "POST":
         # check if first_name already exists in db
         existing_user = mongo.db.users.find_one(
-            {"first": request.form.get("first_name").lower(),
-                "last": request.form.get("last_name").lower()})
+            {"first": request.form.get("first_name"),
+                "last": request.form.get("last_name")})
         
         if existing_user:
             print(existing_user)
             flash("user exists")
             return redirect(url_for("register"))
-        print(request.form.get("password"))
-        print(request.form.get("repeat_password"))
+
         if request.form.get("password") != request.form.get("repeat_password"):
             flash("Password entries must match")
             return redirect(url_for("register"))
         
         register = {
-            "first": request.form.get("first_name").lower(),
-            "last": request.form.get("last_name").lower(),
-            "email": request.form.get("email").lower(),
-            "password": generate_password_hash(request.form.get("password")),
-            "department": request.form.get("department").lower(),
-            "research_group": request.form.get("research_group").lower(),
+            "first": request.form.get("first_name"),
+            "last": request.form.get("last_name"),
+            "email": request.form.get("email"),
+            "password": (request.form.get("password")),
+            "department": request.form.get("department"),
+            "research_group": request.form.get("research_group"),
             "approved": "False",
             "role": "user"
         }
@@ -106,17 +105,14 @@ def get_userb(user_id):
             submit = {"approved": "False"}
         else:
             submit = {"approved": "True"}
-        submit.update({'first':existing_user["first"],
-            'last':existing_user["last"],
-            'email':existing_user["email"],
-            'password':existing_user["password"],
-            'department':existing_user["department"],
-            'research_group':existing_user["research_group"],
-            'role':existing_user["role"]})    
-        mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
+        
+        mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
+            { '$set': submit }, return_document = ReturnDocument.AFTER)
         flash("User Successfully Approved")
     users = mongo.db.users.find()
     return render_template("user.html" , users=users)
+
+
 
 @app.route("/get_userc/<user_id>", methods=["GET", "POST"])
 def get_userc(user_id):
@@ -126,14 +122,9 @@ def get_userc(user_id):
             submit = {"role": "user"}
         else:
             submit = {"role": "admin"}
-        submit.update({'first':existing_user["first"],
-            'last':existing_user["last"],
-            'email':existing_user["email"],
-            'password':existing_user["password"],
-            'department':existing_user["department"],
-            'research_group':existing_user["research_group"],
-            'approved':existing_user["approved"]})    
-        mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
+        
+        mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
+            { '$set': submit }, return_document = ReturnDocument.AFTER)
         flash("User role successfully updated")
     users = mongo.db.users.find()
     return render_template("user.html" , users=users)
@@ -178,10 +169,21 @@ def logout():
     return render_template("logout.html")
 
 
-@app.route("/userAccount")
+@app.route("/userAccount", methods=["GET", "POST"])
 def userAccount():
-    session.pop('_flashes', None)
-    return render_template("userAccount.html")
+
+    existing_user = mongo.db.users.find_one(
+            {"first": session["user"]})
+    user_id = existing_user["_id"]
+    if request.method == "POST":
+        submit = {"password": request.form.get("password"),
+            "department": request.form.get("department").lower(),
+            "research_group": request.form.get("research_group").lower()}
+
+        mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
+            { '$set': submit }, return_document = ReturnDocument.AFTER)
+        flash("Your account details have been successfully updated")
+    return render_template("userAccount.html", user=existing_user)
 
 
 
