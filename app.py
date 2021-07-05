@@ -1,4 +1,8 @@
 import os
+import re
+import matplotlib.pyplot as plt
+import numpy as np
+
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -89,7 +93,16 @@ def source_request():
 
 @app.route("/usage_report")
 def usage_report():
-    return render_template("usageReport.html")
+    source_types = mongo.db.sources.find().distinct("isotope")
+    
+    source_num = []
+    for source in source_types:
+        source_num.append(mongo.db.sources.count_documents({"isotope": source}))
+   
+    plt.bar(source_types, source_num)
+    plt.savefig('static/assets/sourceUsed.png')
+    return render_template("usageReport.html", name="usage plot", url="static/assets/sourceUsed.png")
+
 
 
 @app.route("/approve_request")
