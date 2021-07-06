@@ -7,68 +7,59 @@
         <th class="tg-c3ow" colspan="16">Radio Isotope Inventory</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody >
       <tr>
-        <td class="tg-ul38">USO</td>
+        <td class="tg-ul38 hide-on-med-and-down">USO</td>
         <td class="tg-ul38">Department</td>
         <td class="tg-ul38">Serial No.</td>
         <td class="tg-ul38">Isotope</td>
         <td class="tg-ul38">Laboratory</td>
-        <td class="tg-ul38">Location</td>
-        <td class="tg-ul38">Original Activity</td>
-        <td class="tg-ul38">Date Activated</td>
+        <td class="tg-ul38 hide-on-med-and-down ">Location</td>
+        <td class="tg-ul38 hide-on-small-only">Original Activity</td>
+        <td class="tg-ul38 hide-on-small-only">Date Activated</td>
         <td class="tg-ul38">Half life</td>
         <td class="tg-ul38">Ativity Now</td>
         <td class="tg-ul38">Type</td>
         <td class="tg-ul38">Acc</td>
-        <td class="tg-ul38">A/D value</td>
+        <td class="tg-ul38 hide-on-med-and-down">A/D value</td>
         <td class="tg-ul38">Security Group</td>
         <td class="tg-ul38">Last Used</td>
+        <td class="tg-ul38">Update</td>
+        <td class="tg-ul38">Delete</td>
       </tr>
-      {% set cycle = 'odd' %}
-      {% for source in sources %}
-        {% if cycle == 'odd' %}
+
+      {% for source in sources %} 
           <tr>
-            <td class="tg-hmp3">{{ source.uso }}</td>
+            <td class="tg-hmp3 hide-on-med-and-down">{{ source.uso }}</td>
             <td class="tg-hmp3">{{ source.department }}</td>
             <td class="tg-hmp3">{{ source.serial_number }}</td>
             <td class="tg-hmp3">{{ source.isotope }}</td>
             <td class="tg-hmp3">{{ source.laboratory }}</td>
-            <td class="tg-hmp3">{{ source.location }}</td>
-            <td class="tg-hmp3">{{ source.original_activity }} {{source.original_activity_units}}</td>
-            <td class="tg-hmp3">{{ source.activation_date }}</td>
+            <td class="tg-hmp3 hide-on-med-and-down">{{ source.location }}</td>
+            <td class="tg-hmp3 hide-on-small-only">{{ source.original_activity }} {{source.original_activity_units}}</td>
+            <td class="tg-hmp3 hide-on-small-only">{{ source.activation_date }}</td>
             <td class="tg-hmp3">{{ source.half_life }} {{source.half_life_units}}</td>
             <td class="tg-hmp3">{{ source.activity_now }} {{source.activity_now_units}}</td>
             <td class="tg-hmp3">{{ source.type }}</td>
             <td class="tg-hmp3">{{ source.acc }} {{source.acc_units}}</td>
-            <td class="tg-hmp3">{{ source.a_d_value }}</td>
+            <td class="tg-hmp3 hide-on-med-and-down">{{ source.a_d_value }}</td>
             <td class="tg-hmp3">{{ source.security_group }} </td>
             <td class="tg-hmp3">{{ source.last_used }}</td>
+            <td class="tg-hmp3">
+              <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}" 
+              class ="btn-small  teal lighten-2" tbl_btn_wd>Update                      
+              </a>
+            </td>
+            <td class="tg-hmp3">
+              <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}" 
+              class ="btn-small  teal lighten-2" tbl_btn_wd>Update                      
+              </a>
+            </td>
           </tr>
-          {% set cycle = 'even' %}
-        {% else %}
-          <tr>
-            <td class="tg-0lax">{{ source.uso }}</td>
-            <td class="tg-0lax">{{ source.department }}</td>
-            <td class="tg-0lax">{{ source.serial_number }}</td>
-            <td class="tg-0lax">{{ source.isotope }}</td>
-            <td class="tg-0lax">{{ source.laboratory }}</td>
-            <td class="tg-0lax">{{ source.location }}</td>
-            <td class="tg-0lax">{{ source.original_activity }} {{source.original_activity_units}}</td>
-            <td class="tg-0lax">{{ source.activation_date }}</td>
-            <td class="tg-0lax">{{ source.half_life }} {{source.half_life_units}}</td>
-            <td class="tg-0lax">{{ source.activity_now }} {{source.activity_now_units}}</td>
-            <td class="tg-0lax">{{ source.type }}</td>
-            <td class="tg-0lax">{{ source.acc }} {{source.acc_units}}</td>
-            <td class="tg-0lax">{{ source.a_d_value }}</td>
-            <td class="tg-0lax">{{ source.security_group }} </td>
-            <td class="tg-0lax">{{ source.last_used }}</td>
-          </tr>
-          {% set cycle = 'odd' %}
-        {% endif %}
       {% endfor %}
 
     </tbody>
+    
   </table>
 </div>
 

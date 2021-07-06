@@ -54,7 +54,6 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    print(request.method)
     if request.method == "POST":
         # check if first_name already exists in db
         existing_user = mongo.db.users.find_one(
@@ -150,16 +149,42 @@ def get_user():
     return render_template("user.html", users=users) 
 
 
-
-
 @app.route("/get_sources")
 def get_sources():
     sources = mongo.db.sources.find()
     return render_template("inventory.html", sources=sources)
 
-@app.route("/add_source")
+
+@app.route("/add_source", methods=["GET", "POST"])
 def add_source():
-    return render_template("addSource.html")
+    if request.method == "POST":
+        # check if source serial number already exists in db
+        existing_source = mongo.db.users.find_one(
+            {"serial_number": request.form.get("serial_number")})
+        print("got here")
+    
+        if existing_source:
+            print("exiting source")
+            flash("Source Serial Number In Use")
+            return redirect(url_for("addSsource"))
+
+        newSource = {
+            "serial_number": request.form.get("serial_number"),
+            "department": request.form.get("department"),
+            "laboratory": request.form.get("laboratory"),
+            "location": request.form.get("location"),
+            "isotope": request.form.get("isotope"),
+            "half_life": request.form.get("half_life"),
+            "half_life_units": request.values.get("half_life_units")
+        }
+        mongo.db.sources.insert_one(newSource)
+        flash("New source sucessfully added to inventory")
+    
+        sources = mongo.db.sources.find()
+        return render_template("inventory.html", sources=sources)
+
+    actionType = "Add"    
+    return render_template("addSource.html", actionType=actionType)
 
 
 @app.route("/delete_source")
@@ -169,7 +194,19 @@ def delete_source():
 
 @app.route("/update_source")
 def update_source():
+    return render_template("updatwSource.html")
+
+
+
+@app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
+def update_source_resp(source_serial_no):
+    print(source_serial_no)
     return render_template("updateSource.html")
+
+@app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
+def delete_source_resp(source_serial_no):
+    print(source_serial_no)
+    return render_template("deleteSource.html")
 
 
 @app.route("/logout")

@@ -1,114 +1,121 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Add Source</h1>
+
 <div class="row">
-    <form class="col s12">
-        <div class="row">
-            <div class="input-field col s3">
-                <input id="serial_number" type="text" class="validate">
-                <label for="serial_number">Serial Number</label>
-            </div>
-            <div class="input-field col s3">
-                <input id="department" type="text" class="validate">
-                <label for="department">Department</label>
-            </div>
-            <div class="input-field col s3">
-                <input id="laboratory" type="text" class="validate">
-                <label for="laboratory">Laboratory</label>
-            </div>
-            <div class="input-field col s3">
-                <input id="location" type="text" class="validate">
-                <label for="location">Location</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s4">
-                <input id="isotope" type="text" class="validate">
-                <label for="isotope">Isotope</label>
-            </div>
-            <div class="input-field col s4">
-                <input id="half_life" type="text" class="validate">
-                <label for="half_life">Half Life</label>
-            </div>
-            <div class="input-field col s4">
-                <p>
-                    <label>
-                        <input name="group1" type="radio" checked />
-                        <span>Years</span>
-                    </label>
-                    <label>
-                        <input name="group1" type="radio" />
-                        <span>Days</span>
-                    </label>
-                </p>
-            </div>
-        </div>
+    <div class="col s12 m8 offset-m2">
+        <div class="card blue lighten-3">
+            <div class="card-content white-text">
+                <span class="card-title">Add Source</span>
+                <form method="POST" action="{{ url_for('add_source') }}">
+                    <div class="row">
+                        <div class="input-field col s3">
+                            <input id="serial_number" name="serial_number" type="text" class="validate">
+                            <label for="serial_number">Serial Number</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <input id="department" name="department" type="text" class="validate">
+                            <label for="department">Department</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <input id="laboratory" name="laboratory" type="text" class="validate">
+                            <label for="laboratory">Laboratory</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <input id="location" name="location" type="text" class="validate">
+                            <label for="location">Location</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id="isotope" name="isotope" type="text" class="validate">
+                            <label for="isotope">Isotope</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="half_life" name="half_life" type="text" class="validate">
+                            <label for="half_life">Half Life</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <p>
+                                <label>
+                                    <input name="half_life_units" value = "years" type="radio" checked />
+                                    <span>Years</span>
+                                </label>
+                                <label>
+                                    <input name="half_life_units" value = "days" type="radio" />
+                                    <span>Days</span>
+                                </label>
+                            </p>
+                        </div>
+                    </div>
 
-        <div class="row">
-            <div class="input-field col s4">
-                <input id="original_activity" type="text" class="validate">
-                <label for="original_activity">Original Activity</label>
-            </div>
-            <div class="input-field col 2">
-                <p>
-                    <label>
-                        <input name="group2" type="radio" checked />
-                        <span>kBq</span>
-                    </label>
-                    <label>
-                        <input name="group2" type="radio" />
-                        <span>MBq</span>
-                    </label>
-                </p>
-            </div>
-            <div class="input-field col s4">
-                <input type="text" id="activation_date" class="datepicker">
-                <label for="activation_date">Activation Date</label>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id="original_activity" name="original_activity" type="text" class="validate">
+                            <label for="original_activity">Original Activity</label>
+                        </div>
+                        <div class="input-field col 2">
+                            <p>
+                                <label>
+                                    <input name="original_activity_units"  value="kBq" type="radio" checked />
+                                    <span>kBq</span>
+                                </label>
+                                <label>
+                                    <input name="original_activity_units" value="MBq" type="radio" />
+                                    <span>MBq</span>
+                                </label>
+                            </p>
+                        </div>
+                        <div class="input-field col s4">
+                            <input type="text" id="activation_date" name="activation_date" class="datepicker">
+                            <label for="activation_date">Activation Date</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p> Encapsulation</p>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <p>
+                                <label>
+                                    <input name="encapsulation" value="alpha disk" type="radio" checked />
+                                    <span>Alpha disk</span>
+                                </label>
+                                <label>
+                                    <input name="encapsulation" value="beta disk" type="radio" />
+                                    <span>Beta disk</span>
+                                </label>
+                                <label>
+                                    <input name="encapsulation" value ="gamma disk" type="radio" />
+                                    <span>Gamma disk</span>
+                                </label>
+                                <label>
+                                    <input name="encapsulation" value = "alpha capsule " type="radio" checked />
+                                    <span>Alpha capsule</span>
+                                </label>
+                                <label>
+                                    <input name="encapsulation" value ="beta capsule " type="radio" />
+                                    <span>Beta capsule</span>
+                                </label>
+                                <label>
+                                    <input name="group3" value = "gamma capsule" type="radio" />
+                                    <span>Gamma capsule</span>
+                                </label>
+                            </p>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">{{actionType}}
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </button>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Clear
+                        <i class="fas fa-trash-restore-alt"></i>
+                    </button>
+
+
+
+                </form>
             </div>
         </div>
-
-            <div>
-                <p> Encapsulation</p>
-            </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <p>
-                    <label>
-                        <input name="group3" type="radio" checked />
-                        <span>Alpha disk</span>
-                    </label>
-                    <label>
-                        <input name="group3" type="radio" />
-                        <span>Beta disk</span>
-                    </label>
-                    <label>
-                        <input name="group3" type="radio" />
-                        <span>Gamma disk</span>
-                    </label>
-                    <label>
-                        <input name="group3" type="radio" checked />
-                        <span>Alpha capsule</span>
-                    </label>
-                    <label>
-                        <input name="group3" type="radio" />
-                        <span>Beta capsule</span>
-                    </label>
-                    <label>
-                        <input name="group3" type="radio" />
-                        <span>Gamma capsule</span>
-                    </label>
-                </p>
-            </div>
-        </div>
-        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-            <i class="fas fa-cloud-upload-alt"></i>
-        </button>
-        <button class="btn waves-effect waves-light" type="submit" name="action">Clear
-            <i class="fas fa-trash-restore-alt"></i>
-        </button>
-
-        
-    </form>
-    
+    </div>
 </div>
 {% endblock %}
