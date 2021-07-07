@@ -1,4 +1,55 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Delete Source</h1>
+<div class="row">
+    <div class="col s12 m8 offset-m2">
+        <div class="card blue lighten-3">
+            <div class="card-content white-text">
+                <span class="card-title">Delete Source</span>
+                <form>
+                <div class="row">
+                        <div class="input-field col s3">  
+                            <!--span>Serial Number: {{existing_source.serial_number}}</span-->
+                            <input id="serial_number" name="serial_number" type="text" value="{{existing_source.serial_number}}" disabled>>
+                            <label for="serial_number">Serial Number</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <span>Department:</span>
+                        </div>
+                        <div class="input-field col s3">
+                            <span>Laboratory: </span>
+                        </div>
+                        <div class="input-field col s3">
+                            <span>Location:</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <span>Isotope:</span>
+                        </div>
+                        <div class="input-field col s4">
+                            <span>Half Life: </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <span> Original Activity:</span>
+                        </div>
+                        
+                        <div class="input-field col s4">
+                            <span>Activation Date</span>
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"  class="btn waves-effect waves-light">
+                        <i class="fas fa-cloud-upload-alt"></i> Delete</a>
+                    
+                    <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"  class="btn waves-effect waves-light">
+                        <i class="fas fa-cloud-upload-alt"></i> Go Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

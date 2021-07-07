@@ -182,21 +182,35 @@ def add_source():
     
         sources = mongo.db.sources.find()
         return render_template("inventory.html", sources=sources)
+  
+    return render_template("addSource.html")
 
-    actionType = "Add"    
-    return render_template("addSource.html", actionType=actionType)
+@app.route("/del_source_conf/<source_serial_no>" , methods=["GET", "POST"])
+def del_source_conf(source_serial_no):
+    mongo.db.sources.delete_one({"serial_number": source_serial_no})
+    sources = mongo.db.sources.find()
+    return render_template("inventory.html", sources=sources)
 
-
-@app.route("/delete_source")
-def delete_source():
-    return render_template("deleteSource.html")
+#@app.route("/delete_source/<serial_number>")
+#def delete_source(serial_number):
+#    print("got here for delete")
+  
+#    if request.method == "POST":
+#        existing_source = mongo.db.users.find_one(
+#            {"serial_number": request.form.get("serial_number")})
+#        return render_template("deleteSources.html", source=existing_source)    
+        
+#    sources = mongo.db.sources.find()
+#    return render_template("inventory.html", sources=sources)
 
 
 @app.route("/update_source")
 def update_source():
-    return render_template("updatwSource.html")
+    return render_template("updateSource.html")
 
-
+@app.route("/delete_source")
+def delete_source():
+    return render_template("deleteSource.html")
 
 @app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def update_source_resp(source_serial_no):
@@ -204,9 +218,14 @@ def update_source_resp(source_serial_no):
     return render_template("updateSource.html")
 
 @app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
-def delete_source_resp(source_serial_no):
-    print(source_serial_no)
-    return render_template("deleteSource.html")
+def delete_source_resp(source_serial_no):     
+    # check if source serial number already exists in db
+    existing_source = mongo.db.sources.find_one(
+        {"serial_number": source_serial_no})    
+    
+    flash("You are about to delete", source_serial_no)    
+    return render_template("deleteSource.html", existing_source=existing_source)
+    
 
 
 @app.route("/logout")

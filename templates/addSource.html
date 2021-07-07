@@ -6,8 +6,8 @@
         <div class="card blue lighten-3">
             <div class="card-content white-text">
                 <span class="card-title">Add Source</span>
-                <form method="POST" action="{{ url_for('add_source') }}">
-                    <div class="row">
+                <form method="POST"action="{{ url_for('add_source')}}">
+                <div class="row">
                         <div class="input-field col s3">
                             <input id="serial_number" name="serial_number" type="text" class="validate">
                             <label for="serial_number">Serial Number</label>
@@ -104,15 +104,12 @@
                             </p>
                         </div>
                     </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">{{actionType}}
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Add
                         <i class="fas fa-cloud-upload-alt"></i>
                     </button>
                     <button class="btn waves-effect waves-light" type="submit" name="action">Clear
                         <i class="fas fa-trash-restore-alt"></i>
                     </button>
-
-
-
                 </form>
             </div>
         </div>
