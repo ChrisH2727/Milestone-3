@@ -5,43 +5,77 @@
     <div class="col s12 m8 offset-m2">
         <div class="card blue lighten-3">
             <div class="card-content white-text">
-                <span class="card-title">Add Source</span>
+                {% if mode == "update" %}    
+                    <span class="card-title">Update Source</span>
+                {% else %}
+                    <span class="card-title">Add Source</span>
+                {% endif %}
                 <form method="POST"action="{{ url_for('add_source')}}">
                 <div class="row">
                         <div class="input-field col s3">
-                            <input id="serial_number" name="serial_number" type="text" class="validate">
+                            <input id="serial_number" name="serial_number" type="text" class="validate"
+                            {% if mode == "update" %}  
+                                value ="{{existing_source.serial_number}}"
+                            {% endif %}>
                             <label for="serial_number">Serial Number</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="department" name="department" type="text" class="validate">
+                            <input id="department" name="department" type="text" class="validate"
+                            {% if mode == "update" %}  
+                                value ="{{existing_source.department}}"
+                            {% endif %}>
                             <label for="department">Department</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="laboratory" name="laboratory" type="text" class="validate">
+                            <input id="laboratory" name="laboratory" type="text" class="validate"
+                            {% if mode == "update" %}  
+                                value ="{{existing_source.laboratory}}"
+                            {% endif %}>
                             <label for="laboratory">Laboratory</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="location" name="location" type="text" class="validate">
+                            <input id="location" name="location" type="text" class="validate"
+                            {% if mode == "update" %}  
+                                value ="{{existing_source.location}}"
+                            {% endif %}>
                             <label for="location">Location</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s4">
-                            <input id="isotope" name="isotope" type="text" class="validate">
+                            <input id="isotope" name="isotope" type="text" class="validate"
+                            {% if mode == "update" %}  
+                                value ="{{existing_source.isotope}}"
+                            {% endif %}>
                             <label for="isotope">Isotope</label>
                         </div>
                         <div class="input-field col s4">
-                            <input id="half_life" name="half_life" type="text" class="validate">
+                            <input id="half_life" name="half_life" type="text" class="validate"
+                            {% if mode == "update" %}  
+                                value ="{{existing_source.half_life}}">
+                            {% endif %}>
                             <label for="half_life">Half Life</label>
                         </div>
+
                         <div class="input-field col s4">
                             <p>
                                 <label>
-                                    <input name="half_life_units" value = "years" type="radio" checked />
+                                    <input name="half_life_units" value = "years" type="radio" 
+                                    {% if mode == "update" %} 
+                                        {% if existing_source.half_life == "years" %}
+                                            checked
+                                        {% endif%}
+                                    {% endif %}
+                                    checked >
                                     <span>Years</span>
                                 </label>
                                 <label>
-                                    <input name="half_life_units" value = "days" type="radio" />
+                                    <input name="half_life_units" value = "days" type="radio" 
+                                    {% if mode == "update" %} 
+                                        {% if existing_source.half_life == "days" %}
+                                            checked
+                                        {% endif%}
+                                    {% endif %}>
                                     <span>Days</span>
                                 </label>
                             </p>
@@ -104,7 +138,12 @@
                             </p>
                         </div>
                     </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Add
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                    {% if mode == "update" %}    
+                        Update
+                    {% else %}
+                        Add
+                    {% endif %}
                         <i class="fas fa-cloud-upload-alt"></i>
                     </button>
                     <button class="btn waves-effect waves-light" type="submit" name="action">Clear

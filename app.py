@@ -159,14 +159,14 @@ def get_sources():
 def add_source():
     if request.method == "POST":
         # check if source serial number already exists in db
-        existing_source = mongo.db.users.find_one(
+        existing_source = mongo.db.sources.find_one(
             {"serial_number": request.form.get("serial_number")})
-        print("got here")
+
     
-        if existing_source:
-            print("exiting source")
-            flash("Source Serial Number In Use")
-            return redirect(url_for("addSsource"))
+        #if existing_source:
+        #    print("exiting source")
+        #    flash("Source Serial Number In Use")
+        #    return redirect(url_for("addSsource"))
 
         newSource = {
             "serial_number": request.form.get("serial_number"),
@@ -177,8 +177,26 @@ def add_source():
             "half_life": request.form.get("half_life"),
             "half_life_units": request.values.get("half_life_units")
         }
-        mongo.db.sources.insert_one(newSource)
-        flash("New source sucessfully added to inventory")
+
+        if existing_source:
+            existing_source_id = existing_source["_id"]
+            print("update")
+            
+            # Temporary code
+
+            newSourceTemp = {
+                "serial_number": request.form.get("serial_number"),
+                "department": request.form.get("department")
+            }
+            ############
+            print(newSourceTemp)
+            mongo.db.sources.find_one_and_update({"_id": ObjectId(existing_source_id)},
+            { '$set': newSourceTemp }, return_document = ReturnDocument.AFTER)
+            flash("Source sucessfully updated")
+        else:
+            print("new")
+            mongo.db.sources.insert_one(newSource)
+            flash("New source sucessfully added to inventory")
     
         sources = mongo.db.sources.find()
         return render_template("inventory.html", sources=sources)
@@ -212,10 +230,24 @@ def update_source():
 def delete_source():
     return render_template("deleteSource.html")
 
+
+
+
+
 @app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def update_source_resp(source_serial_no):
-    print(source_serial_no)
-    return render_template("updateSource.html")
+    existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
+    mode = "update"
+    return render_template("addSource.html", mode=mode, existing_source=existing_source )
+
+
+
+
+
+
+
+
+
 
 @app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def delete_source_resp(source_serial_no):     
