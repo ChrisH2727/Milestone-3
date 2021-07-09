@@ -85,9 +85,16 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/source_request")
+@app.route("/source_request", methods=["GET", "POST"])
 def source_request():
-    return render_template("sourceRequest.html")
+    print("arrived")
+    if request.method == "POST":
+        showsources = "true"
+        sources = mongo.db.sources.find()
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources)
+    showsources = "false"
+    sources = ""
+    return render_template("sourceRequest.html", sources=sources, showsources=showsources, )
 
 
 @app.route("/usage_report")
@@ -162,12 +169,6 @@ def add_source():
         existing_source = mongo.db.sources.find_one(
             {"serial_number": request.form.get("serial_number")})
 
-    
-        #if existing_source:
-        #    print("exiting source")
-        #    flash("Source Serial Number In Use")
-        #    return redirect(url_for("addSsource"))
-
         newSource = {
             "serial_number": request.form.get("serial_number"),
             "department": request.form.get("department"),
@@ -209,18 +210,6 @@ def del_source_conf(source_serial_no):
     sources = mongo.db.sources.find()
     return render_template("inventory.html", sources=sources)
 
-#@app.route("/delete_source/<serial_number>")
-#def delete_source(serial_number):
-#    print("got here for delete")
-  
-#    if request.method == "POST":
-#        existing_source = mongo.db.users.find_one(
-#            {"serial_number": request.form.get("serial_number")})
-#        return render_template("deleteSources.html", source=existing_source)    
-        
-#    sources = mongo.db.sources.find()
-#    return render_template("inventory.html", sources=sources)
-
 
 @app.route("/update_source")
 def update_source():
@@ -241,23 +230,14 @@ def update_source_resp(source_serial_no):
     return render_template("addSource.html", mode=mode, existing_source=existing_source )
 
 
-
-
-
-
-
-
-
-
 @app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def delete_source_resp(source_serial_no):     
     # check if source serial number already exists in db
-    existing_source = mongo.db.sources.find_one(
-        {"serial_number": source_serial_no})    
-    
+    existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})    
+    mode = "delete"
     flash("You are about to delete", source_serial_no)    
-    return render_template("deleteSource.html", existing_source=existing_source)
-    
+    #return render_template("deleteSource.html", existing_source=existing_source)
+    return render_template("addSource.html", mode=mode, existing_source=existing_source)
 
 
 @app.route("/logout")
@@ -273,17 +253,27 @@ def logout():
 @app.route("/userAccount", methods=["GET", "POST"])
 def userAccount():
 
-    existing_user = mongo.db.users.find_one(
-            {"first": session["user"]})
-    user_id = existing_user["_id"]
-    if request.method == "POST":
-        submit = {"password": request.form.get("password"),
-            "department": request.form.get("department").lower(),
-            "research_group": request.form.get("research_group").lower()}
+    # User already logged in so use session cookie as key to user details
+    existing_user = mongo.db.users.find_one({"first": session["user"]})
 
-        mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
-            { '$set': submit }, return_document = ReturnDocument.AFTER)
-        flash("Your account details have been successfully updated")
+    user_id = existing_user["_id"]
+    
+    if request.method == "POST":
+
+        if request.form.get("password") != request.form.get("repeat_password"):
+            flash("Please ensure that that your password entries match")
+        else:
+            submit = {"password": request.form.get("password"),
+                "department": request.form.get("department").lower(),
+                "research_group": request.form.get("research_group").lower()}
+
+            mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
+                { '$set': submit }, return_document = ReturnDocument.AFTER)
+        
+            flash("Your account details have been successfully updated")
+    
+    existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})    
+    
     return render_template("userAccount.html", user=existing_user)
 
 

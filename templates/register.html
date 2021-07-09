@@ -10,7 +10,7 @@
         <form method="POST" action="{{ url_for('register') }}">
           <div class="row">
             <div class="input-field col s6">
-              <input id="first_name" name ="first_name" type="text" class="validate">
+              <input id="first_name" name ="first_name" type="text" class="validate" pattern="^[a-zA-Z]+*.[a-zA-Z]+$">
               <label for="first_name">First Name</label>
             </div>
             <div class="input-field col s6">

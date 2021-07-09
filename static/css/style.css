@@ -1,11 +1,41 @@
+/********************General Styling To Augment Material*****************************/
+.input-field>label{
+  font-size: 1.6rem;
+}
+
+nav ul a{
+  font-size: 1.6rem;
+}
+
 .logo-shift{
     margin-left: 20px;
 }
+/****************************** Card Content***********************************/
+.card .card-title{
+  font-weight: 700;
+}
+
+/*********************************Nav Bar***********************************/
+nav .nav-title {
+  padding-top: 60px;
+}
+
+/*********************************Nav Bar***********************************/
+.fab, .far {
+  font-size: 40px;
+}
+
+
+
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+  padding-top: 20px;
+}
+
 /*********************************Isotope Table***********************************/
 .tbl_btn_wd{
   min-width: 76px;
 }
-/*********************************Isotope Table***********************************/
+
 
 
   .tg .tg-c3ow {
