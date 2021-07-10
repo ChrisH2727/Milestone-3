@@ -2,9 +2,23 @@
 {% block content %}
 
 <!-- Uses code snip from Code Institute Mini Project | Putting It All Together  Searching  Search Within The Database-->
-<h3 class="light-blue-text text-darken-4 center-align">Search All Sources</h3>
+
+
+{% if mode == "delete" %}
+    <h3 class="light-blue-text text-darken-4 center-align">Search All Sources For Deletion</h3>
+{% elif mode== "update" %}
+    <h3 class="light-blue-text text-darken-4 center-align">Search All Sources To Update</h3>
+{% else %}
+    <h3 class="light-blue-text text-darken-4 center-align">Search All Sources To Use</h3>
+{% endif %}
         <div class="row card-panel grey lighten-5">
-            <form action="{{ url_for('source_request') }}" method="post" class="col s12">
+            {% if mode == "delete" %}
+                <form action="{{ url_for('delete_source') }}" method="post" class="col s12">
+            {% elif mode== "update" %}
+                <form action="{{ url_for('update_source') }}" method="post" class="col s12">
+            {% else %}
+                <form action="{{ url_for('source_request') }}" method="post" class="col s12">
+            {% endif %}
                 <div class="row valign-wrapper center-align">
                     <div class="input-field col s12 m8">
                         <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
@@ -41,18 +55,48 @@
                     <td class="tg-ul38">Half life</td>
                     <td class="tg-ul38">Ativity Now</td>
                     <td class="tg-ul38">Type</td>
+                    {% if mode == "update" %}
+                        <td class="tg-ul38">Update</td>
+                    {% elif mode == "delete" %}
+                        <td class="tg-ul38">Delete</td>
+                    {% else %}
+                        <td class="tg-ul38">Delete</td>
+                    {% endif %}    
                     </tr>
         
                     {% for source in sources %} 
-                        <tr>
+                    <tr>
                         <td class="tg-hmp3">{{ source.serial_number }}</td>
                         <td class="tg-hmp3">{{ source.isotope }}</td>
                         <td class="tg-hmp3 hide-on-small-only">{{ source.original_activity }} {{source.original_activity_units}}</td>
                         <td class="tg-hmp3 hide-on-small-only">{{ source.activation_date }}</td>
                         <td class="tg-hmp3">{{ source.half_life }} {{source.half_life_units}}</td>
                         <td class="tg-hmp3">{{ source.activity_now }} {{source.activity_now_units}}</td>
-                        <td class="tg-hmp3">{{ source.type }}</td>                        
-                        </tr>
+                        <td class="tg-hmp3">{{ source.type }}</td> 
+                        {% if mode == "update" %}
+                            <td class="tg-hmp3">
+                                <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}" 
+                                class ="btn-small  teal lighten-2" tbl_btn_wd>Update                      
+                                </a>
+                            </td>
+                        {% elif mode == "delete" %}
+                            <td class="tg-hmp3">
+                                <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}" 
+                                class ="btn-small  teal lighten-2" tbl_btn_wd>Delete                   
+                                </a>
+                            </td>
+                        {% else %}
+                            <td class="tg-hmp3">
+                                <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}" 
+                                class ="btn-small  teal lighten-2" tbl_btn_wd>Request                   
+                                </a>
+                            </td>              
+                        {% endif %}
+
+
+
+
+                    </tr>
                     {% endfor %}
                 </tbody>           
             </table>

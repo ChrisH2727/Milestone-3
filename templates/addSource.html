@@ -7,14 +7,15 @@
             <div class="card-content white-text">
                 {% if mode == "update" %}    
                     <span class="card-title">Update Source</span>
+                    <form>
                 {% elif mode =="delete" %}
                     <span class="card-title">Delete Source</span>
+                    <form>
+                {% elif mode =="request" %}
+                    <span class="card-title">Request Source</span>
+                    <form>        
                 {% else %}
                     <span class="card-title">Add Source</span>
-                {% endif %}
-                {% if mode == "delete" %}
-                    <form>
-                {% else %}
                     <form method="POST"action="{{ url_for('add_source')}}">  
                 {% endif %}
                     <div class="row">
@@ -151,6 +152,9 @@
                     {% elif mode == "delete" %}
                         <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"  class="btn waves-effect waves-light">  
                         Delete
+                    {% elif mode == "Request" %}
+                        <a href="{{ url_for('req_source_conf', source_serial_no=existing_source.serial_number) }}"  class="btn waves-effect waves-light">  
+                        Request
                     {% else %}
                         <button class="btn-large deep-orange accent-3" type="submit" name="action">
                         Add <i class="fas fa-cloud-upload-alt"></i>

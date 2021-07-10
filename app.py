@@ -19,13 +19,9 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-
 mongo = PyMongo(app)
 
-
-
 @app.route("/")
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -87,14 +83,18 @@ def register():
 
 @app.route("/source_request", methods=["GET", "POST"])
 def source_request():
-    print("arrived")
-    if request.method == "POST":
+    query = request.form.get("query")
+    mode = "request"
+    if query:
+        print(query)
+        sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
+        print(sources)
         showsources = "true"
-        sources = mongo.db.sources.find()
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources)
-    showsources = "false"
-    sources = ""
-    return render_template("sourceRequest.html", sources=sources, showsources=showsources, )
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+    else:
+        showsources = "false"
+        sources = ""
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
 @app.route("/usage_report")
@@ -182,20 +182,16 @@ def add_source():
         if existing_source:
             existing_source_id = existing_source["_id"]
             print("update")
-            
-            # Temporary code
 
             newSourceTemp = {
                 "serial_number": request.form.get("serial_number"),
                 "department": request.form.get("department")
             }
-            ############
-            print(newSourceTemp)
+
             mongo.db.sources.find_one_and_update({"_id": ObjectId(existing_source_id)},
             { '$set': newSourceTemp }, return_document = ReturnDocument.AFTER)
             flash("Source sucessfully updated")
         else:
-            print("new")
             mongo.db.sources.insert_one(newSource)
             flash("New source sucessfully added to inventory")
     
@@ -204,6 +200,12 @@ def add_source():
   
     return render_template("addSource.html")
 
+@app.route("/req_source_conf/<source_serial_no>" , methods=["GET", "POST"])
+def req_source_conf(source_serial_no):
+    source = mongo.db.sources.find_one({"serial_number": source_serial_no})
+    return render_template("approveRequest.html", source=source)
+
+
 @app.route("/del_source_conf/<source_serial_no>" , methods=["GET", "POST"])
 def del_source_conf(source_serial_no):
     mongo.db.sources.delete_one({"serial_number": source_serial_no})
@@ -211,14 +213,38 @@ def del_source_conf(source_serial_no):
     return render_template("inventory.html", sources=sources)
 
 
-@app.route("/update_source")
+
+@app.route("/update_source", methods=["GET", "POST"])
 def update_source():
-    return render_template("updateSource.html")
+    query = request.form.get("query")
+    mode = "update"
+    if query:
+        print(query)
+        #sources = mongo.db.sources.find()
+        sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
+        showsources = "true"
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+    else:
+        showsources = "false"
+        sources = ""
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
-@app.route("/delete_source")
+
+
+@app.route("/delete_source", methods=["GET", "POST"])
 def delete_source():
-    return render_template("deleteSource.html")
-
+    query = request.form.get("query")
+    mode = "delete"
+    if query:
+        print(query)
+        #sources = mongo.db.sources.find()
+        sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
+        showsources = "true"
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+    else:
+        showsources = "false"
+        sources = ""
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
 
