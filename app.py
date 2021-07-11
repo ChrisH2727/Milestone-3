@@ -81,20 +81,6 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/source_request", methods=["GET", "POST"])
-def source_request():
-    query = request.form.get("query")
-    mode = "request"
-    if query:
-        print(query)
-        sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
-        print(sources)
-        showsources = "true"
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
-    else:
-        showsources = "false"
-        sources = ""
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
 @app.route("/usage_report")
@@ -113,7 +99,10 @@ def usage_report():
 
 @app.route("/approve_request")
 def approve_request():
-    return render_template("approveRequest.html")
+    existing_sources = mongo.db.sources.collection.find({ "$and":[
+            {"sources":{"$requested": "true"}} , {"sources":{"$approved": "no"}}]})
+            
+    return render_template("approveRequest.html", sources=existing_sources)
 
 
 @app.route("/get_userb/<user_id>", methods=["GET", "POST"])
@@ -200,10 +189,42 @@ def add_source():
   
     return render_template("addSource.html")
 
+
+#
+# Action on selecting the SOURCE REQUEST option
+#
+@app.route("/source_request", methods=["GET", "POST"])
+def source_request():
+    query = request.form.get("query")
+    mode = "request"
+    if query:
+        sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
+        showsources = "true"
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+    else:
+        showsources = "false"
+        sources = ""
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+
+
+
+#
+# Action on clicking the REQUEST button on the SOURRCE REQUEST Page 
+#
 @app.route("/req_source_conf/<source_serial_no>" , methods=["GET", "POST"])
 def req_source_conf(source_serial_no):
     source = mongo.db.sources.find_one({"serial_number": source_serial_no})
-    return render_template("approveRequest.html", source=source)
+    
+    # Update the source record
+    submit = {"requested": "true", "user": session["user"]} 
+    mongo.db.sources.update({"serial_number": source_serial_no},{"$set": submit})
+    
+    flash("Source has been requested - please wait for your request to be approved")
+
+    showsources = "false"
+    sources = ""
+    mode ="request"
+    return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
 @app.route("/del_source_conf/<source_serial_no>" , methods=["GET", "POST"])
@@ -219,8 +240,6 @@ def update_source():
     query = request.form.get("query")
     mode = "update"
     if query:
-        print(query)
-        #sources = mongo.db.sources.find()
         sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
         showsources = "true"
         return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
@@ -236,8 +255,6 @@ def delete_source():
     query = request.form.get("query")
     mode = "delete"
     if query:
-        print(query)
-        #sources = mongo.db.sources.find()
         sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
         showsources = "true"
         return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
@@ -262,7 +279,6 @@ def delete_source_resp(source_serial_no):
     existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})    
     mode = "delete"
     flash("You are about to delete", source_serial_no)    
-    #return render_template("deleteSource.html", existing_source=existing_source)
     return render_template("addSource.html", mode=mode, existing_source=existing_source)
 
 

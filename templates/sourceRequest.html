@@ -38,7 +38,7 @@
         </div>
 
 
-    {% if showsources == "true" %}
+    {% if showsources == "true" and sources|length >0 %}
         <div class="tg-wrap">
             <table class="tg" id="tg-6QsDT">
                 <thead>
@@ -60,11 +60,11 @@
                     {% elif mode == "delete" %}
                         <td class="tg-ul38">Delete</td>
                     {% else %}
-                        <td class="tg-ul38">Delete</td>
+                        <td class="tg-ul38">Request</td>
                     {% endif %}    
                     </tr>
         
-                    {% for source in sources %} 
+                    {% for source in sources %}
                     <tr>
                         <td class="tg-hmp3">{{ source.serial_number }}</td>
                         <td class="tg-hmp3">{{ source.isotope }}</td>
@@ -86,16 +86,20 @@
                                 </a>
                             </td>
                         {% else %}
-                            <td class="tg-hmp3">
-                                <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}" 
-                                class ="btn-small  teal lighten-2" tbl_btn_wd>Request                   
-                                </a>
-                            </td>              
+                            {% if source.requested == "false" %}
+                                <td class="tg-hmp3">
+                                    <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}" 
+                                    class ="btn-small  teal lighten-2" tbl_btn_wd>Request                   
+                                    </a>
+                                </td>              
+                            {% else %}
+                                <td class="tg-hmp3">
+                                    <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}" 
+                                    class ="btn-small  deep-orange accent-3" tbl_btn_wd>Not Available                   
+                                    </a>
+                                </td> 
+                            {% endif %}
                         {% endif %}
-
-
-
-
                     </tr>
                     {% endfor %}
                 </tbody>           

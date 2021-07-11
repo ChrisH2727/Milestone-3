@@ -1,5 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Approve request now</h1>
-<p>{{source.serial_number}}</p>
+
+<h3 class="light-blue-text text-darken-4 center-align">Search All Sources To Use</h3>
+{% if sources|length >0 %}
+    <div class="tg-wrap">
+        <table class="tg" id="tg-6QsDT">
+            <thead>
+                <tr>
+                <th class="tg-c3ow" colspan="16">Radio Isotope Inventory</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr>
+                <td class="tg-ul38">Serial No.</td>
+                <td class="tg-ul38">Isotope</td>
+                <td class="tg-ul38">Type</td>
+                <td class="tg-ul38">User</td>
+                <td class="tg-ul38">Approve</td>  
+                </tr>
+
+                {% for source in sources %}
+                    <tr>
+                    <td class="tg-hmp3">{{ source.serial_number }}</td>
+                    <td class="tg-hmp3">{{ source.isotope }}</td>
+                    <td class="tg-hmp3">{{ source.type }}</td>
+                    <td class="tg-hmp3">{{ source.user }}</td>
+                    <td class="tg-hmp3">
+                        <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}" 
+                        class ="btn-small  teal lighten-2" tbl_btn_wd>Update                      
+                        </a>
+                    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>           
+        </table>
+    </div>
+{% endif %} 
 {% endblock %}
