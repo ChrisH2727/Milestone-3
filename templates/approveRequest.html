@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="light-blue-text text-darken-4 center-align">Search All Sources To Use</h3>
-{% if sources|length >0 %}
+<h3 class="light-blue-text text-darken-4 center-align">Approve Source Request</h3>
+
     <div class="tg-wrap">
         <table class="tg" id="tg-6QsDT">
             <thead>
@@ -26,8 +26,8 @@
                     <td class="tg-hmp3">{{ source.type }}</td>
                     <td class="tg-hmp3">{{ source.user }}</td>
                     <td class="tg-hmp3">
-                        <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}" 
-                        class ="btn-small  teal lighten-2" tbl_btn_wd>Update                      
+                        <a href="{{ url_for('approve_request_resp', source_serial_no=source.serial_number) }}" 
+                        class ="btn-small  teal lighten-2" tbl_btn_wd>Approve                      
                         </a>
                     </td>
                     </tr>
@@ -35,5 +35,5 @@
             </tbody>           
         </table>
     </div>
-{% endif %} 
+
 {% endblock %}

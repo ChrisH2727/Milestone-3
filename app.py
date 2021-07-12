@@ -97,12 +97,28 @@ def usage_report():
 
 
 
-@app.route("/approve_request")
+@app.route("/approve_request", methods=["GET", "POST"])
 def approve_request():
-    existing_sources = mongo.db.sources.collection.find({ "$and":[
-            {"sources":{"$requested": "true"}} , {"sources":{"$approved": "no"}}]})
-            
-    return render_template("approveRequest.html", sources=existing_sources)
+    
+    existing_sources = mongo.db.sources.find({"$and" : [
+            {"requested": "true"} , {"approved": "no"}]})
+    
+    testReturn = list(existing_sources)
+    if len(testReturn) == 0:
+        showtable = "false"
+        flash("You have no further source requests to approve")
+    return render_template("approveRequest.html", sources=existing_sources, showtable=showtable)
+
+
+@app.route("/approve_request_resp<source_serial_no>", methods=["GET", "POST"])
+def approve_request_resp(source_serial_no):
+    
+    submit = {"approved": "yes"}
+    mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
+        { '$set': submit }, return_document = ReturnDocument.AFTER)
+    flash("Source Request Appoved")
+
+    return approve_request()
 
 
 @app.route("/get_userb/<user_id>", methods=["GET", "POST"])
