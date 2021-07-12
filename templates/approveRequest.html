@@ -1,39 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="light-blue-text text-darken-4 center-align">Approve Source Request</h3>
-
-    <div class="tg-wrap">
-        <table class="tg" id="tg-6QsDT">
-            <thead>
-                <tr>
-                <th class="tg-c3ow" colspan="16">Radio Isotope Inventory</th>
-                </tr>
-            </thead>
-            <tbody >
-                <tr>
-                <td class="tg-ul38">Serial No.</td>
-                <td class="tg-ul38">Isotope</td>
-                <td class="tg-ul38">Type</td>
-                <td class="tg-ul38">User</td>
-                <td class="tg-ul38">Approve</td>  
-                </tr>
-
-                {% for source in sources %}
+    <h3 class="light-blue-text text-darken-4 center-align">Approve Source Request</h3>
+    <!--Only display the table of requests and returns if there is something to display-->
+    {% if showtable == "true" %}
+        <div class="tg-wrap">
+            <table class="tg" id="tg-6QsDT">
+                <thead>
                     <tr>
-                    <td class="tg-hmp3">{{ source.serial_number }}</td>
-                    <td class="tg-hmp3">{{ source.isotope }}</td>
-                    <td class="tg-hmp3">{{ source.type }}</td>
-                    <td class="tg-hmp3">{{ source.user }}</td>
-                    <td class="tg-hmp3">
-                        <a href="{{ url_for('approve_request_resp', source_serial_no=source.serial_number) }}" 
-                        class ="btn-small  teal lighten-2" tbl_btn_wd>Approve                      
-                        </a>
-                    </td>
+                    <th class="tg-c3ow" colspan="16">Radio Isotope Inventory</th>
                     </tr>
-                {% endfor %}
-            </tbody>           
-        </table>
-    </div>
+                </thead>
+                <tbody >
+                    <tr>
+                    <td class="tg-ul38">Serial No.</td>
+                    <td class="tg-ul38">Isotope</td>
+                    <td class="tg-ul38">Type</td>
+                    <td class="tg-ul38">User</td>
+                    <td class="tg-ul38">Approve/Returned</td>  
+                    </tr>
 
+                    {% for source in sources %}
+                        <tr>
+                        <td class="tg-hmp3">{{ source.serial_number }}</td>
+                        <td class="tg-hmp3">{{ source.isotope }}</td>
+                        <td class="tg-hmp3">{{ source.type }}</td>
+                        <td class="tg-hmp3">{{ source.user }}</td>
+                        <td class="tg-hmp3">
+                            {% if source.approved == "no" and source.requested == "true" %}    
+                                <a href="{{ url_for('approve_request_resp', source_serial_no=source.serial_number) }}" 
+                                class ="btn-small  teal lighten-2" tbl_btn_wd>Approve                      
+                                </a>
+                            {% endif %}
+                            {% if source.approved == "yes" and source.requested == "true" %}  
+                                <a href="{{ url_for('return_source_resp', source_serial_no=source.serial_number) }}" 
+                                class ="btn-small  deep-orange accent-3" tbl_btn_wd>Return                      
+                                </a>
+                            {% endif %}
+                        </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>           
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}

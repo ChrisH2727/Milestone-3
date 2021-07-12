@@ -12,6 +12,7 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -99,25 +100,72 @@ def usage_report():
 
 @app.route("/approve_request", methods=["GET", "POST"])
 def approve_request():
-    
-    existing_sources = mongo.db.sources.find({"$and" : [
-            {"requested": "true"} , {"approved": "no"}]})
-    
-    testReturn = list(existing_sources)
-    if len(testReturn) == 0:
+
+    # Check for any requested but not approved sources 
+    if len(list( mongo.db.sources.find({"requested": "true"}))) == 0:
         showtable = "false"
         flash("You have no further source requests to approve")
+    else:
+        showtable = "true"
+
+    existing_sources = mongo.db.sources.find({"requested": "true"})
+    
     return render_template("approveRequest.html", sources=existing_sources, showtable=showtable)
 
 
 @app.route("/approve_request_resp<source_serial_no>", methods=["GET", "POST"])
 def approve_request_resp(source_serial_no):
+    #
+    # Called when an admin user approves use of a source from the inventory
+    #
     
-    submit = {"approved": "yes"}
+    # Get mongodb record for source to be loaned
+    existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
+    
+    # Create a source loan history entry document in mongodb
+    outDate = datetime.today().strftime('%d-%m-%y')
+    sourceLoan = {
+            "serial_number": source_serial_no,
+            "data_out": outDate,
+            "date_in": "",
+            "user": existing_source["user"],
+            "laboratory": existing_source["laboratory"]
+        }
+    mongo.db.source_history.insert_one(sourceLoan)
+    
+    # Update the source document in mongodb
+    submit = {"approved": "yes",
+                "last_used":outDate}
     mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
-        { '$set': submit }, return_document = ReturnDocument.AFTER)
+            {'$set': submit}, return_document=ReturnDocument.AFTER)
+    
     flash("Source Request Appoved")
 
+    return approve_request()
+
+
+@app.route("/return_source_resp<source_serial_no>", methods=["GET", "POST"])
+def return_source_resp(source_serial_no):
+    #
+    # Called when an admin user returns a source to the inventory
+    #  
+    inDate = datetime.today().strftime('%d-%m-%y')
+
+    # Update the  source loan history document in mongodb with return date
+    submit = {"date_in" : inDate}
+    mongo.db.source_history.find_one_and_update({"serial_number": source_serial_no},
+            { '$set': submit }, return_document = ReturnDocument.AFTER)
+
+    # Update the  source document in mongodb with return date and removal approval status
+    submit = {"last_used" : inDate,
+                "approved" : "no",
+                "requested" : "false",
+                "user" : ""
+                }
+    mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
+            { '$set': submit }, return_document = ReturnDocument.AFTER)
+    
+    flash("Source Returned To Inventory")
     return approve_request()
 
 
@@ -332,7 +380,11 @@ def userAccount():
     
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})    
     
-    return render_template("userAccount.html", user=existing_user)
+    # Get list of sources held by the user
+    userfirst = existing_user["first"]
+    loanSources = mongo.db.sources.find({"user": userfirst})
+
+    return render_template("userAccount.html", user=existing_user, sources=loanSources)
 
 
 

@@ -57,4 +57,41 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col s12 m8 offset-m2">
+        <div class="card blue lighten-3">
+            <div class="card-content black-text">
+                <span class="card-title">Sources on loan</span>
+                <div class="row">
+                    <table class="tg" id="tg-6QsDT">
+                        <thead>
+                            <tr>
+                            <th class="tg-c3ow" colspan="16">Radio Isotope Inventory</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr>
+                            <td class="tg-ul38">Serial No.</td>
+                            <td class="tg-ul38">Isotope</td>
+                            <td class="tg-ul38">Type</td>
+                            <td class="tg-ul38">Activity</td>
+                            <td class="tg-ul38">On Loan Since</td>  
+                            </tr>
+                            {% for source in sources %}
+                                <tr>
+                                <td class="tg-hmp3">{{ source.serial_number }}</td>
+                                <td class="tg-hmp3">{{ source.isotope }}</td>
+                                <td class="tg-hmp3">{{ source.type }}</td>
+                                <td class="tg-hmp3">{{ source.activity }}</td>
+                                <td class="tg-hmp3">{{ source.last_used }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
