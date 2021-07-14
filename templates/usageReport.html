@@ -1,8 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Usage Report</h1>
-<h1>{{name}}</h1>
+<div class="row">
+    <div class="col s12 m12 l12">
+        <div class="card blue lighten-3">
+            <div class="card-content black-text">
+                <span class="card-title">Service Report</span>
+                <div class="row " >
+                    <div class=" col s12 m12 l4">
+                        <img src={{ url }} alt="Chart" width="420" > 
+                    </div>
+                    <div class="col s12 m12 l4" >
+                        <img src={{ url }} alt="Chart" width="420" > 
+                    </div>
+                    <div class="col s12 m12 l4">
+                        <img src={{ url }} alt="Chart" width="420"> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <img src={{ url }} alt="Chart" height="400" width="400">
+<h1>{{name}}</h1>
 
 {% endblock %}

@@ -26,6 +26,13 @@ mongo = PyMongo(app)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    #
+    # Function called when the user first logs
+    #
+
+    # clear any exiting flash messages
+    session.pop('_flashes', None)
+
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
             {"first": request.form.get("first_name").lower(),
@@ -38,7 +45,6 @@ def login():
             session["role"] = existing_user["role"]
             # session cookie for users first name
             session["user"] = existing_user["first"]
-            flash("user exists")
             return redirect(url_for("userAccount"))
     
         else:
@@ -51,6 +57,9 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    # clear any exiting flash messages
+    session.pop('_flashes', None)
+
     if request.method == "POST":
         # check if first_name already exists in db
         existing_user = mongo.db.users.find_one(
@@ -82,8 +91,6 @@ def register():
     return render_template("register.html")
 
 
-
-
 @app.route("/usage_report")
 def usage_report():
     source_types = mongo.db.sources.find().distinct("isotope")
@@ -100,7 +107,9 @@ def usage_report():
 
 @app.route("/approve_request", methods=["GET", "POST"])
 def approve_request():
-
+    # clear any exiting flash messages
+    session.pop('_flashes', None)
+    
     # Check for any requested but not approved sources 
     if len(list( mongo.db.sources.find({"requested": "true"}))) == 0:
         showtable = "false"
@@ -109,7 +118,6 @@ def approve_request():
         showtable = "true"
 
     existing_sources = mongo.db.sources.find({"requested": "true"})
-    
     return render_template("approveRequest.html", sources=existing_sources, showtable=showtable)
 
 
@@ -118,6 +126,9 @@ def approve_request_resp(source_serial_no):
     #
     # Called when an admin user approves use of a source from the inventory
     #
+    
+    # clear any exiting flash messages
+    session.pop('_flashes', None)
     
     # Get mongodb record for source to be loaned
     existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
@@ -149,6 +160,10 @@ def return_source_resp(source_serial_no):
     #
     # Called when an admin user returns a source to the inventory
     #  
+    
+    # clear any exiting flash messages
+    session.pop('_flashes', None)
+    
     inDate = datetime.today().strftime('%d-%m-%y')
 
     # Update the  source loan history document in mongodb with return date
@@ -217,6 +232,9 @@ def get_sources():
 
 @app.route("/add_source", methods=["GET", "POST"])
 def add_source():
+    #
+    # Called when an admin user adds a new source to the source inventory
+    #
     if request.method == "POST":
         # check if source serial number already exists in db
         existing_source = mongo.db.sources.find_one(
@@ -234,7 +252,6 @@ def add_source():
 
         if existing_source:
             existing_source_id = existing_source["_id"]
-            print("update")
 
             newSourceTemp = {
                 "serial_number": request.form.get("serial_number"),
@@ -254,11 +271,12 @@ def add_source():
     return render_template("addSource.html")
 
 
-#
-# Action on selecting the SOURCE REQUEST option
-#
+
 @app.route("/source_request", methods=["GET", "POST"])
 def source_request():
+    #
+    # Action on selecting the SOURCE REQUEST option
+    #
     query = request.form.get("query")
     mode = "request"
     if query:
@@ -272,12 +290,13 @@ def source_request():
 
 
 
-#
-# Action on clicking the REQUEST button on the SOURRCE REQUEST Page 
-#
+
 @app.route("/req_source_conf/<source_serial_no>" , methods=["GET", "POST"])
 def req_source_conf(source_serial_no):
-    source = mongo.db.sources.find_one({"serial_number": source_serial_no})
+    #
+    # Action on clicking the REQUEST button on the SOURRCE REQUEST Page 
+    #
+    source=mongo.db.sources.find_one({"serial_number": source_serial_no})
     
     # Update the source record
     submit = {"requested": "true", "user": session["user"]} 

@@ -1,96 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Approve , Delete, Manage user access rights</h1>
-<div class="tg-wrap">
-    <form method="POST" action="{{ url_for('get_user') }}">
-        <table class="tg" id="tg-6QsDT">
-            <thead>
-                <tr>
-                    <th class="tg-c3ow" colspan="16">User Access Management</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="tg-ul38">First name</td>
-                    <td class="tg-ul38">Last name</td>
-                    <td class="tg-ul38">Email</td>
-                    <td class="tg-ul38">Department</td>
-                    <td class="tg-ul38">Research group</td>
-                    <td class="tg-ul38">Approved</td>
-                    <td class="tg-ul38">Role</td>
-                </tr>
-                {% set cycle = 'odd' %}
-                {% for user in users %}
-                    {% if cycle == 'odd' %}
-                        <tr>
-                            <td class="tg-hmp3">{{ user.first }}</td>
-                            <td class="tg-hmp3">{{ user.last }}</td>
-                            <td class="tg-hmp3">{{ user.email }}</td>
-                            <td class="tg-hmp3">{{ user.department }}</td>
-                            <td class="tg-hmp3">{{ user.research_group }}</td>
-                            <td class="tg-hmp3">
-                            <!-- Switch -->
-                                <a href="{{ url_for('get_userb', user_id=user._id) }}" 
-                                    {% if user.approved == 'True' %}
-                                        class ="btn-small  teal lighten-2" tbl_btn_wd>Approve
+<div class="row">
+<div class="col s12 m10 offset-m1">
+    <div class="card blue lighten-3">
+        <div class="card-content black-text">
+            <div class="tg-wrap">
+                <form method="POST" action="{{ url_for('get_user') }}">
+                    <table class="tg" id="tg-6QsDT">
+                        <thead>
+                            <tr>
+                                <th class="tg-c3ow" colspan="16">User Access Management</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="tg-ul38">Name</td>
+                                <td class="tg-ul38 hide-on-small-only">Email</td>
+                                <td class="tg-ul38 hide-on-small-only ">Department</td>
+                                <td class="tg-ul38 hide-on-small-only">Research group</td>
+                                <td class="tg-ul38">Approved</td>
+                                <td class="tg-ul38">Role</td>
+                            </tr>
+                            {% for user in users %}
+                                <tr>
+                                <td class="tg-hmp3 capitalize">{{ user.first }} {{ user.last }}</td>
+                                <td class="tg-hmp3 hide-on-small-only">{{ user.email }}</td>
+                                <td class="tg-hmp3 hide-on-small-only ">{{ user.department }}</td>
+                                <td class="tg-hmp3 hide-on-small-only ">{{ user.research_group }}</td>
+                                <td class="tg-hmp3">
+                                    <a href="{{ url_for('get_userb', user_id=user._id) }}" 
+                                    {% if user.approved=='True' %} 
+                                        class="btn-small  teal lighten-2" tbl_btn_wd>Approve
                                     {% else %}
                                         class ="btn-small deep-orange darken-1" tbl_btn_wd>Approved
                                     {% endif %}
-                                </a>
-                            </td>
-                            <td class="tg-hmp3">
-                            <!-- Switch -->
-                                <a href="{{ url_for('get_userc', user_id=user._id) }}" 
-                                    {% if user.role == 'admin' %}
-                                        class ="btn-small  teal lighten-2" tbl_btn_wd>Admin
+                                    </a>
+                                </td>
+                                <td class="tg-hmp3">
+                                    <a href="{{ url_for('get_userc', user_id=user._id) }}" 
+                                    {% if user.role=='admin' %}
+                                        class="btn-small  teal lighten-2" tbl_btn_wd>Admin
                                     {% else %}
                                         class ="btn-small deep-orange darken-1" tbl_btn_wd>User
                                     {% endif %}
-                                </a>
-                            </td>
-                        </tr>
-                        {% set cycle = 'even' %}
-                    {% else %}
-                        <tr>
-                            <td class="tg-0lax">{{ user.first }}</td>
-                            <td class="tg-0lax">{{ user.last }}</td>
-                            <td class="tg-0lax">{{ user.email }}</td>
-                            <td class="tg-0lax">{{ user.department }}</td>
-                            <td class="tg-0lax">{{ user.research_group }}</td>
-                            <td class="tg-hmp3">
-                            <!-- Switch -->
-                                <div class="switch">
-                                    <label>
-                                        No
-                                        <input type="checkbox" name="userApprove" id="userApprove" value="{{user._id}}"
-                                        {% if user.approved == 'True' %}
-                                            checked = "true"
-                                        {% endif %}>
-                                        <span class="lever"></span>
-                                        Yes
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="tg-hmp3">
-                            <!-- Switch -->
-                                <div class="switch">
-                                    <label>
-                                        User
-                                        <input type="checkbox" name="userRole" id="userRole" value="{{user._id}}"
-                                        {% if user.role == 'admin' %}
-                                            checked = "true"
-                                        {% endif %}>
-                                        <span class="lever"></span>
-                                        Admin
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        {% set cycle = 'odd' %}
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-    </form>
+                                    </a>
+                                </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 {% endblock %}

@@ -3,42 +3,51 @@
 
 <!-- Uses code snip from Code Institute Mini Project | Putting It All Together  Searching  Search Within The Database-->
 
-
+<div class="col s12 m10 offset-m1">
+    <div class="card blue lighten-3">
+        <div class="card-content black-text">
 {% if mode == "delete" %}
-    <h3 class="light-blue-text text-darken-4 center-align">Search All Sources For Deletion</h3>
+    <span class="card-title">Search All Sources For Deletion</span>
 {% elif mode== "update" %}
-    <h3 class="light-blue-text text-darken-4 center-align">Search All Sources To Update</h3>
+    <span class="card-title">Search All Sources To Update</span>
 {% else %}
-    <h3 class="light-blue-text text-darken-4 center-align">Search All Sources To Use</h3>
+    <span class="card-title">Search All Sources To Use</span>
 {% endif %}
-        <div class="row card-panel grey lighten-5">
-            {% if mode == "delete" %}
-                <form action="{{ url_for('delete_source') }}" method="post" class="col s12">
-            {% elif mode== "update" %}
-                <form action="{{ url_for('update_source') }}" method="post" class="col s12">
-            {% else %}
-                <form action="{{ url_for('source_request') }}" method="post" class="col s12">
-            {% endif %}
-                <div class="row valign-wrapper center-align">
-                    <div class="input-field col s12 m8">
-                        <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
-                        <input type="text" name="query" id="query" minlength="3" class="validate" required>
-                        <label for="query">Search Source</label>
+            <div class="row card-panel grey lighten-5">
+                {% if mode == "delete" %}
+                    <form action="{{ url_for('delete_source') }}" method="post" class="col s12">
+                {% elif mode== "update" %}
+                    <form action="{{ url_for('update_source') }}" method="post" class="col s12">
+                {% else %}
+                    <form action="{{ url_for('source_request') }}" method="post" class="col s12">
+                {% endif %}
+                    <!--div class="row valign-wrapper center-align"-->
+                    <div class="row center-align">
+                        <div class="input-field col s12 m8 l8">
+                            <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
+                            <input type="text" name="query" id="query" minlength="3" class="validate" required>
+                            <label for="query">Search Source</label>
+                        </div>
+                        <div class="col s6 m2 l2">
+                            <button type="submit" class="btn-large deep-orange accent-3">
+                                <i class="fas fa-search left"></i> Search
+                            </button>
+                        </div>
+                        <div class="col s6 m2 l2">
+                            <a href="{{ url_for('userAccount') }}" class="btn-large deep-green accent-3">Reset</a>
+                        </div>
                     </div>
-                    <div class="col s12 m4">
-                        <button type="submit" class="btn-large deep-orange accent-3">
-                            <i class="fas fa-search left"></i> Search
-                        </button>
-
-                        <a href="{{ url_for('userAccount') }}" class="btn-large deep-green accent-3">Reset</a>
-                        
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-
+    </div>
+</div>
 
     {% if showsources == "true" and sources|length >0 %}
+    <div class="row">
+    <div class="col s12 m10 offset-m1">
+        <div class="card blue lighten-3">
+            <div class="card-content black-text">
         <div class="tg-wrap">
             <table class="tg" id="tg-6QsDT">
                 <thead>
@@ -52,8 +61,8 @@
                     <td class="tg-ul38">Isotope</td>
                     <td class="tg-ul38 hide-on-small-only">Original Activity</td>
                     <td class="tg-ul38 hide-on-small-only">Date Activated</td>
-                    <td class="tg-ul38">Half life</td>
-                    <td class="tg-ul38">Ativity Now</td>
+                    <td class="tg-ul38 hide-on-small-only">Half life</td>
+                    <td class="tg-ul38 hide-on-small-only ">Ativity Now</td>
                     <td class="tg-ul38">Type</td>
                     {% if mode == "update" %}
                         <td class="tg-ul38">Update</td>
@@ -70,8 +79,8 @@
                         <td class="tg-hmp3">{{ source.isotope }}</td>
                         <td class="tg-hmp3 hide-on-small-only">{{ source.original_activity }} {{source.original_activity_units}}</td>
                         <td class="tg-hmp3 hide-on-small-only">{{ source.activation_date }}</td>
-                        <td class="tg-hmp3">{{ source.half_life }} {{source.half_life_units}}</td>
-                        <td class="tg-hmp3">{{ source.activity_now }} {{source.activity_now_units}}</td>
+                        <td class="tg-hmp3 hide-on-small-only">{{ source.half_life }} {{source.half_life_units}}</td>
+                        <td class="tg-hmp3 hide-on-small-only">{{ source.activity_now }} {{source.activity_now_units}}</td>
                         <td class="tg-hmp3">{{ source.type }}</td> 
                         {% if mode == "update" %}
                             <td class="tg-hmp3">
@@ -105,5 +114,9 @@
                 </tbody>           
             </table>
         </div>
+            </div>
+        </div>
+    </div>
+    </div>
     {% endif %}  
 {% endblock %}
