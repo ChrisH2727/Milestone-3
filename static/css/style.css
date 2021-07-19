@@ -15,6 +15,9 @@ nav ul a{
 .logo-shift{
     margin-left: 20px;
 }
+nav .brand-logo{
+  padding-top: 10px;
+}
 .capitalize {
   text-transform: capitalize;
 }
@@ -34,7 +37,24 @@ body {
 .btn-large{
   margin: 10px;
 }
+.collapsible-header i {
+  text-align: left;
+}
+.card .card-content{
+  padding: 5px; /* changes Materialize card padding from 28px to 5px*/
+}
+@media only screen and (min-width: 0) {html
+  {
+  font-size: 16px; /* changes Materialize card font size at min screen width from 14px to 16px*/
+}}
 
+/****************************Collapsable Body******************************/
+
+table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, table.dataTable tfoot th {
+  padding-left: 2px; 
+  padding-right: 2px;
+  font-size: 14px;
+}
 /****************************Usage Report Charts******************************/
 plot-scale{
   
@@ -63,119 +83,3 @@ nav .nav-title {
 nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
   padding-top: 20px;
 }
-
-/*********************************Isotope Table***********************************/
-.tbl_btn_wd{
-  min-width: 76px;
-}
-.tg .tg-c3ow {
-  border-color: inherit;
-  text-align: center;
-  vertical-align: top
-}
-
-  .tg {
-    border: none;
-    border-collapse: collapse;
-    border-color: #9ABAD9;
-    border-spacing: 0;
-  }
-
-  .tg td {
-    background-color: #EBF5FF;
-    border-color: #9ABAD9;
-    border-style: solid;
-    border-width: 0px;
-    color: #444;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    overflow: hidden;
-    padding: 10px 5px;
-    word-break: normal;
-  }
-
-  .tg th {
-    background-color: #409cff;
-    border-color: #9ABAD9;
-    border-style: solid;
-    border-width: 0px;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    font-weight: normal;
-    overflow: hidden;
-    padding: 10px 5px;
-    word-break: normal;
-  }
-
-  .tg .tg-ul38 {
-    position: -webkit-sticky;
-    position: sticky;
-    text-align: left;
-    top: -1px;
-    vertical-align: top;
-    will-change: transform
-  }
-
-  .tg .tg-hmp3 {
-    background-color: #D2E4FC;
-    text-align: left;
-    vertical-align: top
-  }
-
-  .tg .tg-0lax {
-    text-align: left;
-    vertical-align: top
-  }
-
-  .tg-sort-header::-moz-selection {
-    background: 0 0
-  }
-
-  .tg-sort-header::selection {
-    background: 0 0
-  }
-
-  .tg-sort-header {
-    cursor: pointer
-  }
-
-  .tg-sort-header:after {
-    content: '';
-    float: right;
-    margin-top: 7px;
-    border-width: 0 5px 5px;
-    border-style: solid;
-    border-color: #404040 transparent;
-    visibility: hidden
-  }
-
-  .tg-sort-header:hover:after {
-    visibility: visible
-  }
-
-  .tg-sort-asc:after,
-  .tg-sort-asc:hover:after,
-  .tg-sort-desc:after {
-    visibility: visible;
-    opacity: .4
-  }
-
-  .tg-sort-desc:after {
-    border-bottom: none;
-    border-width: 5px 5px 0
-  }
-
-  @media screen and (max-width: 767px) {
-    .tg {
-      width: auto !important;
-    }
-
-    .tg col {
-      width: auto !important;
-    }
-
-    .tg-wrap {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    } 

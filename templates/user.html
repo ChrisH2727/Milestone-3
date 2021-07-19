@@ -1,33 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row">
-<div class="col s12 m10 offset-m1">
-    <div class="card blue lighten-3">
-        <div class="card-content black-text">
-            <div class="tg-wrap">
+<div class="row hide-on-med-and-down show-on-large">
+    <div class="col s12 m10 ">
+        <div class="card blue lighten-3 center-align">
+            <div class="card-content black-text">
+            <span class="card-title">User Access Management</span>
                 <form method="POST" action="{{ url_for('get_user') }}">
-                    <table class="tg" id="tg-6QsDT">
-                        <thead>
+                    <table id="inventory" class="table table-striped table-bordered " style="width:100%">
+                    <thead>
                             <tr>
-                                <th class="tg-c3ow" colspan="16">User Access Management</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Research group</th>
+                                <th>Approved</th>
+                                <th>Role</th> 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="tg-ul38">Name</td>
-                                <td class="tg-ul38 hide-on-small-only">Email</td>
-                                <td class="tg-ul38 hide-on-small-only ">Department</td>
-                                <td class="tg-ul38 hide-on-small-only">Research group</td>
-                                <td class="tg-ul38">Approved</td>
-                                <td class="tg-ul38">Role</td>
-                            </tr>
                             {% for user in users %}
                                 <tr>
-                                <td class="tg-hmp3 capitalize">{{ user.first }} {{ user.last }}</td>
-                                <td class="tg-hmp3 hide-on-small-only">{{ user.email }}</td>
-                                <td class="tg-hmp3 hide-on-small-only ">{{ user.department }}</td>
-                                <td class="tg-hmp3 hide-on-small-only ">{{ user.research_group }}</td>
-                                <td class="tg-hmp3">
+                                <td class= "capitalize">{{ user.first }} {{ user.last }}</td>
+                                <td> {{ user.email }}</td>
+                                <td class="capitalize">{{ user.department }}</td>
+                                <td class="capitalise">{{ user.research_group }}</td>
+                                <td>
                                     <a href="{{ url_for('get_userb', user_id=user._id) }}" 
                                     {% if user.approved=='True' %} 
                                         class="btn-small  teal lighten-2" tbl_btn_wd>Approve
@@ -36,7 +33,7 @@
                                     {% endif %}
                                     </a>
                                 </td>
-                                <td class="tg-hmp3">
+                                <td>
                                     <a href="{{ url_for('get_userc', user_id=user._id) }}" 
                                     {% if user.role=='admin' %}
                                         class="btn-small  teal lighten-2" tbl_btn_wd>Admin
@@ -45,7 +42,6 @@
                                     {% endif %}
                                     </a>
                                 </td>
-                                </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -54,5 +50,75 @@
         </div>
     </div>
 </div>
-</div>
+<div class="row hide-on-large-only">
+    <div class="col s12 m12">
+      <div class="card blue lighten-3">
+        <div class="card-content black-text ">
+          <span class="card-title">User Management</span>   
+          <ul class="collapsible ">
+            {% for alt_user in alt_users %}  
+              <li>
+                <div class="collapsible-header white-text blue indigo darken-2 ">
+                    <div class="row">
+                        <div class="col s1 m1">
+                            <i class="fas fa-caret-down"> </i>
+                        </div>
+                    </div>
+                    <div class="col s5 m3">
+                        <strong> Name: </strong>
+                        <p class= "capitalize" >{{ alt_user.first }} {{ alt_user.last }}</p>
+                    </div>
+                </div>
+                <div class="collapsible-body">
+                    <div class="row">
+                        <div class="col s6 m3">
+                            <strong>Department: </strong>
+                        </div>
+                        <div class="col s6 m9">
+                            <p>{{ alt_user.department }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6 m3">
+                            <strong>Research Group: </strong>
+                        </div>
+                        <div class="col s6 m9">
+                            <p>{{ alt_user.research_group }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6 m3">
+                            <strong>Approve User: </strong>
+                        </div>
+                        <div class="col s6 m9">
+                            <a href="{{ url_for('get_userb', user_id=alt_user._id) }}" 
+                            {% if alt_user.approved=='True' %} 
+                                class="btn-small  teal lighten-2" tbl_btn_wd>Approve
+                            {% else %}
+                                class ="btn-small deep-orange darken-1" tbl_btn_wd>Approved
+                            {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6 m3">
+                            <strong>User Role: </strong>
+                        </div>
+                        <div class="col s6 m9">
+                            <a href="{{ url_for('get_userc', user_id=alt_user._id) }}"
+                        {% if alt_user.role=='admin' %}
+                            class="btn-small  teal lighten-2" tbl_btn_wd>Admin
+                        {% else %}
+                            class ="btn-small deep-orange darken-1" tbl_btn_wd>User
+                        {% endif %}
+                        </a>
+                    </div>
+                </div> 
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div> 
+    </div>
+</div>    
 {% endblock %}

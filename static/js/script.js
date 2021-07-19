@@ -3,6 +3,13 @@ $(document).ready(function () {
   $(".dropdown-trigger").dropdown();
   $('.datepicker').datepicker();
   $('select').formSelect();
+  $('.collapsible').collapsible();
+
+  $('#inventory').DataTable( {
+    ordering: true,
+    searching: false,
+    paging:true
+  });
 });
 
 

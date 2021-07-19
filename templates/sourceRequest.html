@@ -4,119 +4,245 @@
 <!-- Uses code snip from Code Institute Mini Project | Putting It All Together  Searching  Search Within The Database-->
 
 <div class="col s12 m10 offset-m1">
-    <div class="card blue lighten-3">
-        <div class="card-content black-text">
+   <div class="card blue lighten-3">
+       <div class="card-content black-text">
 {% if mode == "delete" %}
-    <span class="card-title">Search All Sources For Deletion</span>
+   <span class="card-title">Search All Sources For Deletion</span>
 {% elif mode== "update" %}
-    <span class="card-title">Search All Sources To Update</span>
+   <span class="card-title">Search All Sources To Update</span>
 {% else %}
-    <span class="card-title">Search All Sources To Use</span>
+   <span class="card-title">Search All Sources To Use</span>
 {% endif %}
-            <div class="row card-panel grey lighten-5">
-                {% if mode == "delete" %}
-                    <form action="{{ url_for('delete_source') }}" method="post" class="col s12">
-                {% elif mode== "update" %}
-                    <form action="{{ url_for('update_source') }}" method="post" class="col s12">
-                {% else %}
-                    <form action="{{ url_for('source_request') }}" method="post" class="col s12">
-                {% endif %}
-                    <!--div class="row valign-wrapper center-align"-->
-                    <div class="row center-align">
-                        <div class="input-field col s12 m8 l8">
-                            <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
-                            <input type="text" name="query" id="query" minlength="3" class="validate" required>
-                            <label for="query">Search Source</label>
-                        </div>
-                        <div class="col s6 m2 l2">
-                            <button type="submit" class="btn-large deep-orange accent-3">
-                                <i class="fas fa-search left"></i> Search
-                            </button>
-                        </div>
-                        <div class="col s6 m2 l2">
-                            <a href="{{ url_for('userAccount') }}" class="btn-large deep-green accent-3">Reset</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+           <div class="row card-panel grey lighten-5">
+               {% if mode == "delete" %}
+                   <form action="{{ url_for('delete_source') }}" method="post" class="col s12">
+               {% elif mode== "update" %}
+                   <form action="{{ url_for('update_source') }}" method="post" class="col s12">
+               {% else %}
+                   <form action="{{ url_for('source_request') }}" method="post" class="col s12">
+               {% endif %}
+                   <!--div class="row valign-wrapper center-align"-->
+                   <div class="row center-align">
+                       <div class="input-field col s12 m8 l8">
+                           <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
+                           <input type="text" name="query" id="query" minlength="3" class="validate" required>
+                           <label for="query">Search Source</label>
+                       </div>
+                       <div class="col s6 m2 l2">
+                           <button type="submit" class="btn-large deep-orange accent-3">
+                               <i class="fas fa-search left"></i> Search
+                           </button>
+                       </div>
+                       <div class="col s6 m2 l2">
+                           <a href="{{ url_for('userAccount') }}" class="btn-large deep-green accent-3">Reset</a>
+                       </div>
+                   </div>
+               </form>
+           </div>
+       </div>
+   </div>
 </div>
 
-    {% if showsources == "true" and sources|length >0 %}
-    <div class="row">
-    <div class="col s12 m10 offset-m1">
-        <div class="card blue lighten-3">
-            <div class="card-content black-text">
-        <div class="tg-wrap">
-            <table class="tg" id="tg-6QsDT">
-                <thead>
-                    <tr>
-                    <th class="tg-c3ow" colspan="16">Radio Isotope Inventory</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    <tr>
-                    <td class="tg-ul38">Serial No.</td>
-                    <td class="tg-ul38">Isotope</td>
-                    <td class="tg-ul38 hide-on-small-only">Original Activity</td>
-                    <td class="tg-ul38 hide-on-small-only">Date Activated</td>
-                    <td class="tg-ul38 hide-on-small-only">Half life</td>
-                    <td class="tg-ul38 hide-on-small-only ">Ativity Now</td>
-                    <td class="tg-ul38">Type</td>
-                    {% if mode == "update" %}
-                        <td class="tg-ul38">Update</td>
-                    {% elif mode == "delete" %}
-                        <td class="tg-ul38">Delete</td>
-                    {% else %}
-                        <td class="tg-ul38">Request</td>
-                    {% endif %}    
-                    </tr>
-        
-                    {% for source in sources %}
-                    <tr>
-                        <td class="tg-hmp3">{{ source.serial_number }}</td>
-                        <td class="tg-hmp3">{{ source.isotope }}</td>
-                        <td class="tg-hmp3 hide-on-small-only">{{ source.original_activity }} {{source.original_activity_units}}</td>
-                        <td class="tg-hmp3 hide-on-small-only">{{ source.activation_date }}</td>
-                        <td class="tg-hmp3 hide-on-small-only">{{ source.half_life }} {{source.half_life_units}}</td>
-                        <td class="tg-hmp3 hide-on-small-only">{{ source.activity_now }} {{source.activity_now_units}}</td>
-                        <td class="tg-hmp3">{{ source.type }}</td> 
-                        {% if mode == "update" %}
-                            <td class="tg-hmp3">
-                                <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}" 
-                                class ="btn-small  teal lighten-2" tbl_btn_wd>Update                      
-                                </a>
-                            </td>
-                        {% elif mode == "delete" %}
-                            <td class="tg-hmp3">
-                                <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}" 
-                                class ="btn-small  teal lighten-2" tbl_btn_wd>Delete                   
-                                </a>
-                            </td>
-                        {% else %}
-                            {% if source.requested == "false" %}
-                                <td class="tg-hmp3">
-                                    <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}" 
-                                    class ="btn-small  teal lighten-2" tbl_btn_wd>Request                   
-                                    </a>
-                                </td>              
-                            {% else %}
-                                <td class="tg-hmp3">
-                                    <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}" 
-                                    class ="btn-small  deep-orange accent-3" tbl_btn_wd>Not Available                   
-                                    </a>
-                                </td> 
-                            {% endif %}
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>           
-            </table>
-        </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    {% endif %}  
-{% endblock %}
+{% if showsources == "true" and sources|length >0 %}
+ <div class="row hide-on-med-and-down show-on-large">
+   <div class="col s12 m12">
+     <div class="card blue lighten-3">
+       <div class="card-content">
+         <span class="card-title">Full Inventory Listing</span>  
+         <table id="inventory" class="table table-striped table-bordered " style="width:100%">
+           <thead>
+             <tr>
+               <th>Dept.</th>
+               <th>Serial No.</th>
+               <th>Isotope</th>
+               <th>Lab</th>
+               <th>Location</th>
+               <th>Original Activity</th>
+               <th>Date Activated</th>
+               <th>Half life</th>
+               <th>Ativity Now</th>
+               <th>Type</th>
+            {% if mode == "update" %}
+               <th>Update</th>
+            {% elif mode == "delete" %}
+               <th>Delete</th>
+            {% else %}
+               <th>Request</th>
+            {% endif %}    
+             </tr>
+           </thead>
+           <tbody>
+             {% for source in sources %}   
+               <tr>
+                 <td>{{ source.department }}</td>
+                 <td>{{ source.serial_number }}</td>
+                 <td>{{ source.isotope }}</td>
+                 <td>{{ source.laboratory }}</td>
+                 <td>{{ source.location }}</td>
+                 <td>{{ source.original_activity }} {{source.original_activity_units}}</td>
+                 <td>{{ source.activation_date }}</td>
+                 <td>{{ source.half_life }} {{source.half_life_units}}</td>
+                 <td>{{ source.activity_now }} {{source.activity_now_units}}</td>
+                 <td>{{ source.type }}</td>
+
+               {% if mode == "update" %}
+                 <td>
+                     <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}" 
+                     class ="btn-small  teal lighten-2" tbl_btn_wd>Update                      
+                     </a>
+                 </td>
+               {% elif mode == "delete" %}
+                 <td">
+                     <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}" 
+                     class ="btn-small  teal lighten-2" tbl_btn_wd>Delete                   
+                     </a>
+                 </td>
+               {% else %}
+                 {% if source.requested == "false" %}
+                     <td>
+                         <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}" 
+                         class ="btn-small  teal lighten-2" tbl_btn_wd>Request                   
+                         </a>
+                     </td>              
+                 {% else %}
+                     <td>
+                         <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}" 
+                         class ="btn-small  deep-orange accent-3" tbl_btn_wd>Not Available                   
+                         </a>
+                     </td> 
+                 {% endif %}
+               {% endif %}    
+               </tr>
+             {% endfor %}  
+           </tbody>
+         </table>
+       </div>
+     </div>
+   </div>
+ </div>      
+ <div class="row hide-on-large-only">
+   <div class="col s12 m12">
+     <div class="card blue lighten-3">
+       <div class="card-content black-text ">
+         <span class="card-title">Available Inventory</span>   
+         <ul class="collapsible ">
+           {% for alt_source in alt_sources %}  
+             <li>
+               <div class="collapsible-header white-text blue indigo darken-2 ">
+                 <div class="row">
+                   <div class="col s1 m1">
+                     <i class="fas fa-caret-down"> </i>
+                   </div>
+                 </div>
+                 <div class="col s5 m3">
+                   <strong> Isotope: </strong>
+                   <p>{{ alt_source.isotope }}</p>
+                 </div>
+                 <div class="col s6 m8">
+                   <strong>Serial Number:</strong>
+                   <p>{{ alt_source.serial_number }}</p>
+                 </div>
+               </div>
+               <div class="collapsible-body">
+                   <div class="row">
+                     <div class="col s6 m3">
+                       <strong>Department: </strong>
+                     </div>
+                     <div class="col s6 m9">
+                       <p>{{ alt_source.department }}</p>
+                     </div>
+                     <div class="row">
+                       <div class="col s6 m3">
+                         <strong>Laboratory: </strong>
+                       </div>
+                       <div class="col s6 m9">
+                         <p>{{ alt_source.laboratory }}</p>
+                       </div>
+                     </div>
+                     <div class="row">
+                       <div class="col s6 m3">
+                           <strong>Location: </strong>
+                       </div>
+                       <div class="col s6 m9">
+                         <p>{{ alt_source.location }}</p>
+                       </div>
+                     </div>
+                     <div class="row">
+                       <div class="col s6 m3">
+                         <strong>Original Activity: </strong>
+                       </div>
+                       <div class="col s6 m9">
+                         <p>{{ alt_source.original_activity }} {{alt_source.original_activity_units}}</p>
+                       </div>
+                     </div>
+                     <div class="row">
+                       <div class="col s6 m3">
+                         <strong>Date Activated: </strong>
+                       </div>
+                       <div class="col s6 m9">
+                         <p>{{ alt_source.activation_date }}</p>
+                       </div>
+                     </div>
+                     <div class="row">
+                       <div class="col s6 m3">
+                         <strong>Half life: </strong>
+                       </div>
+                       <div class="col s6 m9">
+                         <p>{{ alt_source.half_life }} {{alt_source.half_life_units}}</p>
+                       </div>
+                     </div>
+                     <div class="row">
+                        <div class="col s6 m3">
+                           <strong>Ativity Now: </strong>
+                         </div>
+                         <div class="col s6 m9">
+                           <p>{{ alt_source.activity_now }} {{alt_source.activity_now_units}}</p>
+                         </div>
+                       </div>
+                     <div class="row">
+                        <div class="col s6 m3">
+                           <strong>Type: </strong>
+                        </div>
+                        <div class="col s6 m9">
+                           <p>{{ alt_source.type }}</p>
+                        </div> 
+                     </div>
+
+                  {% if mode == "update" %}
+                        <div class="col s6 m9">
+                           <a href="{{ url_for('update_source_resp', source_serial_no=alt_source.serial_number) }}" 
+                           class ="btn-small  teal lighten-2" tbl_btn_wd>Update                      
+                           </a>
+                        </div>
+                 {% elif mode == "delete" %}
+                     <div class="col s6 m9">
+                         <a href="{{ url_for('delete_source_resp', source_serial_no=ant_source.serial_number) }}" 
+                         class ="btn-small  teal lighten-2" tbl_btn_wd>Delete                   
+                         </a>
+                        </div>
+                 {% else %}
+                     {% if alt_source.requested == "false" %}
+                         <div class="col s6 m9">
+                             <a href="{{ url_for('req_source_conf', source_serial_no=alt_source.serial_number) }}" 
+                             class ="btn-small  teal lighten-2" tbl_btn_wd>Request                   
+                             </a>
+                           </div>              
+                     {% else %}
+                         <div class="col s6 m9">
+                             <a href="{{ url_for('req_source_conf', source_serial_no=alt_source.serial_number) }}" 
+                             class ="btn-small  deep-orange accent-3" tbl_btn_wd>Not Available                   
+                             </a>
+                           </div> 
+                     {% endif %}
+                 {% endif %}
+                   </div>
+               </div>                
+             </li>
+           {% endfor %}  
+         </ul>
+       </div>
+     </div>
+   </div>
+ </div>
+ {% endif %}
+ {% endblock %}   
