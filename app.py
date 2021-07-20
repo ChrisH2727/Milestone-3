@@ -9,6 +9,7 @@ from flask import (
 from flask_pymongo import PyMongo
 from pymongo import ReturnDocument
 from bson.objectid import ObjectId
+from selenium import webdriver
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
@@ -29,7 +30,7 @@ def login():
     #
     # Function called when the user first logs in
     #
-
+    
     # clear any exiting flash messages
     session.pop('_flashes', None)
 
@@ -41,27 +42,50 @@ def login():
                 "password": request.form.get("password").lower()})
 
         if existing_user:
-            # session cookie for role "admin" or "user"
-            session["role"] = existing_user["role"]
-            # session cookie for users first name
-            session["user"] = existing_user["first"]
+            if existing_user["approved"] == "approved":
+                # session cookie for role "admin" or "user"
+                session["role"] = existing_user["role"]
+                # session cookie for users first name
+                session["user"] = existing_user["first"]
             
-            # Add an entry to the user login history
-            user = {
-                "first": request.form.get("first_name").lower(),
-                "last": request.form.get("last_name").lower(),
-                "email": request.form.get("email").lower(),
-                "login_date": datetime.today().strftime('%d-%m-%y'),
-                "logout_date": ""  
-            }
-            mongo.db.login_history.insert_one(user)
+                # Add an entry to the user login history
+                user = {
+                    "first": request.form.get("first_name").lower(),
+                    "last": request.form.get("last_name").lower(),
+                    "email": request.form.get("email").lower(),
+                    "login_date": datetime.today().strftime('%d-%m-%y'),
+                    "logout_date": ""
+                }
+                mongo.db.login_history.insert_one(user)
             
-            return redirect(url_for("userAccount"))
+                return redirect(url_for("userAccount"))
+            else:
+               flash("Your account has not yet been approved or has been suspended. Please refer to an admin user")     
         else:
             # invalid password match or user name or email
             flash("Incorrect Username and/or Password")
             return redirect(url_for("login"))
+
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    #
+    # Called when a user logs out of a session
+    #
+
+    # Add date to the user login history
+    user = {"logout_date": datetime.today().strftime('%d-%m-%y')}
     
+    mongo.db.login_history.find_one_and_update({"first": session["user"]},
+            {'$set': user}, return_document=ReturnDocument.AFTER)
+    
+    # Remove user from session cookie
+    # Code line from Code Institute Mini Project 
+    flash("Goodbye, {}".format(session["user"]), "You have been logged out" )
+    session.pop("user")
+    session.pop("role")
     return render_template("login.html")
 
 
@@ -106,8 +130,10 @@ def register():
             "password": (request.form.get("password")),
             "department": request.form.get("department").lower(),
             "research_group": request.form.get("research_group").lower(),
-            "approved": "False",
-            "role": "user"
+            "approved": "approve",
+            "role": "user",
+            "approved_date": "",
+            "deleted_date":""
         }
         mongo.db.users.insert_one(register)
         flash("You have sucessfully registered, please wait for your request to be approved")
@@ -219,19 +245,46 @@ def return_source_resp(source_serial_no):
 @app.route("/get_userb/<user_id>", methods=["GET", "POST"])
 def get_userb(user_id):
     #
-    # Called when an admin user approves a new account
+    # Called when an admin user approves a new account or suspends/re-approves
+    # an account. User approved state starts at "appove" then toggles between
+    # "approved" and "suspended" 
     #
-    if request.method == "GET":
-        existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-        if existing_user["approved"] == "True":
-            submit = {"approved": "False"}
-        else:
-            submit = {"approved": "True"}
-        
+
+    
+    existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+
+    # User cannot action his/her own account
+    if existing_user["first"] == session["user"]:
+        flash("You cannot action your own user account")
+    else:
+        # Admin user approves first time registration 
+        if existing_user["approved"] == "approve":
+            submit = {"approved": "approved",
+                      "approved_date": datetime.today().strftime('%d-%m-%y'),
+                      "remove_date": ""
+                    }
+            flash("User Successfully Approved")
+
+        # Admin user suspends users account
+        if existing_user["approved"] == "approved":
+            submit = {"approved": "suspended",
+                      "approved_date": "",
+                      "remove_date": datetime.today().strftime('%d-%m-%y')
+                    }
+            flash("User Successfully Suspended")
+
+        # Admin user reinstates users account
+        if existing_user["approved"] == "suspended":
+            submit = {"approved": "approved",
+                      "approved_date": datetime.today().strftime('%d-%m-%y'),
+                      "remove_date": ""
+                     }              
+            flash("User Successfully Approved")
+
         # pymongo update has been deprecated use find_one_and_update
         mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
             { '$set': submit }, return_document = ReturnDocument.AFTER)
-        flash("User Successfully Approved")
+
     users = mongo.db.users.find()
     alt_users = mongo.db.users.find()
     return render_template("user.html", users=users, alt_user=alt_users)
@@ -243,25 +296,59 @@ def get_userc(user_id):
     #
     # Called when an admin user gives admin rights to another user
     #
+    
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-    if existing_user["role"] == "admin":
-        submit = {"role": "user"}
+    
+    # User cannot action his/her own account
+    if existing_user["first"] == session["user"]:
+        flash("You cannot action your own user account")
     else:
-        submit = {"role": "admin"}
-        
-    mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
-        { '$set': submit }, return_document = ReturnDocument.AFTER)
-    flash("User role successfully updated")
+        # Admin user toggles another user account between admin/user roles
+        if existing_user["role"] == "admin":
+            submit = {"role": "user"}
+        else:
+            submit = {"role": "admin"}    
+        mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
+            { '$set': submit }, return_document = ReturnDocument.AFTER)
+        flash("User role successfully updated")
+    
     users = mongo.db.users.find()
     alt_users=mongo.db.users.find()
     return render_template("user.html", users=users, alt_users=alt_users)
 
 
+@app.route("/get_userdelete/<user_id>", methods=["GET", "POST"])
+def get_userdelete(user_id):
+    #
+    # Called when an admin user deletes a normal user account
+    #
+    existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    
+    # User cannot delete his/her own account 
+    if existing_user["first"] == session["user"]:
+        flash("You cannot delete your own user account")
+
+    # Admin user cannot be deleted/removed
+    elif existing_user["role"] == "admin":
+        flash("You cannot delete an Admin user")
+    
+    # User account must be suspended before it can be deleted
+    elif existing_user["approved"] == "approved" or existing_user["approved"] == "approve":
+        flash("A user account must be suspended for it to be deleted")
+
+    else: 
+        mongo.db.users.delete_one({"_id": ObjectId(user_id)})
+        flash("user account sucessfuly deleted")
+
+    users = mongo.db.users.find()
+    alt_users = mongo.db.users.find()
+    return render_template("user.html", users=users, alt_users=alt_users)
+
 
 @app.route("/get_user")
 def get_user():
-    users=mongo.db.users.find()
-    alt_users=mongo.db.users.find()
+    users = mongo.db.users.find()
+    alt_users = mongo.db.users.find()
     return render_template("user.html", users=users, alt_users=alt_users) 
 
 
@@ -437,21 +524,7 @@ def delete_source_resp(source_serial_no):
     return render_template("addSource.html", mode=mode, existing_source=existing_source)
 
 
-@app.route("/logout")
-def logout():
-    #
-    # Called when a user logs out of a session
-    #
 
-    # Add an entry to the user login history
-    user = {"logout_date": datetime.today().strftime('%d-%m-%y')}
-    mongo.db.login_history.update({"first": session["user"]},{"$set": user})
-    # Remove user from session cookie
-    # Code line from Code Institute Mini Project 
-    flash("Goodbye, {}".format(session["user"]), "You have been logged out" )
-    session.pop("user")
-    session.pop("role")
-    return render_template("login.html")
 
 
 @app.route("/userAccount", methods=["GET", "POST"])
