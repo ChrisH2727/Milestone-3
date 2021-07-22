@@ -23,6 +23,15 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
+def mongo_connect(url):
+    try:
+        conn = pymongo.MongoClient(url)
+        print("Mongo is connected")
+        return conn
+    except pymongo.errors.ConnectionFailure as e:
+        print("Could not connect to MongoDB: %s") % e
+
+
 @app.route("/")
 
 @app.route("/login", methods=["GET", "POST"])
@@ -36,11 +45,9 @@ def login():
 
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
-            {"first": request.form.get("first_name").lower(),
-                "last": request.form.get("last_name").lower(),
-                "email": request.form.get("email").lower(),
+            {"email": request.form.get("email").lower(),
                 "password": request.form.get("password").lower()})
-
+        
         if existing_user:
             if existing_user["approved"] == "approved":
                 # session cookie for role "admin" or "user"
@@ -50,8 +57,8 @@ def login():
             
                 # Add an entry to the user login history
                 user = {
-                    "first": request.form.get("first_name").lower(),
-                    "last": request.form.get("last_name").lower(),
+                    "first": existing_user["first"].lower(),
+                    "last": existing_user["last"].lower(),
                     "email": request.form.get("email").lower(),
                     "login_date": datetime.today().strftime('%d-%m-%y'),
                     "logout_date": ""
@@ -60,7 +67,7 @@ def login():
             
                 return redirect(url_for("userAccount"))
             else:
-               flash("Your account has not yet been approved or has been suspended. Please refer to an admin user")     
+                flash("Account not approved or suspended. Please refer to an admin user")
         else:
             # invalid password match or user name or email
             flash("Incorrect Username and/or Password")
@@ -72,7 +79,7 @@ def login():
 @app.route("/logout")
 def logout():
     #
-    # Called when a user logs out of a session
+    # Called when a user or admin logs out of a session
     #
 
     # Add date to the user login history
@@ -141,7 +148,7 @@ def register():
 
     return render_template("register.html")
 
-
+#-------------------------Report Generation-----------------------------------
 @app.route("/usage_report")
 def usage_report():
     #
@@ -176,7 +183,8 @@ def approve_request():
 
     existing_sources = mongo.db.sources.find({"requested": "true"})
     alt_existing_sources = mongo.db.sources.find({"requested": "true"})
-    return render_template("approveRequest.html", sources=existing_sources, alt_sources=alt_existing_sources, showtable=showtable)
+    return render_template("approveRequest.html", sources=existing_sources,
+        alt_sources=alt_existing_sources, showtable=showtable)
 
 
 @app.route("/approve_request_resp<source_serial_no>", methods=["GET", "POST"])
@@ -250,7 +258,6 @@ def get_userb(user_id):
     # "approved" and "suspended" 
     #
 
-    
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
 
     # User cannot action his/her own account
@@ -357,82 +364,135 @@ def get_sources():
     # Guidance on the rewinding/reseting of the pymongo cursor unclear
     # hence use 2 instances of the cursor one for each view (large 
     # width/reduced width screen size)
-    sources = mongo.db.sources.find()
-    alt_sources = mongo.db.sources.find()
-    return render_template("inventory.html", sources=sources, alt_sources=alt_sources)
+
+    sources = list(mongo.db.sources.find())
+    return render_template("inventory.html", sources=sources)
 
 
 @app.route("/add_source", methods=["GET", "POST"])
 def add_source():
     #
     # Called when an admin user adds a new source to the source inventory
+    # or when an admin user updates an exiting source
     #
-    if request.method == "POST":
-        # check if source serial number already exists in db
-        existing_source = mongo.db.sources.find_one(
-            {"serial_number": request.form.get("serial_number")})
 
-        newSource = {
+    if request.method == "POST":
+        # Get source from mongo db
+        existing_source = mongo.db.sources.find_one(
+        {"serial_number": request.form.get("serial_number")})
+
+        # Get isotope half life
+        isotope_half_life = mongo.db.isotope_category.find_one({"isotope": request.form.get("isotope")})
+        
+        # check if source serial number already exists in db
+        if existing_source:
+            updateSource = {
             "serial_number": request.form.get("serial_number"),
             "department": request.form.get("department"),
             "laboratory": request.form.get("laboratory"),
             "location": request.form.get("location"),
             "isotope": request.form.get("isotope"),
-            "half_life": request.form.get("half_life"),
-            "half_life_units": request.values.get("half_life_units")
-        }
-
-        if existing_source:
-            existing_source_id = existing_source["_id"]
-
-            newSourceTemp = {
-                "serial_number": request.form.get("serial_number"),
-                "department": request.form.get("department")
+            "half_life": isotope_half_life["isotope"][1],
+            "half_life_units": "years",
+            "original_activity": request.values.get("original_activity"),
+            "original_activity_units": request.values.get("original_activity_units"),
+            "activation_date": request.values.get("activation_date"),
+            "type": request.values.get("encapsulation"),
             }
-
-            mongo.db.sources.find_one_and_update({"_id": ObjectId(existing_source_id)},
-            { '$set': newSourceTemp }, return_document = ReturnDocument.AFTER)
+            mongo.db.sources.find_one_and_update({"serial_number": request.form.get("serial_number")},
+            { '$set': updateSource }, return_document = ReturnDocument.AFTER)
             flash("Source sucessfully updated")
         else:
+            newSource = {
+            "serial_number": request.form.get("serial_number"),
+            "department": request.form.get("department"),
+            "laboratory": request.form.get("laboratory"),
+            "location": request.form.get("location"),
+            "isotope": request.form.get("isotope"),
+            "half_life": isotope_half_life["isotope"][1],
+            "half_life_units": "years",
+            "original_activity": request.values.get("original_activity"),
+            "original_activity_units": request.values.get("original_activity_units"),
+            "activation_date": request.values.get("activation_date"),
+            "type": request.values.get("encapsulation"),
+            "last_used":"",
+            "approved":"no",
+            "requested":"false",
+            "user":""
+            }
             mongo.db.sources.insert_one(newSource)
             flash("New source sucessfully added to inventory")
+        
+        # Confirm that user has admin rights and can render requested page 
+        if session["role"] == "admin":
+            sources = list(mongo.db.sources.find())
+            return render_template("inventory.html", sources=sources )
+        else:
+            return render_template("errorPage.html")
     
-        sources = mongo.db.sources.find()
-        alt_sources = mongo.db.sources.find()
-        return render_template("inventory.html", sources=sources, alt_sources=alt_sources)
-  
-    return render_template("addSource.html")
-
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        #No post setup html page for adding a new source
+        security_codes = mongo.db.security_group.find()
+        departments = mongo.db.departments.find()
+        laboratories = mongo.db.laboratories.find()
+        locations = mongo.db.locations.find()
+        encapsulations = mongo.db.encapsulations.find()
+        isotope_category = list(mongo.db.isotope_category.find())
+        mode = "add"
+        return render_template("addSource.html",security_codes=security_codes,
+            departments=departments, laboratories= laboratories,
+            locations=locations, mode=mode, encapsulations=encapsulations,
+            isotope_category=isotope_category )
+    else:
+        return render_template("errorPage.html")
 
 
 @app.route("/source_request", methods=["GET", "POST"])
 def source_request():
     #
     # Action on selecting the SOURCE REQUEST option
+    # Action open to users and admin
     #
     query = request.form.get("query")
     mode = "request"
     if query:
         sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
-        alt_sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
         showsources = "true"
-        return render_template("sourceRequest.html", showsources=showsources, alt_sources=alt_sources, sources=sources, mode=mode)
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
     else:
         showsources = "false"
-        sources = ""
-        alt_sources=" "
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, alt_sources=alt_sources, mode=mode)
+        sources = []
+        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
+@app.route("/del_source_req/<source_serial_no>" , methods=["GET", "POST"])
+def del_source_req(source_serial_no):
+    #
+    # Action when user deletes a source request before authorised by admin
+    # Action open to users and admin
+    #
+    submit = {"approved": "no",
+            "requested": "false",
+            "user": ""}
+
+    mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
+            { '$set': submit }, return_document = ReturnDocument.AFTER)
+
+    # Get list of sources held by the user
+    userfirst = session["user"]
+    loanSources = list(mongo.db.sources.find({"user": userfirst}))
+    return render_template("userAccount.html",
+            user=userfirst, usersources=loanSources)
 
 
 @app.route("/req_source_conf/<source_serial_no>" , methods=["GET", "POST"])
 def req_source_conf(source_serial_no):
     #
-    # Action on clicking the REQUEST button on the SOURRCE REQUEST Page 
+    # Action on clicking the REQUEST button on the SOURRCE REQUEST Page
+    # Action open to users and admin
     #
-    sources=mongo.db.sources.find_one({"serial_number": source_serial_no})
-    alt_sources=mongo.db.sources.find_one({"serial_number": source_serial_no})
+    sources=list(mongo.db.sources.find_one({"serial_number": source_serial_no}))
 
     # Update the source record
     submit = {"requested": "true", "user": session["user"]} 
@@ -443,7 +503,7 @@ def req_source_conf(source_serial_no):
     showsources = "false"
     sources = ""
     mode ="request"
-    return render_template("sourceRequest.html", showsources=showsources, sources=sources, alt_sources=alt_sources, mode=mode)
+    return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
 @app.route("/del_source_conf/<source_serial_no>" , methods=["GET", "POST"])
@@ -452,10 +512,13 @@ def del_source_conf(source_serial_no):
     # Gets source data from the mongo db and generates a table
     #
 
-    mongo.db.sources.delete_one({"serial_number": source_serial_no})
-    sources = mongo.db.sources.find()
-    alt_sources = mongo.db.sources.find()
-    return render_template("inventory.html", sources=sources, alt_sources=alt_sources)
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        mongo.db.sources.delete_one({"serial_number": source_serial_no})
+        sources = list(mongo.db.sources.find())
+        return render_template("inventory.html", sources=sources)
+    else:
+        return render_template("errorPage.html")
 
 
 @app.route("/update_source", methods=["GET", "POST"])
@@ -464,19 +527,20 @@ def update_source():
     # called when the admin user selects a source for update via a query
     #
 
-    query = request.form.get("query")
-    mode = "update"
-    if query:
-        sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
-        alt_sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
-        showsources = "true"
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, alt_sources=alt_sources, mode=mode)
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        query = request.form.get("query")
+        mode = "update"
+        if query:
+            sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
+            showsources = "true"
+            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+        else:
+            showsources = "false"
+            sources = []
+            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
     else:
-        showsources = "false"
-        sources = ""
-        alt_sources =" "
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, alt_sources=alt_sources, mode=mode)
-
+        return render_template("errorPage.html")
 
 
 @app.route("/delete_source", methods=["GET", "POST"])
@@ -485,30 +549,45 @@ def delete_source():
     # called when the admin user selects a source for deletion via a query
     #
 
-    query = request.form.get("query")
-    mode = "delete"
-    if query:
-        # line of code from Code Institute tuition Data "Centric Design Mini Project"
-        sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
-        alt_sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
-        showsources = "true"
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, alt_sources=alt_sources, mode=mode)
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        query = request.form.get("query")
+        mode = "delete"
+        if query:
+            # line of code from Code Institute tuition Data "Centric Design Mini Project"
+            sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
+            showsources = "true"
+            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+        else:
+            showsources = "false"
+            sources = []
+            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
     else:
-        showsources = "false"
-        sources = ""
-        alt_sources =" "
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, alt_sources=alt_sources, mode=mode)
-
+        return render_template("errorPage.html")
 
 
 @app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def update_source_resp(source_serial_no):
     #
+    # Called when data relating to a source requires update
     #
-    #
-    existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
-    mode = "update"
-    return render_template("addSource.html", mode=mode, existing_source=existing_source )
+
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
+        mode = "update"
+        security_codes = mongo.db.security_group.find()
+        departments= mongo.db.departments.find()
+        laboratories = mongo.db.laboratories.find()
+        locations = mongo.db.locations.find()
+        encapsulations = mongo.db.encapsulations.find()
+
+        return render_template("addSource.html", mode=mode, existing_source=existing_source,
+                security_codes=security_codes, departments=departments,
+                locations=locations, laboratories=laboratories,
+                encapsulations=encapsulations )
+    else:
+        return render_template("errorPage.html")
 
 
 @app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
@@ -517,14 +596,15 @@ def delete_source_resp(source_serial_no):
     # Called prior to user clicking button to delete a source from the mongo db 
     #      
     
-    # check if source serial number already exists in db
-    existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})    
-    mode = "delete"
-    flash("You are about to delete", source_serial_no)    
-    return render_template("addSource.html", mode=mode, existing_source=existing_source)
-
-
-
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        # check if source serial number already exists in db
+        existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})    
+        mode = "delete"
+        flash("You are about to delete", source_serial_no)    
+        return render_template("addSource.html", mode=mode, existing_source=existing_source)
+    else:
+        return render_template("errorPage.html")
 
 
 @app.route("/userAccount", methods=["GET", "POST"])
@@ -553,10 +633,19 @@ def userAccount():
     
     # Get list of sources held by the user
     userfirst = existing_user["first"]
-    loanSources = mongo.db.sources.find({"user": userfirst})
+    loanSources = list(mongo.db.sources.find({"user": userfirst}))
+    return render_template("userAccount.html",
+            user=existing_user, usersources=loanSources)
 
-    return render_template("userAccount.html", user=existing_user, sources=loanSources)
+#-------------------------Error Handlers------------------------------
+@app.errorhandler(404) 
+def invalid_route(e):
+    #
+    # Handles 404 page not found error 
+    # 
+    return render_template("404error.html")
 
+#-------------------------Main Loop-----------------------------------
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
