@@ -167,15 +167,48 @@ def usage_report():
     #
     # Generates reports from the mongodb and renders them for admin user to view
     #
+
+    # Determine sources of isotopes on inventory
     source_types = mongo.db.sources.find().distinct("isotope")
-    
     source_num = []
     for source in source_types:
         source_num.append(mongo.db.sources.count_documents({"isotope": source}))
-   
-    plt.bar(source_types, source_num)
-    plt.savefig('static/assets/sourceUsed.png')
-    return render_template("usageReport.html", name="usage plot", url="static/assets/sourceUsed.png")
+    
+    # Determine Logins per day
+    logins = mongo.db.login_history.find().distinct("login_date")
+    login_num = []
+    for login in logins:
+        login_num.append(mongo.db.login_history.count_documents({"login_date": login}))
+
+    # Determine source usage by serial number
+    source_loans = mongo.db.source_history.find().distinct("serial_number")
+    loans_num = []
+    for loans in source_loans:
+        loans_num.append(mongo.db.source_history.count_documents({"serial_number": loans}))
+
+    # Page only accessible for admin users
+    if session["role"] == "admin":
+        plt.bar(source_types, source_num, color='green')
+        plt.title("Sources by Isotope") 
+        plt.savefig('static/assets/sourceUsed.png')
+        plt.close()
+
+        plt.bar(logins, login_num, color='blue')
+        plt.title("User Logins by Day")  
+        plt.savefig('static/assets/loginHistory.png')
+        plt.close()
+
+        plt.bar(source_loans, loans_num, color='red')
+        plt.title("Source Loans by Serial Number")  
+        plt.savefig('static/assets/loanHistory.png')
+        plt.close()
+
+        return render_template("usageReport.html", name="usage plot",
+            url1="static/assets/sourceUsed.png",
+            url2="static/assets/loginHistory.png",
+            url3="static/assets/loanHistory.png")
+    else:
+        return render_template("errorPage.html")
 
 
 @app.route("/approve_request", methods=["GET", "POST"])
