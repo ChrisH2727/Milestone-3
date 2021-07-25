@@ -79,7 +79,7 @@
         <div class="card-content black-text ">
           <span class="card-title">User Management</span>   
           <ul class="collapsible ">
-            {% for alt_user in alt_users %}  
+            {% for user in users %}  
               <li>
                 <div class="collapsible-header white-text blue indigo darken-2 ">
                     <div class="row">
@@ -89,7 +89,7 @@
                     </div>
                     <div class="col s5 m3">
                         <strong> Name: </strong>
-                        <p class= "capitalize" >{{ alt_user.first }} {{ alt_user.last }}</p>
+                        <p class= "capitalize" >{{ user.first }} {{ user.last }}</p>
                     </div>
                 </div>
                 <div class="collapsible-body">
@@ -98,7 +98,7 @@
                             <strong>Department: </strong>
                         </div>
                         <div class="col s6 m9">
-                            <p>{{ alt_user.department }}</p>
+                            <p>{{ user.department }}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -106,7 +106,7 @@
                             <strong>Research Group: </strong>
                         </div>
                         <div class="col s6 m9">
-                            <p>{{ alt_user.research_group }}</p>
+                            <p>{{ user.research_group }}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -114,11 +114,11 @@
                             <strong>Approve User: </strong>
                         </div>
                         <div class="col s6 m9">
-                            <a href="{{ url_for('get_userb', user_id=alt_user._id) }}" 
-                            {% if alt_user.approved=='approve' or  alt_user.approved=='approved' %}
-                                class="btn-small  teal lighten-2" >{{ alt_user.approved }} 
+                            <a href="{{ url_for('get_userb', user_id=user._id) }}" 
+                            {% if user.approved=='approve' or  user.approved=='approved' %}
+                                class="btn-small  teal lighten-2" >{{ user.approved }} 
                             {% else %}
-                                class ="btn-small deep-orange darken-1">{{ alt_user.approved }} 
+                                class ="btn-small deep-orange darken-1">{{ user.approved }} 
                             {% endif %}
                             </a>
                         </div>
@@ -128,8 +128,8 @@
                             <strong>Approved Date: </strong>
                         </div>
                         <div class="col s6 m9">   
-                            {% if alt_user.approved =='approved' %} 
-                                {{ alt_user.approved_date }}
+                            {% if user.approved =='approved' %} 
+                                {{ user.approved_date }}
                             {% else %}
                             -
                             {% endif %}
@@ -140,8 +140,8 @@
                             <strong>Suspended Date: </strong>
                         </div>
                         <div class="col s6 m9">   
-                            {% if alt_user.approved =='suspended' %} 
-                                {{ alt_user.remove_date }}
+                            {% if user.approved =='suspended' %} 
+                                {{ user.remove_date }}
                             {% else %}
                             -
                             {% endif %}
@@ -152,8 +152,8 @@
                             <strong>User Role: </strong>
                         </div>
                         <div class="col s6 m9">
-                            <a href="{{ url_for('get_userc', user_id=alt_user._id) }}"
-                        {% if alt_user.role=='admin' %}
+                            <a href="{{ url_for('get_userc', user_id=user._id) }}"
+                        {% if user.role=='admin' %}
                             class="btn-small  teal lighten-2">Admin
                         {% else %}
                             class ="btn-small deep-orange darken-1" >User
@@ -165,7 +165,7 @@
                             <strong>Delete User Account: </strong>
                         </div>
                         <div class="col s6 m9">
-                            <a href="{{ url_for('get_userdelete', user_id=alt_user._id) }}" 
+                            <a href="{{ url_for('get_userdelete', user_id=user._id) }}" 
                                 class="btn-small  teal lighten-2" >Delete
                             </a>
                         </div>

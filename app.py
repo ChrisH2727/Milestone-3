@@ -1,7 +1,9 @@
 import os
 import re
+import math
 import matplotlib.pyplot as plt
 import numpy as np
+import pymongo
 
 from flask import (
     Flask, flash, render_template,
@@ -9,10 +11,10 @@ from flask import (
 from flask_pymongo import PyMongo
 from pymongo import ReturnDocument
 from bson.objectid import ObjectId
-from selenium import webdriver
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
+
 from datetime import datetime
 
 
@@ -23,15 +25,6 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
-def mongo_connect(url):
-    try:
-        conn = pymongo.MongoClient(url)
-        print("Mongo is connected")
-        return conn
-    except pymongo.errors.ConnectionFailure as e:
-        print("Could not connect to MongoDB: %s") % e
-
-
 @app.route("/")
 
 @app.route("/login", methods=["GET", "POST"])
@@ -39,35 +32,49 @@ def login():
     #
     # Function called when the user first logs in
     #
-    
-    # clear any exiting flash messages
-    session.pop('_flashes', None)
 
+    # Ensure only login and register nav bar options are available
+    if session.get("in_use"):
+        session.pop("in_use")
+    
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
-            {"email": request.form.get("email").lower(),
+                {"email": request.form.get("email").lower(),
                 "password": request.form.get("password").lower()})
-        
+
         if existing_user:
-            if existing_user["approved"] == "approved":
-                # session cookie for role "admin" or "user"
-                session["role"] = existing_user["role"]
-                # session cookie for users first name
-                session["user"] = existing_user["first"]
-            
-                # Add an entry to the user login history
-                user = {
-                    "first": existing_user["first"].lower(),
-                    "last": existing_user["last"].lower(),
-                    "email": request.form.get("email").lower(),
-                    "login_date": datetime.today().strftime('%d-%m-%y'),
-                    "logout_date": ""
-                }
-                mongo.db.login_history.insert_one(user)
-            
-                return redirect(url_for("userAccount"))
+            # Check if user already has an open session
+            if existing_user["status"] == "logged_out":
+                # Check if users account has been approved
+                if existing_user["approved"] == "approved":
+                    # session cookie for role "admin" or "user"
+                    session["role"] = existing_user["role"]
+                    # session cookie for users first name
+                    session["user"] = existing_user["first"]
+                    # session cookie for in_use
+                    session["in_use"] = True
+
+                    # Set user status to logged out
+                    user_status = {"status": "logged_in"}
+                    mongo.db.users.find_one_and_update({"first": session["user"]},
+                            {'$set': user_status}, return_document=ReturnDocument.AFTER)
+                    
+                    # Add an entry to the user login history
+                    login_entry = {
+                        "first": existing_user["first"].lower(),
+                        "last": existing_user["last"].lower(),
+                        "email": request.form.get("email").lower(),
+                        "login_date": datetime.today().strftime('%d-%m-%y'),
+                        "logout_date": ""
+                    }
+                    mongo.db.login_history.insert_one(login_entry)
+                    return redirect(url_for("userAccount"))
+                else:
+                    flash("Account not approved or suspended")
+                    return redirect(url_for("login"))
             else:
-                flash("Account not approved or suspended. Please refer to an admin user")
+                flash("Please log out before logging in again")
+                return redirect(url_for("login"))
         else:
             # invalid password match or user name or email
             flash("Incorrect Username and/or Password")
@@ -83,23 +90,30 @@ def logout():
     #
 
     # Add date to the user login history
-    user = {"logout_date": datetime.today().strftime('%d-%m-%y')}
-    
+    user_history = {"logout_date": datetime.today().strftime('%d-%m-%y')}
     mongo.db.login_history.find_one_and_update({"first": session["user"]},
-            {'$set': user}, return_document=ReturnDocument.AFTER)
+            {'$set': user_history}, return_document=ReturnDocument.AFTER)
     
-    # Remove user from session cookie
-    # Code line from Code Institute Mini Project 
-    flash("Goodbye, {}".format(session["user"]), "You have been logged out" )
-    session.pop("user")
-    session.pop("role")
+    # Set user status to logged out
+    user_status = {"status": "logged_out"}
+    mongo.db.users.find_one_and_update({"first": session["user"]},
+            {'$set': user_status}, return_document=ReturnDocument.AFTER)
+
+    # Code line from Code Institute Mini Project
+    flash("Goodbye, {}".format(session["user"]), "You have been logged out")
+    # Remove user from session cookies if active
+    if session.get("user"):
+        session.pop("user")
+    if session.get("role"):
+        session.pop("role")
+    if session.get("in_use"):
+        session.pop("in_use")
+    
     return render_template("login.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    # clear any exiting flash messages
-    # session.pop('_flashes', None)
 
     if request.method == "POST":
 
@@ -114,7 +128,6 @@ def register():
             flash("Please complete all fields before clicking the submit button")
             return redirect(url_for("register"))
         else:
-            print("false")
             # clear any exiting flash messages
             session.pop('_flashes', None)
         
@@ -181,10 +194,9 @@ def approve_request():
     else:
         showtable = "true"
 
-    existing_sources = mongo.db.sources.find({"requested": "true"})
-    alt_existing_sources = mongo.db.sources.find({"requested": "true"})
+    existing_sources = list(mongo.db.sources.find({"requested": "true"}))
     return render_template("approveRequest.html", sources=existing_sources,
-        alt_sources=alt_existing_sources, showtable=showtable)
+        showtable=showtable)
 
 
 @app.route("/approve_request_resp<source_serial_no>", methods=["GET", "POST"])
@@ -292,10 +304,8 @@ def get_userb(user_id):
         mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
             { '$set': submit }, return_document = ReturnDocument.AFTER)
 
-    users = mongo.db.users.find()
-    alt_users = mongo.db.users.find()
-    return render_template("user.html", users=users, alt_user=alt_users)
-
+    users = list(mongo.db.users.find())
+    return render_template("user.html", users=users)
 
 
 @app.route("/get_userc/<user_id>", methods=["GET", "POST"])
@@ -319,9 +329,8 @@ def get_userc(user_id):
             { '$set': submit }, return_document = ReturnDocument.AFTER)
         flash("User role successfully updated")
     
-    users = mongo.db.users.find()
-    alt_users=mongo.db.users.find()
-    return render_template("user.html", users=users, alt_users=alt_users)
+    users = list(mongo.db.users.find())
+    return render_template("user.html", users=users)
 
 
 @app.route("/get_userdelete/<user_id>", methods=["GET", "POST"])
@@ -347,27 +356,49 @@ def get_userdelete(user_id):
         mongo.db.users.delete_one({"_id": ObjectId(user_id)})
         flash("user account sucessfuly deleted")
 
-    users = mongo.db.users.find()
-    alt_users = mongo.db.users.find()
-    return render_template("user.html", users=users, alt_users=alt_users)
+    users = list(mongo.db.users.find())
+    return render_template("user.html", users=user)
 
 
 @app.route("/get_user")
 def get_user():
-    users = mongo.db.users.find()
-    alt_users = mongo.db.users.find()
-    return render_template("user.html", users=users, alt_users=alt_users) 
+    users = list(mongo.db.users.find())
+    return render_template("user.html", users=users) 
 
 
 @app.route("/get_sources")
 def get_sources():
-    # Guidance on the rewinding/reseting of the pymongo cursor unclear
-    # hence use 2 instances of the cursor one for each view (large 
-    # width/reduced width screen size)
+    # 
+    # Called when the full source inventory is to be displayed
+    # Calculates updated source activity 
+    # 
 
     sources = list(mongo.db.sources.find())
-    return render_template("inventory.html", sources=sources)
+    
+    for source in sources:
+        serial_number=(source["serial_number"])
+        origin_act=float(source["original_activity"])
+        date_out=source["activation_date"]
+        half_life=float(source["half_life"])
 
+        # datetime.datetime.strptime only supported by date time 
+        # strftime used else where and requires the datetime component from datetime
+        import datetime
+        delta_years = (((datetime.datetime.now() - datetime.datetime.strptime(date_out, '%d-%m-%y')).days)/365.25)
+        from datetime import datetime
+        
+        # Calculate new activity using equation for radioactive decay
+        new_act=str(round(origin_act*math.exp(((-1*math.log(2)*delta_years)/half_life)),2))
+        
+        source_new_act = {"activity_now": new_act}
+        mongo.db.sources.find_one_and_update({"serial_number": serial_number},
+            {'$set': source_new_act}, return_document=ReturnDocument.AFTER)
+    
+    # Restrict access to admin users only
+    if session["role"] == "admin":    
+        return render_template("inventory.html", sources=sources)
+    else:
+        return render_template("errorPage.html")
 
 @app.route("/add_source", methods=["GET", "POST"])
 def add_source():
@@ -612,11 +643,9 @@ def userAccount():
 
     # User already logged in so use session cookie as key to user details
     existing_user = mongo.db.users.find_one({"first": session["user"]})
-
     user_id = existing_user["_id"]
-    
-    if request.method == "POST":
 
+    if request.method == "POST":
         if request.form.get("password") != request.form.get("repeat_password"):
             flash("Please ensure that that your password entries match")
         else:
@@ -636,6 +665,35 @@ def userAccount():
     loanSources = list(mongo.db.sources.find({"user": userfirst}))
     return render_template("userAccount.html",
             user=existing_user, usersources=loanSources)
+
+#-------------------------Manage isotope types------------------------
+@app.route("/manage_isotopes", methods=["GET", "POST"])
+def manage_isotopes():
+    #
+    #  Called to list out isotope types to the admin user
+    #
+    if request.method == "POST":
+        isotope_entry = {
+                        "isotope": request.form.get("isotope"),
+                        "halflife": request.form.get("halflife")
+                        }
+        mongo.db.isotope_category.insert_one(isotope_entry)
+
+    # get isotope list   
+    if session["role"] == "admin":
+        isotopes = list(mongo.db.isotope_category.find())   
+        return render_template("isotopeTypes.html", isotopes=isotopes)
+    else:
+        return render_template("errorPage.html")
+
+
+@app.route("/delete_isotope_resp/<isotope_id>", methods=["GET", "POST"])
+def delete_isotope_resp(isotope_id):
+    #
+    # Called to delete an isotope from the list in mongo db 
+    #
+    mongo.db.isotope_category.delete_one({"_id": ObjectId(isotope_id)})     
+    return redirect(url_for("manage_isotopes"))
 
 #-------------------------Error Handlers------------------------------
 @app.errorhandler(404) 

@@ -52,7 +52,7 @@
                 <div class="card-content black-text ">
                 <span class="card-title">Approval Source Loan Request</span>   
                     <ul class="collapsible ">
-                        {% for alt_source in alt_sources %}  
+                        {% for source in sources %}  
                             <li>
                                 <div class="collapsible-header white-text blue indigo darken-2 ">
                                     <div class="row">
@@ -61,11 +61,11 @@
                                         </div>
                                         <div class="col s5 m3">
                                             <strong> Isotope: </strong>
-                                            <p>{{ alt_source.isotope }}</p>
+                                            <p>{{ source.isotope }}</p>
                                         </div>
                                         <div class="col s6 m8">
                                             <strong>Serial Number:</strong>
-                                            <p>{{ alt_source.serial_number }}</p>
+                                            <p>{{ source.serial_number }}</p>
                                         </div>
                                     </div>
 
@@ -76,7 +76,7 @@
                                         <strong>Type: </strong>
                                         </div>
                                         <div class="col s6 m9">
-                                        <p>{{ alt_source.type }}</p>
+                                        <p>{{ source.type }}</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -84,7 +84,7 @@
                                         <strong>User: </strong>
                                         </div>
                                         <div class="col s6 m9">
-                                        <p>{{ alt_source.user }}</p>
+                                        <p>{{ source.user }}</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -92,13 +92,13 @@
                                         <strong>Update: </strong>
                                         </div>
                                         <div class="col s6 m9">
-                                            {% if alt_source.approved == "no" and alt_source.requested == "true" %}    
-                                                <a href="{{ url_for('approve_request_resp', source_serial_no=alt_source.serial_number) }}" 
+                                            {% if source.approved == "no" and source.requested == "true" %}    
+                                                <a href="{{ url_for('approve_request_resp', source_serial_no=source.serial_number) }}" 
                                                 class ="btn-small  teal lighten-2" tbl_btn_wd>Approve                      
                                                 </a>
                                             {% endif %}
-                                            {% if alt_source.approved == "yes" and alt_source.requested == "true" %}  
-                                                <a href="{{ url_for('return_source_resp', source_serial_no=alt_source.serial_number) }}" 
+                                            {% if source.approved == "yes" and source.requested == "true" %}  
+                                                <a href="{{ url_for('return_source_resp', source_serial_no=source.serial_number) }}" 
                                                 class ="btn-small  deep-orange accent-3" tbl_btn_wd>Return                      
                                                 </a>
                                             {% endif %}
