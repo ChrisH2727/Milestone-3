@@ -2,60 +2,73 @@
 {% block content %}
 
 <div class="row">
-  <div class="col s12 m8 offset-m2">
-    <div class="card">
-      <div class="card-content black-text">
-        <span class="card-title">Register</span>
-        <form method="POST" action="{{ url_for('register') }}">
-          <div class="row">
-            <div class="input-field col s6">
-              <input id="first_name" name ="first_name" type="text" class="validate" pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$">
-              <label for="first_name">First Name</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="last_name" name="last_name" type="text" class="validate">
-              <label for="last_name">Last Name</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="password" type="password" name="password" class="validate" >
-              <label for="password">New password</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="repeat_password" type="password" name="repeat_password" class="validate"  >
-              <label for="repeat_password">Repeat password</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="email" type="email" name="email" class="validate" emailObject.pattern="^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$">
-              <label for="email">Email</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s6">
-              <!--Regex first three characters must be alpha then any alpha numeric and incuding spaces and "-"-->
-              <input id="department" type="text" name="department" class="validate"pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$" >
-              <label for="department">Department</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="research_group" type="text" name="research_group" class="validate" pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$">
-              <label for="research_group">Research Group</label>
-            </div>
-          </div>
-          <div class="card-action">
-            <button class="btn-large deep-orange accent-3 " type="submit" name="action">Submit
-              <i class="fas fa-cloud-upload-alt"></i>
-            </button>
-          </div>
-        </form>
+  <div class="col s12 m12 l10 offset-l1">
+    <div class="card blue lighten-3">
+      <div class=" card-content black-text">
+      <span class="card-title">Register</span>
+        <div class="card white black-text">
+          
+            <form method="POST" action="{{ url_for('register') }}">
+              <div class="row">
+                <div class="input-field col s6">
+                  <!--regex first charater must be alpha-->
+                  <input id="first_name" name="first_name" type="text" class="validate"
+                    pattern="^[a-zA-Z]{1}(?:[\w \-]{1,10}[\w\-])?$" minlength="1" maxlength="15">
+                  <label for="first_name">First Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="last_name" name="last_name" type="text" class="validate"
+                    pattern="^[a-zA-Z]{1}(?:[\w \-]{1,10}[\w\-])?$" minlength="1" maxlength="15">
+                  <label for="last_name">Last Name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <!--Full password regex is complex and could take weeks to test!-->
+                  <input id="password" type="password" name="password" class="validate" minlength="8" maxlength="24"
+                    pattern="^[a-zA-Z0-9]{8-24}">
+                  <label for="password">New password</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="repeat_password" type="password" name="repeat_password" class="validate" minlength="8"
+                    maxlength="24" pattern="^[a-zA-Z0-9]{8-24}">
+                  <label for="repeat_password">Repeat password</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <!-- regex pattern provided by  https://ihateregex.io 
+                      Author's Github:https://github.com/geongeorge/i-hate-regex-->
+                  <input id="email" type="email" name="email" class="validate"
+                    emailObject.pattern="^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$">
+                  <label for="email">Email</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <!--Regex first three characters must be alpha then any alpha numeric and incuding spaces and "-"-->
+                  <input id="department" type="text" name="department" class="validate"
+                    pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$" minlength="3" maxlength="15">
+                  <label for="department">Department</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="research_group" type="text" name="research_group" class="validate"
+                    pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$" minlength="3" maxlength="15">
+                  <label for="research_group">Research Group</label>
+                </div>
+              </div>
+              <div class="card-action">
+                <button class="btn-large teal lighten-2" type="submit" name="action">Submit
+                  <i class="fas fa-cloud-upload-alt"></i>
+                </button>
+              </div>
+            </form>
+
+        </div>
       </div>
-    </div>
+    </div>    
   </div>
 </div>
-
-
 {% endblock %}

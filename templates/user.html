@@ -30,9 +30,9 @@
                                 <td>
                                     <a href="{{ url_for('get_userb', user_id=user._id) }}" 
                                     {% if user.approved=='approve' or  user.approved=='approved' %} 
-                                        class="btn-small  teal lighten-2" >{{ user.approved }}
+                                        class="btn-small  teal lighten-2 sm-btn-add " >{{ user.approved }}
                                     {% else %}
-                                        class ="btn-small deep-orange darken-1" >{{ user.approved }}
+                                        class ="btn-small deep-orange darken-1 sm-btn-add">{{ user.approved }}
                                     {% endif %}
                                     </a>
                                 </td>
@@ -53,15 +53,15 @@
                                 <td>
                                     <a href="{{ url_for('get_userc', user_id=user._id) }}" 
                                     {% if user.role=='admin' %}
-                                        class="btn-small  teal lighten-2" >Admin
+                                        class="btn-small  teal lighten-2 sm-btn-add" >Admin
                                     {% else %}
-                                        class ="btn-small deep-orange darken-1">User
+                                        class ="btn-small deep-orange darken-1 sm-btn-add">User
                                     {% endif %}
                                     </a>
                                 </td>
                                 <td>
                                     <a href="{{ url_for('get_userdelete', user_id=user._id) }}" 
-                                        class="btn-small  teal lighten-2" >Active </a>
+                                        class="btn-small  teal lighten-2 sm-btn-add" >Active </a>
                                     
                                     </a>
                                 </td>
@@ -81,7 +81,7 @@
           <ul class="collapsible ">
             {% for user in users %}  
               <li>
-                <div class="collapsible-header white-text blue indigo darken-2 ">
+                <div class="collapsible-header white-text blue indigo darken-2 sm-btn-add ">
                     <div class="row">
                         <div class="col s1 m1">
                             <i class="fas fa-caret-down"> </i>
@@ -116,9 +116,9 @@
                         <div class="col s6 m9">
                             <a href="{{ url_for('get_userb', user_id=user._id) }}" 
                             {% if user.approved=='approve' or  user.approved=='approved' %}
-                                class="btn-small  teal lighten-2" >{{ user.approved }} 
+                                class="btn-small  teal lighten-2 sm-btn-add" >{{ user.approved }} 
                             {% else %}
-                                class ="btn-small deep-orange darken-1">{{ user.approved }} 
+                                class ="btn-small deep-orange darken-1 sm-btn-add">{{ user.approved }} 
                             {% endif %}
                             </a>
                         </div>
@@ -156,7 +156,7 @@
                         {% if user.role=='admin' %}
                             class="btn-small  teal lighten-2">Admin
                         {% else %}
-                            class ="btn-small deep-orange darken-1" >User
+                            class ="btn-small deep-orange darken-1 sm-btn-add" >User
                         {% endif %}
                             </a>
                     </div>
@@ -166,7 +166,7 @@
                         </div>
                         <div class="col s6 m9">
                             <a href="{{ url_for('get_userdelete', user_id=user._id) }}" 
-                                class="btn-small  teal lighten-2" >Delete
+                                class="btn-small  teal lighten-2 sm-btn-add" >Delete
                             </a>
                         </div>
                     </div>

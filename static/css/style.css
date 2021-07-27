@@ -51,6 +51,11 @@ body {
   font-size: 20px;
   height:4rem;
 }
+.sm-btn-add{
+  min-width: 76px;
+  border-radius: 5px; 
+}
+
 
 /****************************Collapsable Body******************************/
 
@@ -60,8 +65,7 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, ta
   font-size: 14px;
 }
 /****************************Usage Report Charts******************************/
-plot-scale{
-  
+.plot-scale{
   width: 100%;
   height: auto;
 }
@@ -91,4 +95,7 @@ nav .nav-title {
 }
 nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
   padding-top: 20px;
+}
+.rm-padding{
+  padding-top: 0px;
 }

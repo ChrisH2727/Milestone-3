@@ -21,7 +21,6 @@
 </head>
 
 <body>
-
     <header>
         <!-- top navbar -->
         <ul id="source-dropdown" class="dropdown-content">
@@ -49,7 +48,7 @@
             <li><a href=" {{url_for('usage_report') }}">Usage Report</a></li>
             <li><a href="{{url_for('approve_request') }}">Approve Request</a></li>
         </ul>
-        <nav class="nav-extended">
+        <nav class="nav-extended" >
             <div class="nav-wrapper indigo darken-2">
                 <a href="#" class="brand-logo logo-shift"><i class="fas fa-atom"> Faculty of
                         Physics</i></a>
@@ -62,14 +61,14 @@
                         <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
                         {% if session.role|lower == "admin"|lower %}
                             <li><a href="{{ url_for('get_user') }}">User Access</a></li>
-                            <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown2">Inventory <i
-                                class="fas fa-caret-down"></i></a></li>
-                            <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown2">Source <i
-                                class="fas fa-caret-down"></i></a></li>
+                            <li><a class="dropdown-trigger" data-target="inventory-dropdown2">Inventory <i
+                                class="fas fa-caret-down rm-padding"></i></a></li>
+                            <li><a class="dropdown-trigger" data-target="source-dropdown2">Source <i
+                                class="fas fa-caret-down rm-padding"></i></a></li>
                         {% endif %}
                     {% else %}
                         <li><a href="{{ url_for('register') }}">Register</a></li>
-                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        <!--li><a href="{{ url_for('login') }}">Login</a></li-->
                     {% endif %}
 
                 </ul>
@@ -92,10 +91,8 @@
                 {% endif %}
             {% else %}
                 <li><a href="{{ url_for('register') }}">Register</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <!--li><a href="{{ url_for('login') }}">Login</a></li-->
             {% endif %}
-
-
         </ul>
     </header>
 

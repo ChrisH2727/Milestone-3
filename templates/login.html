@@ -1,41 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
 
-  <div class="col s12 m7">
-    <div class="card horizontal">
-      <div class="card-image hide-on-med-and-down background" >
-        <!--Image provided by Sutterstock -->
-        <img src="static/assets/isotope.jpg" alt="Radio active isotope" class="responsive">
-      </div>
-      <div class="card-stacked ">
-        <div class="card-content ">
-          <h2 class="header">Login:</h2>
-          <div class="row">
-            <form class="col s12" method="POST" action="{{ url_for('login') }}">
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="email" type="email" name="email" class="validate"
-                  pattern="^[A-Za-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{1,4}[^\\S]+$">
-                  <label for="email">Email</label>
-                </div>
+<div class="col s12 m7">
+  <div class="card horizontal">
+    <div class="card-image hide-on-med-and-down background">
+      <!--Image provided by Sutterstock -->
+      <img src="static/assets/isotope.jpg" alt="Radio active isotope" class="responsive">
+    </div>
+    <div class="card-stacked blue lighten-3">
+      <div class="card-content black-text">
+        <span class="card-title">Login</span>
+        <div class="card white black-text" <div class="row">
+          <form class="col s12" method="POST" action="{{ url_for('login') }}">
+            <div class="row">
+              <div class="input-field col s12">
+                <!--regex first charater must be alpha-->
+                <input id="email" type="email" name="email" class="validate"
+                  <pattern="^[A-Za-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{1,4}[^\\S]+$" required>
+                <label for="email">Email</label>
               </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="password" type="password" name="password"class="validate">
-                  <label for="password">Password</label>
-                </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <!--Full password regex is complex and could take weeks to test!-->
+                <input id="password" type="password" name="password" class="validate" minlength="2" maxlength="24"
+                  required pattern="^[a-zA-Z0-9]{2-24}">
+                <label for="password">Password</label>
               </div>
-              <div class="card-action">
-                <button class="btn-large deep-orange accent-3 "type="submit" name="action">Submit
+            </div>
+            <div class="card-action">
+              <button class="btn-large teal lighten-2 " type="submit" name="action">Submit
                 <i class="fas fa-cloud-upload-alt"></i>
-                </button>
-              </div>
-            </form>
-          </div>
+              </button>
+            </div>
+          </form>
         </div>
-        
       </div>
     </div>
-  </div>
 
-  {% endblock %}
+  </div>
+</div>
+</div>
+{% endblock %}

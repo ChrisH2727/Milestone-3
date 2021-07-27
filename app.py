@@ -14,9 +14,7 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
-
 from datetime import datetime
-
 
 app = Flask(__name__)
 
@@ -40,11 +38,11 @@ def login():
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
                 {"email": request.form.get("email").lower(),
-                "password": request.form.get("password").lower()})
+                    "password": request.form.get("password").lower()})
 
         if existing_user:
             # Check if user already has an open session
-            if existing_user["status"] == "logged_out":
+            # if existing_user["status"] == "logged_out":
                 # Check if users account has been approved
                 if existing_user["approved"] == "approved":
                     # session cookie for role "admin" or "user"
@@ -53,6 +51,7 @@ def login():
                     session["user"] = existing_user["first"]
                     # session cookie for in_use
                     session["in_use"] = True
+                    # session cookie for email
 
                     # Set user status to logged out
                     user_status = {"status": "logged_in"}
@@ -72,9 +71,9 @@ def login():
                 else:
                     flash("Account not approved or suspended")
                     return redirect(url_for("login"))
-            else:
-                flash("Please log out before logging in again")
-                return redirect(url_for("login"))
+            # else:
+            #    flash("Please log out before logging in again")
+            #    return redirect(url_for("login"))
         else:
             # invalid password match or user name or email
             flash("Incorrect Username and/or Password")
@@ -390,14 +389,21 @@ def get_userdelete(user_id):
         flash("user account sucessfuly deleted")
 
     users = list(mongo.db.users.find())
-    return render_template("user.html", users=user)
+    return render_template("user.html", users=users)
 
 
 @app.route("/get_user")
 def get_user():
-    users = list(mongo.db.users.find())
-    return render_template("user.html", users=users) 
+    #
+    # Called to display a complete table of all users with eiter admin or user role
+    #
 
+    # Restrict access to admin users only
+    if session["role"] == "admin":   
+        users = list(mongo.db.users.find())
+        return render_template("user.html", users=users) 
+    else:
+        return render_template("errorPage.html")
 
 @app.route("/get_sources")
 def get_sources():
@@ -521,7 +527,8 @@ def source_request():
     query = request.form.get("query")
     mode = "request"
     if query:
-        sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
+        # Find collection of seached sources not already requested
+        sources = list(mongo.db.sources.find({"$and":[{"$text": {"$search": query}}, {"requested":"false"}]}))
         showsources = "true"
         return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
     else:
@@ -546,8 +553,7 @@ def del_source_req(source_serial_no):
     # Get list of sources held by the user
     userfirst = session["user"]
     loanSources = list(mongo.db.sources.find({"user": userfirst}))
-    return render_template("userAccount.html",
-            user=userfirst, usersources=loanSources)
+    return redirect(url_for("userAccount"))
 
 
 @app.route("/req_source_conf/<source_serial_no>" , methods=["GET", "POST"])

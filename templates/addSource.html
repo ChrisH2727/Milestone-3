@@ -22,7 +22,7 @@
                 <div class="card white black-text">
                     <div class="row">
                         <div class="input-field col l3 m6">
-                            <input id="serial_number" name="serial_number" type="text" class="validate cardInput" required"
+                            <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" required
                             {% if mode == "update" or mode =="delete" %}  
                                 value ="{{existing_source.serial_number}}"
                             {% endif %}>
