@@ -51,7 +51,6 @@ def login():
                     session["user"] = existing_user["first"]
                     # session cookie for in_use
                     session["in_use"] = True
-                    # session cookie for email
 
                     # Set user status to logged out
                     user_status = {"status": "logged_in"}
@@ -462,7 +461,7 @@ def add_source():
             "laboratory": request.form.get("laboratory"),
             "location": request.form.get("location"),
             "isotope": request.form.get("isotope"),
-            "half_life": isotope_half_life["isotope"][1],
+            "half_life": isotope_half_life,
             "half_life_units": "years",
             "original_activity": request.values.get("original_activity"),
             "original_activity_units": request.values.get("original_activity_units"),

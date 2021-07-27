@@ -97,45 +97,56 @@
                     </div>
                     <div class="row">
                         <div class="input-field col l3 m6" >
-                            {% if mode == "update" %}
+                        {% if mode == "update" %}
                                 <select id="isotope" name="isotope" class="validate" required>
                                 <option value="{{ existing_source.isotope }}" disabled selected>{{ existing_source.isotope }}</option>
                             {% for isotope in isotope_category %}
-                                <option value="{{ isotope.isotope[0] }}">{{ isotope.isotope[0] }}  {{ isotope.isotope[1] }} years</option>
+                                <option value="{{ isotope.isotope }}">{{ isotope.isotope }}  {{ isotope.halflife }} years</option>
                             {% endfor %}
                                 </select>
                             <label for="isotope">Locations</label>
+                            
                         {% elif mode =="delete" %}
-                            <h5>Isotope: <span><small>{{ existing_source.isotope }}</small></span></h5>
-                        {% else %}
-                            <select id="isotope" name="isotope" class="validate" required>
-                            <option value="" disabled selected>Select Isotope</option>
+                                <h5>Isotope: <span><small>{{ existing_source.isotope }}</small></span></h5>
+                            {% else %}
+                                <select id="isotope" name="isotope" class="validate" required>
+                                <option value="" disabled selected>Select Isotope</option>
                             {% for isotope in isotope_category %}
-                                <option value="{{ isotope.isotope[0] }}">{{ isotope.isotope[0] }}<strong> half life: </strong>{{ isotope.isotope[1] }}</option>
+                                <option value="{{ isotope.isotope }}">{{ isotope.isotope }}<strong> half life: </strong>{{ isotope.halflife }}</option>
                             {% endfor %}
-                            </select>
+                                </select>
                             <label for="isotope">Isotope</label>
                         {% endif %}                        
                         </div>
 
                         <div class="input-field col l3 s8 m4">
-                            <input id="original_activity" name="original_activity" type="text" class="validate" required>
+                            <input id="original_activity" name="original_activity" type="text" class="validate" 
+                            value= "{{existing_source.original_activity}}" style="height: 4rem;" required>
                             <label for="original_activity">Original Activity</label>
                         </div>
                         <div class="input-field col l2 s4 m4">
                             <p>
                                 <label>
-                                    <input name="original_activity_units"  value="kBq" type="radio" checked />
+                                    <input name="original_activity_units" type="radio" value="kBq"
+                                    {% if mode =="update" and  existing_source.original_activity_units == "kBq" %}
+                                        checked />
+                                    {% else %}
+                                        checked  />
+                                    {% endif %}
                                     <span>kBq</span>
                                 </label>
                                 <label>
                                     <input name="original_activity_units" value="MBq" type="radio" />
+                                    {% if mode =="update" and  existing_source.original_activity_units == "MBq" %}
+                                        checked  value="kBq"/>
+                                    {% endif %}
                                     <span>MBq</span>
                                 </label>
                             </p>
                         </div>
                         <div class="input-field col l3 s12 m4">
-                            <input type="text" id="activation_date" name="activation_date" class="datepicker" required>
+                            <input type="text" id="activation_date" name="activation_date" 
+                            class="datepicker" required value= "{{existing_source.activation_date}}" style="height: 4rem;">
                             <label for="activation_date">Activation Date</label>
                         </div>
                     </div>
