@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="center-align ">
+<h1>Unauthorised Access!</h1>
+<h3> Please click below to return to your home page.</h3>
+<a href="{{ url_for('userAccount') }}"  class="btn-large deep-orange accent-3">
+    <i class="fa-solid fa-house"></i> Return </a>
+</div>
+{% endblock %}
