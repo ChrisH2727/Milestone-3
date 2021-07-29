@@ -171,7 +171,9 @@ def usage_report():
     source_num = []
     for source in source_types:
         source_num.append(mongo.db.sources.count_documents({"isotope": source}))
-    
+    print(source_types)
+    print(source_num)
+
     # Determine Logins per day
     logins = mongo.db.login_history.find().distinct("login_date")
     login_num = []
@@ -186,25 +188,31 @@ def usage_report():
 
     # Page only accessible for admin users
     if session["role"] == "admin":
-        plt.bar(source_types, source_num, color='green')
-        plt.title("Sources by Isotope") 
-        plt.savefig('static/assets/sourceUsed.png')
-        plt.close()
+        
+        try:
+            plt.bar(source_types, source_num, color='green')
+            plt.title("Sources by Isotope") 
+            plt.savefig('static/assets/sourceUsed.png')
+            plt.close()
 
-        plt.bar(logins, login_num, color='blue')
-        plt.title("User Logins by Day")  
-        plt.savefig('static/assets/loginHistory.png')
-        plt.close()
+            plt.bar(logins, login_num, color='blue')
+            plt.title("User Logins by Day")  
+            plt.savefig('static/assets/loginHistory.png')
+            plt.close()
 
-        plt.bar(source_loans, loans_num, color='red')
-        plt.title("Source Loans by Serial Number")  
-        plt.savefig('static/assets/loanHistory.png')
-        plt.close()
+            plt.bar(source_loans, loans_num, color='red')
+            plt.title("Source Loans by Serial Number")  
+            plt.savefig('static/assets/loanHistory.png')
+            plt.close()
+        
+        except Exception:
+            flash("Database error, unable to generate updated reports")    
 
         return render_template("usageReport.html", name="usage plot",
             url1="static/assets/sourceUsed.png",
             url2="static/assets/loginHistory.png",
             url3="static/assets/loanHistory.png")
+
     else:
         return render_template("errorPage.html")
 
@@ -404,31 +412,41 @@ def get_user():
     else:
         return render_template("errorPage.html")
 
+
+#-------------------------Create Read Update Delete Sources------------------------
+
+
 @app.route("/get_sources")
 def get_sources():
     # 
-    # Called when the full source inventory is to be displayed
+    # Called when the full source inventory is to be read from mongo db
     # Calculates updated source activity 
     # 
 
     sources = list(mongo.db.sources.find())
     
     for source in sources:
-        serial_number=(source["serial_number"])
-        origin_act=float(source["original_activity"])
-        date_out=source["activation_date"]
-        half_life=float(source["half_life"])
 
-        # datetime.datetime.strptime only supported by date time 
-        # strftime used else where and requires the datetime component from datetime
-        import datetime
-        delta_years = (((datetime.datetime.now() - datetime.datetime.strptime(date_out, '%d-%m-%y')).days)/365.25)
-        from datetime import datetime
-        
-        # Calculate new activity using equation for radioactive decay
-        new_act=str(round(origin_act*math.exp(((-1*math.log(2)*delta_years)/half_life)),2))
-        
+        # If db problem use existing activity
+        try:
+            serial_number=(source["serial_number"])
+            origin_act=float(source["original_activity"])
+            date_out=source["activation_date"]
+            half_life=float(source["half_life"])
+
+            # datetime.datetime.strptime only supported by date time 
+            # strftime used else where and requires the datetime component from datetime
+            import datetime
+            delta_years = (((datetime.datetime.now() - datetime.datetime.strptime(date_out, '%d-%m-%y')).days)/365.25)
+            from datetime import datetime
+
+            # Calculate new activity using equation for radioactive decay
+            new_act=str(round(origin_act*math.exp(((-1*math.log(2)*delta_years)/half_life)),2))
+        except:
+            new_act = origin_act
+
         source_new_act = {"activity_now": new_act}
+
         mongo.db.sources.find_one_and_update({"serial_number": serial_number},
             {'$set': source_new_act}, return_document=ReturnDocument.AFTER)
     
@@ -437,6 +455,7 @@ def get_sources():
         return render_template("inventory.html", sources=sources)
     else:
         return render_template("errorPage.html")
+
 
 @app.route("/add_source", methods=["GET", "POST"])
 def add_source():
@@ -671,7 +690,8 @@ def delete_source_resp(source_serial_no):
         existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})    
         mode = "delete"
         flash("You are about to delete", source_serial_no)    
-        return render_template("addSource.html", mode=mode, existing_source=existing_source)
+        # return render_template("addSource.html", mode=mode, existing_source=existing_source)
+        return render_template("deleteSource.html",existing_source=existing_source)
     else:
         return render_template("errorPage.html")
 

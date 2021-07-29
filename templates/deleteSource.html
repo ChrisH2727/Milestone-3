@@ -1,53 +1,80 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Delete Source</h1>
 <div class="row">
-    <div class="col s12 m8 offset-m2">
-        <div class="card blue lighten-3">
-            <div class="card-content white-text">
+    <div class="col s12 m12 l10 offset-l1">
+        <div class="card blue lighten-3 center-align">
+            <div class="card-content black-text">
                 <span class="card-title">Delete Source</span>
-                <form>
-                <div class="row">
-                    <div class="input-field col s3">  
-                        <!--span>Serial Number: {{existing_source.serial_number}}</span-->
-                        <input id="serial_number" name="serial_number" type="text" value="{{existing_source.serial_number}}" disabled>>
-                        <label for="serial_number">Serial Number</label>
-                    </div>
-                    <div class="input-field col s3">
-                        <span>Department:</span>
-                    </div>
-                    <div class="input-field col s3">
-                        <span>Laboratory: </span>
-                    </div>
-                    <div class="input-field col s3">
-                        <span>Location:</span>
-                    </div>
+                    <form>
+                        <div class="card white black-text">
+                            <div class="row">
+                                <div class="col l3 m6 s12">
+                                    <h5 class="del-card-ul">Serial Number: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{ existing_source.serial_number }}</p>
+                                    <hr class="del-card-ul del-card-item ">
+                                </div>
+
+                                <div class="col l3 m6 s12" >
+                                    <h5 class="del-card-ul">Department: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{ existing_source.department }}</p>
+                                    <hr class="del-card-ul del-card-item ">
+                                </div>
+                                <div class="col l3 m6 s12" >
+                                    <h5 class="del-card-ul">Laboratory: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{ existing_source.laboratory }}</p>
+                                    <hr class="del-card-ul del-card-item ">
+                                </div>
+                                <div class="col l3 m6 s12" >
+                                    <h5 class="del-card-ul">Location: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{ existing_source.location }}</p>
+                                    <hr class="del-card-ul del-card-item ">
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class=" col l4 s12 m6" >
+                                    <h5 class="del-card-ul">Isotope: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{ existing_source.isotope }}</p>
+                                    <hr class="del-card-ul del-card-item ">
+                                </div>
+                                <div class="col l4 s12 m6">
+                                    <h5 class="del-card-ul">Original Activity: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.original_activity}} {{existing_source.original_activity_units}}</p>
+                                    <hr class="del-card-ul del-card-item ">
+                                </div>
+                                <div class="col l4 s12 m6">
+                                    <h5 class="del-card-ul">Activation Date: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{ existing_source.activation_date }}</p>
+                                    <hr class="del-card-ul del-card-item ">
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col l4 m4 s12">
+                                    <h5>Encapsulation: <span><small>{{ existing_source.type }}</small></span></h5>
+                                </div>
+                                <div class="col l4 s12 m6">
+                                    <h5>Half Life: <span><small>{{existing_source.half_life}} {{existing_source.half_life_units}}</small></span></h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m4 l4">
+                                    <h5>Security Group: <span><small>{{ existing_source.security_group }}</small></span></h5>
+                                </div>
+                                <div class="col l4 m4 s12" >
+                                    <h5>Location: <span><small>{{ existing_source.location }}</small></span></h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"  class="btn-large deep-orange accent-3">  
+                                Delete <i class="fas fa-cloud-upload-alt"></i></a>
+                                <a href="{{ url_for('get_sources') }}"  class="btn-large deep-green accent-3">  
+                                Clear <i class="fas fa-trash-restore-alt"></i></a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                    <div class="row">
-                        <div class="input-field col s4">
-                            <span>Isotope:</span>
-                        </div>
-                        <div class="input-field col s4">
-                            <span>Half Life: </span>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s4">
-                            <span> Original Activity:</span>
-                        </div>
-                        
-                        <div class="input-field col s4">
-                            <span>Activation Date</span>
-                        </div>
-                    </div>
-
-                    <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"  class="btn-large deep-orange accent-3">
-                        <i class="fas fa-cloud-upload-alt"></i> Delete</a>
-                    
-                    <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"  class="btn-large deep-green accent-3">
-                        <i class="fas fa-cloud-upload-alt"></i> Go Back</a>
-                </form>
             </div>
         </div>
     </div>

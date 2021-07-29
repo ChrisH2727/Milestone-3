@@ -9,9 +9,6 @@
                     <span class="card-title">Update Source</span>
                     <form method="POST"action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">
                     <!--form-->
-                {% elif mode =="delete" %}
-                    <span class="card-title">Delete Source</span>
-                    <form>
                 {% elif mode =="request" %}
                     <span class="card-title">Request Source</span>
                     <form>        
@@ -32,14 +29,12 @@
                         <div class="input-field col l3 m6" >
                             {% if mode == "update" %}
                                 <select id="department" name="department" class="validate" required >
-                                <option value="{{ existing_source.department }}" disabled selected>{{ existing_source.department }}</option>
+                                <option value="{{ existing_source.department }}"  selected>{{ existing_source.department }}</option>
                                 {% for department in departments %}
                                     <option value="{{ department.department }}">{{ department.department }}</option>
                                 {% endfor %}
                                 </select>
                                 <label for="department"  >Department</label>
-                            {% elif mode =="delete" %}
-                                <h5>Department: <span><small>{{ existing_source.department }}</small></span></h5>
                             {% else %}
                                 <select id="department" name="department" class="validate" required>
                                 <option value="" disabled selected>Select Department</option>
@@ -54,14 +49,12 @@
                         <div class="input-field col l3 m6">
                             {% if mode == "update" %}
                                 <select id="laboratory" name="laboratory" class="validate" required>
-                                <option value="{{ existing_source.laboratory }}" disabled selected>{{ existing_source.laboratory }}</option>
+                                <option value="{{ existing_source.laboratory }}"  selected>{{ existing_source.laboratory }}</option>
                                 {% for laboratory in laboratories %}
                                     <option value="{{ laboratory.laboratory }}">{{ laboratory.laboratory }}</option>
                                 {% endfor %}
                                 </select>
                                 <label for="laboratory">Laboratory</label>
-                            {% elif mode =="delete" %}
-                                <h5>Laboratory: <span><small>{{ existing_source.laboratory }}</small></span></h5>
                             {% else %}
                                 <select id="laboratory" name="laborarory" class="validate" required>
                                 <option value="" disabled selected>Select Laboratory</option>
@@ -76,14 +69,12 @@
                         <div class="input-field col l3 m6" >
                             {% if mode == "update" %}
                                 <select id="location" name="location" class="validate" required>
-                                <option value="{{ existing_source.location }}" disabled selected>{{ existing_source.location }}</option>
+                                <option value="{{ existing_source.location }}" selected>{{ existing_source.location }}</option>
                             {% for location in locations %}
                                 <option value="{{ location.location }}">{{ location.location }}</option>
                             {% endfor %}
                                 </select>
                             <label for="location">Locations</label>
-                        {% elif mode =="delete" %}
-                            <h5>Locations: <span><small>{{ existing_source.location }}</small></span></h5>
                         {% else %}
                             <select id="location" name="location" class="validate" required>
                             <option value="" disabled selected>Select Location</option>
@@ -99,12 +90,12 @@
                         <div class="input-field col l3 m6" >
                         {% if mode == "update" %}
                                 <select id="isotope" name="isotope" class="validate" required>
-                                <option value="{{ existing_source.isotope }}" disabled selected>{{ existing_source.isotope }}</option>
+                                <option value="{{ existing_source.isotope }}" selected>{{ existing_source.isotope }}</option>
                             {% for isotope in isotope_category %}
                                 <option value="{{ isotope.isotope }}">{{ isotope.isotope }}  {{ isotope.halflife }} years</option>
                             {% endfor %}
                                 </select>
-                            <label for="isotope">Locations</label>
+                            <label for="isotope">Isotope</label>
                             
                         {% elif mode =="delete" %}
                                 <h5>Isotope: <span><small>{{ existing_source.isotope }}</small></span></h5>
@@ -136,7 +127,7 @@
                                     <span>kBq</span>
                                 </label>
                                 <label>
-                                    <input name="original_activity_units" value="MBq" type="radio" />
+                                    <input name="original_activity_units" value="MBq" type="radio"
                                     {% if mode =="update" and  existing_source.original_activity_units == "MBq" %}
                                         checked  value="kBq"/>
                                     {% endif %}
@@ -182,8 +173,6 @@
                                     {% endfor %}
                                     </select>
                                     <label for="security_group">Security Group</label>
-                            {% elif mode =="delete" %}
-                                    <h5>Security Group: <span><small>{{ existing_source.security_group }}</small></span></h5>
                             {% else %}
                                 <select id="security_group" name="security_group" class="validate" required>
                                     <option value="" disabled selected>Select Security Group</option>

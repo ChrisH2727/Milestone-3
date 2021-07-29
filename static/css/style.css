@@ -85,6 +85,14 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, ta
   height:4rem;
   font-size: 20px;
 }
+.del-card-ul{
+  text-align:left;
+  margin-left: 50px;
+}
+.del-card-item{
+  width:80%;
+}
+
 
 /*********************************Nav Bar***********************************/
 nav .nav-title {
