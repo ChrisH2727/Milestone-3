@@ -40,12 +40,12 @@
                 <td>{{ source.security_group }}</td>
                 <td>{{ source.last_used }}</td>
                 <td>
-                  <a href=" {{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
-                    class="btn-small  teal lighten-2" tbl_btn_wd>Update</a>
+                  <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
+                    class="btn-small  teal lighten-2">Update</a>
                 </td>
                 <td>
                   <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}"
-                    class="btn-small  teal lighten-2" tbl_btn_wd>Delete</a>
+                    class="btn-small  teal lighten-2">Delete</a>
                 </td>
               </tr>
             {% endfor %}  

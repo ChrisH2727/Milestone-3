@@ -1,4 +1,124 @@
+
 {% extends "base.html" %}
 {% block content %}
-<h1>Update Source</h1>
+
+<div class="row">
+    <div class="col s12 m12 l10 offset-l1">
+        <div class="card blue lighten-3 center-align">
+            <div class="card-content black-text"> 
+                <span class="card-title">Update Source</span>    
+                <form method="POST"action="{{ url_for('update_source_activate')}}" id="update_source_activate" class="form-horizontal"> 
+                    <div class="card white black-text">
+                        <div class="row">
+                            <div class="input-field col l3 m6 s12">
+                                <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" readonly required  
+                                value ="{{existing_source.serial_number}}">
+                                <label for="serial_number">Serial Number</label>
+                            </div>
+
+                            <div class="input-field col l3 m6 s12" >
+                                <select id="department" name="department" class="validate" required >
+                                    <option value="{{ existing_source.department }}"selected>{{ existing_source.department }}</option>
+                                    {% for department in departments %}
+                                        <option value="{{ department.department }}">{{ department.department }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="department"  >Department</label>
+                            </div>
+
+                            <div class="input-field col l3 m6 s12">
+                                <select id="laboratory" name="laboratory" class="validate" required>
+                                    <option value="{{ existing_source.laboratory }}"selected>{{ existing_source.laboratory }}</option>
+                                    {% for laboratory in laboratories %}
+                                        <option value="{{ laboratory.laboratory }}">{{ laboratory.laboratory }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="laboratory">Laboratory</label>
+                            </div>
+                        
+                            <div class="input-field col l3 m6" >
+                                <select id="location" name="location" class="validate" required>
+                                    <option value="{{ existing_source.location }}" selected>{{ existing_source.location }}</option>
+                                {% for location in locations %}
+                                    <option value="{{ location.location }}">{{ location.location }}</option>
+                                {% endfor %}
+                                    </select>
+                                <label for="location">Locations</label>          
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l3 m6" >
+                                <select id="isotope" name="isotope" class="validate" required>
+                                    <option value="{{ existing_source.isotope }}" selected>{{ existing_source.isotope }}</option>
+                                {% for isotope in isotope_category %}
+                                    <option value="{{ isotope.isotope }}">{{ isotope.isotope }}  {{ isotope.halflife }} years</option>
+                                {% endfor %}
+                                    </select>
+                                <label for="isotope">Isotope</label>                      
+                            </div>
+
+                            <div class="input-field col l3 s8 m4">
+                                <input id="original_activity" name="original_activity" type="text" class="validate" 
+                                value= "{{existing_source.original_activity}}" style="height: 4rem;" required>
+                                <label for="original_activity">Original Activity</label>
+                            </div>
+                            <div class="input-field col l2 s4 m4">
+                                <p>
+                                    <label>
+                                        <input name="original_activity_units" type="radio" value="kBq"
+                                        {% if existing_source.original_activity_units == "kBq" %}
+                                            checked
+                                        {% endif %}/>
+                                        <span>kBq</span>
+                                    </label>
+                                    <label>
+                                        <input name="original_activity_units" value="MBq" type="radio"
+                                        {% if existing_source.original_activity_units == "MBq" %}
+                                            checked  value="kBq"
+                                        {% endif %}/>
+                                        <span>MBq</span>
+                                    </label>
+                                </p>
+                            </div>
+                            <div class="input-field col l3 s12 m4">
+                                <input type="text" id="activation_date" name="activation_date" 
+                                class="datepicker" required value= "{{existing_source.activation_date}}" style="height: 4rem;">
+                                <label for="activation_date">Activation Date</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col l4 m4 s8">
+                                <select id="encapsulation" name="encapsulation" class="validate" required>
+                                <option value="{{ existing_source.type }}"  selected>{{ existing_source.type }}</option>
+                                {% for encapsulation in encapsulations %}
+                                    <option value="{{ encapsulation.encapsulation }}">{{ encapsulation.encapsulation }}</option>
+                                {% endfor %}
+                                </select>
+                                <label for="encapsulation">Encapsulation</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <select id="security_group" name="security_group" class="validate" required>
+                                    <option value="{{ existing_source.security_group }}"  selected>{{ existing_source.security_group }}</option>
+                                    {% for security_code in security_codes %}
+                                        <option value="{{ security_code.security_code }}">{{ security_code.security_code }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="security_group">Security Group</label>
+                            </div>
+                        </div>
+                        <div class="row">    
+                            <button class="btn-large deep-orange accent-3" type="submit" name="action">
+                            Update<i class="fas fa-cloud-upload-alt"></i>
+                            </button>  
+                            <button class="btn-large deep-green accent-3" onClick="window.location.reload(true)">Clear
+                            <i class="fas fa-trash-restore-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>       
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

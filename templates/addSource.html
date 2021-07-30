@@ -5,211 +5,106 @@
     <div class="col s12 m12 l10 offset-l1">
         <div class="card blue lighten-3 center-align">
             <div class="card-content black-text">
-                {% if mode == "update" %}    
-                    <span class="card-title">Update Source</span>
-                    <form method="POST"action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">
-                    <!--form-->
-                {% elif mode =="request" %}
-                    <span class="card-title">Request Source</span>
-                    <form>        
-                {% else %}
-                    <span class="card-title">Add Source</span>
-                    <form method="POST"action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">  
-                {% endif %}
-                <div class="card white black-text">
-                    <div class="row">
-                        <div class="input-field col l3 m6">
-                            <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" required
-                            {% if mode == "update" or mode =="delete" %}  
-                                value ="{{existing_source.serial_number}}"
-                            {% endif %}>
-                            <label for="serial_number">Serial Number</label>
-                        </div>
+            <span class="card-title">Add Source</span>
+                <form method="POST"action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">  
+                    <div class="card white black-text">
+                        <div class="row">
+                            <div class="input-field col l3 m6">
+                                <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" required>
+                                <label for="serial_number">Serial Number</label>
+                            </div>
 
-                        <div class="input-field col l3 m6" >
-                            {% if mode == "update" %}
-                                <select id="department" name="department" class="validate" required >
-                                <option value="{{ existing_source.department }}"  selected>{{ existing_source.department }}</option>
-                                {% for department in departments %}
-                                    <option value="{{ department.department }}">{{ department.department }}</option>
-                                {% endfor %}
-                                </select>
-                                <label for="department"  >Department</label>
-                            {% else %}
+                            <div class="input-field col l3 m6" >
                                 <select id="department" name="department" class="validate" required>
-                                <option value="" disabled selected>Select Department</option>
+                                    <option value="Select Department" disabled selected>Select Department</option>
                                 {% for department in departments %}
                                     <option value="{{ department.department }}">{{ department.department }}</option>
                                 {% endfor %}
                                 </select>
                                 <label for="department">Department</label>
-                            {% endif %}
-                        </div>
-
-                        <div class="input-field col l3 m6">
-                            {% if mode == "update" %}
+                            </div>
+                            <div class="input-field col l3 m6">
                                 <select id="laboratory" name="laboratory" class="validate" required>
-                                <option value="{{ existing_source.laboratory }}"  selected>{{ existing_source.laboratory }}</option>
-                                {% for laboratory in laboratories %}
-                                    <option value="{{ laboratory.laboratory }}">{{ laboratory.laboratory }}</option>
-                                {% endfor %}
-                                </select>
-                                <label for="laboratory">Laboratory</label>
-                            {% else %}
-                                <select id="laboratory" name="laborarory" class="validate" required>
-                                <option value="" disabled selected>Select Laboratory</option>
+                                    <option value="Select Laboratory" disabled selected>Select Laboratory</option>
                                 {% for laboratory in laboratories %}
                                     <option value="{{ laboratory.laboratory }}">{{ laboratory.laboratory }}</option>
                                 {% endfor %}
                                 </select>
                                 <label for="laborarory">Laboratory</label>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="input-field col l3 m6" >
-                            {% if mode == "update" %}
+                            </div>
+                            <div class="input-field col l3 m6" >
                                 <select id="location" name="location" class="validate" required>
-                                <option value="{{ existing_source.location }}" selected>{{ existing_source.location }}</option>
-                            {% for location in locations %}
-                                <option value="{{ location.location }}">{{ location.location }}</option>
-                            {% endfor %}
+                                    <option value="Select Location" disabled selected>Select Location</option>    
+                                {% for location in locations %}
+                                    <option value="{{ location.location }}">{{ location.location }}</option>
+                                {% endfor %}
                                 </select>
-                            <label for="location">Locations</label>
-                        {% else %}
-                            <select id="location" name="location" class="validate" required>
-                            <option value="" disabled selected>Select Location</option>
-                            {% for location in locations %}
-                                <option value="{{ location.location }}">{{ location.location }}</option>
-                            {% endfor %}
-                            </select>
-                            <label for="location">Location</label>
-                        {% endif %}                        
+                                <label for="location">Locations</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col l3 m6" >
-                        {% if mode == "update" %}
-                                <select id="isotope" name="isotope" class="validate" required>
-                                <option value="{{ existing_source.isotope }}" selected>{{ existing_source.isotope }}</option>
-                            {% for isotope in isotope_category %}
-                                <option value="{{ isotope.isotope }}">{{ isotope.isotope }}  {{ isotope.halflife }} years</option>
-                            {% endfor %}
-                                </select>
-                            <label for="isotope">Isotope</label>
-                            
-                        {% elif mode =="delete" %}
-                                <h5>Isotope: <span><small>{{ existing_source.isotope }}</small></span></h5>
-                            {% else %}
+                        <div class="row">
+                            <div class="input-field col l3 m6" >
                                 <select id="isotope" name="isotope" class="validate" required>
                                 <option value="" disabled selected>Select Isotope</option>
-                            {% for isotope in isotope_category %}
-                                <option value="{{ isotope.isotope }}">{{ isotope.isotope }}<strong> half life: </strong>{{ isotope.halflife }}</option>
-                            {% endfor %}
+                                {% for isotope in isotope_category %}
+                                    <option value="{{ isotope.isotope }}">{{ isotope.isotope }}</option>
+                                {% endfor %}
                                 </select>
-                            <label for="isotope">Isotope</label>
-                        {% endif %}                        
-                        </div>
-
-                        <div class="input-field col l3 s8 m4">
-                            <input id="original_activity" name="original_activity" type="text" class="validate" 
-                            value= "{{existing_source.original_activity}}" style="height: 4rem;" required>
-                            <label for="original_activity">Original Activity</label>
-                        </div>
-                        <div class="input-field col l2 s4 m4">
-                            <p>
+                            <label for="isotope">Isotope</label>                        
+                            </div>
+                            <div class="input-field col l3 s8 m4">
+                                <input id="original_activity" name="original_activity" type="text" class="validate" required style="height: 4rem;">
+                                <label for="original_activity">Original Activity</label>
+                            </div>
+                            <div class="input-field col l2 s4 m4">
+                                <p>
                                 <label>
-                                    <input name="original_activity_units" type="radio" value="kBq"
-                                    {% if mode =="update" and  existing_source.original_activity_units == "kBq" %}
-                                        checked />
-                                    {% else %}
-                                        checked  />
-                                    {% endif %}
+                                    <input name="original_activity_units" type="radio" value="kBq"checked style="height: 4rem;" />
                                     <span>kBq</span>
                                 </label>
                                 <label>
-                                    <input name="original_activity_units" value="MBq" type="radio"
-                                    {% if mode =="update" and  existing_source.original_activity_units == "MBq" %}
-                                        checked  value="kBq"/>
-                                    {% endif %}
+                                    <input name="original_activity_units" value="MBq" type="radio" style="height: 4rem;"/>
                                     <span>MBq</span>
                                 </label>
-                            </p>
+                                </p>
+                            </div>
+                            <div class="input-field col l3 s12 m4">
+                                <input type="text" id="activation_date" name="activation_date" class="datepicker" required style="height: 4rem;" >
+                                <label for="activation_date">Activation Date</label>
+                            </div>
                         </div>
-                        <div class="input-field col l3 s12 m4">
-                            <input type="text" id="activation_date" name="activation_date" 
-                            class="datepicker" required value= "{{existing_source.activation_date}}" style="height: 4rem;">
-                            <label for="activation_date">Activation Date</label>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="input-field col l4 m4 s8">
-                        {% if mode == "update" %}
-                            <select id="encapsulation" name="encapsulation" class="validate" required>
-                            <option value="{{ existing_source.type }}" disabled selected>{{ existing_source.type }}</option>
-                            {% for encapsulation in encapsulations %}
-                                <option value="{{ encapsulation.encapsulation }}">{{ encapsulation.encapsulation }}</option>
-                            {% endfor %}
-                            </select>
-                            <label for="encapsulation">Encapsulation</label>
-                        {% elif mode =="delete" %}
-                            <h5>Encapsulation: <span><small>{{ existing_source.type }}</small></span></h5>
-                        {% else %}
-                            <select id="encapsulation" name="encapsulation" class="validate" required>
-                            <option value="" disabled selected>Select Encapsulation</option>
-                            {% for encapsulation in encapsulations %}
-                                <option value="{{  encapsulation.encapsulation }}">{{  encapsulation.encapsulation }}</option>
-                            {% endfor %}
-                            </select>
-                            <label for="encapsulation">Encapsulation</label>
-                        {% endif %}   
-                        </div>
-                        <div class="input-field col s12 m6 l4">
-                            {% if mode == "update" %}
+                        <div class="row">
+                            <div class="input-field col l4 m4 s8">
+                                <select id="encapsulation" name="encapsulation" class="validate" required>
+                                <option value="" disabled selected>Select Encapsulation</option>
+                                {% for encapsulation in encapsulations %}
+                                    <option value="{{  encapsulation.encapsulation }}">{{  encapsulation.encapsulation }}</option>
+                                {% endfor %}
+                                </select>
+                                <label for="encapsulation">Encapsulation</label> 
+                            </div>
+                            <div class="input-field col s12 m6 l4">
                                 <select id="security_group" name="security_group" class="validate" required>
-                                    <option value="{{ existing_source.security_group }}" disabled selected>{{ existing_source.security_group }}</option>
-                                    {% for security_code in security_codes %}
-                                        <option value="{{ security_code.security_code }}">{{ security_code.security_code }}</option>
-                                    {% endfor %}
-                                    </select>
-                                    <label for="security_group">Security Group</label>
-                            {% else %}
-                                <select id="security_group" name="security_group" class="validate" required>
-                                    <option value="" disabled selected>Select Security Group</option>
-                                    {% for security_code in security_codes %}
-                                        <option value="{{ security_code.security_code }}">{{ security_code.security_code }}</option>
-                                    {% endfor %}
-                                    </select>
-                                    <label for="security_group">Security Group</label>
-                            {% endif %}
+                                <option value="" disabled selected>Select Security Group</option>
+                                {% for security_code in security_codes %}
+                                    <option value="{{ security_code.security_code }}">{{ security_code.security_code }}</option>
+                                {% endfor %}
+                                </select>
+                                <label for="security_group">Security Group</label>
+                            </div>
                         </div>
-
-
-                    </div>
-                    <div class="row">
-                        
-                    </div>
-                    <!--add source and update source end up in the same python function-->
-                    {% if mode == "update" %}
-                        <button class="btn-large waves-effect waves-light" type="submit" name="action">    
-                        Update <i class="fas fa-cloud-upload-alt"></i>
-                    {% elif mode == "delete" %}
-                        <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"  class="btn-large deep-orange accent-3">  
-                        Delete <i class="fas fa-cloud-upload-alt"></i></a>
-                    {% elif mode == "Request" %}
-                        <a href="{{ url_for('req_source_conf', source_serial_no=existing_source.serial_number) }}"  class="bt-large deep-orange accent-3">  
-                        Request <i class="fas fa-cloud-upload-alt"></i></a>
-                    {% else %}
-                        <button class="btn-large deep-orange accent-3" type="submit" name="action">
-                        Add <i class="fas fa-cloud-upload-alt"></i>
-                        </button>
-                    {% endif %}
-                       
-                    <button class="btn-large deep-green accent-3" onClick="window.location.reload(true)">Clear
-                        <i class="fas fa-trash-restore-alt"></i>
-                    </button>
-                    </form>
-                </div>
+                    
+                        <div class="row">
+                            <button class="btn-large deep-orange accent-3" type="submit" name="action">
+                            Add<i class="fas fa-cloud-upload-alt"></i>
+                            </button>       
+                            <button class="btn-large deep-green accent-3" onClick="window.location.reload(true)">Clear
+                            <i class="fas fa-trash-restore-alt"></i>
+                            </button>
+                        </div>
+                    </div>    
+                </form>
             </div>
         </div>
     </div>

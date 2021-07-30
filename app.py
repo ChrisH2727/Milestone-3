@@ -114,7 +114,6 @@ def logout():
 def register():
 
     if request.method == "POST":
-
         # Check if all registration fields have been entered
         if (not((request.form.get("first_name") and not (request.form.get("first_name").isspace())) and
             (request.form.get("last_name") and not (request.form.get("last_name").isspace())) and
@@ -206,7 +205,7 @@ def usage_report():
             plt.close()
         
         except Exception:
-            flash("Database error, unable to generate updated reports")    
+            flash("Database error, unable to generate new reports")    
 
         return render_template("usageReport.html", name="usage plot",
             url1="static/assets/sourceUsed.png",
@@ -422,11 +421,10 @@ def get_sources():
     # Called when the full source inventory is to be read from mongo db
     # Calculates updated source activity 
     # 
-
+    print("get_sources")
     sources = list(mongo.db.sources.find())
     
     for source in sources:
-
         # If db problem use existing activity
         try:
             serial_number=(source["serial_number"])
@@ -442,7 +440,7 @@ def get_sources():
 
             # Calculate new activity using equation for radioactive decay
             new_act=str(round(origin_act*math.exp(((-1*math.log(2)*delta_years)/half_life)),2))
-        except:
+        except Exception:
             new_act = origin_act
 
         source_new_act = {"activity_now": new_act}
@@ -463,45 +461,34 @@ def add_source():
     # Called when an admin user adds a new source to the source inventory
     # or when an admin user updates an exiting source
     #
-
+    print("add_source")
     if request.method == "POST":
         # Get source from mongo db
         existing_source = mongo.db.sources.find_one(
         {"serial_number": request.form.get("serial_number")})
 
-        # Get isotope half life
-        isotope_half_life = mongo.db.isotope_category.find_one({"isotope": request.form.get("isotope")})
-        
         # check if source serial number already exists in db
         if existing_source:
-            updateSource = {
-            "serial_number": request.form.get("serial_number"),
-            "department": request.form.get("department"),
-            "laboratory": request.form.get("laboratory"),
-            "location": request.form.get("location"),
-            "isotope": request.form.get("isotope"),
-            "half_life": isotope_half_life,
-            "half_life_units": "years",
-            "original_activity": request.values.get("original_activity"),
-            "original_activity_units": request.values.get("original_activity_units"),
-            "activation_date": request.values.get("activation_date"),
-            "type": request.values.get("encapsulation"),
-            }
-            mongo.db.sources.find_one_and_update({"serial_number": request.form.get("serial_number")},
-            { '$set': updateSource }, return_document = ReturnDocument.AFTER)
-            flash("Source sucessfully updated")
+            flash("The source serial number already exists, please select another")
         else:
+            # Get isotope half life
+            isotope_half_life = mongo.db.isotope_category.find_one({"isotope": request.form.get("isotope")})
+            
+            # Create new source entry
             newSource = {
             "serial_number": request.form.get("serial_number"),
             "department": request.form.get("department"),
             "laboratory": request.form.get("laboratory"),
             "location": request.form.get("location"),
             "isotope": request.form.get("isotope"),
-            "half_life": isotope_half_life["isotope"][1],
+            "half_life": isotope_half_life["halflife"],
             "half_life_units": "years",
             "original_activity": request.values.get("original_activity"),
             "original_activity_units": request.values.get("original_activity_units"),
+            "activity_now": request.values.get("original_activity"),
+            "activity_now_units": request.values.get("original_activity_units"),
             "activation_date": request.values.get("activation_date"),
+            "security_group": request.values.get("security_group"),
             "type": request.values.get("encapsulation"),
             "last_used":"",
             "approved":"no",
@@ -520,7 +507,7 @@ def add_source():
     
     # Restrict access to admin users only
     if session["role"] == "admin":
-        #No post setup html page for adding a new source
+        # No post setup html page for adding a new source
         security_codes = mongo.db.security_group.find()
         departments = mongo.db.departments.find()
         laboratories = mongo.db.laboratories.find()
@@ -542,6 +529,7 @@ def source_request():
     # Action on selecting the SOURCE REQUEST option
     # Action open to users and admin
     #
+    print("source_request")
     query = request.form.get("query")
     mode = "request"
     if query:
@@ -561,6 +549,7 @@ def del_source_req(source_serial_no):
     # Action when user deletes a source request before authorised by admin
     # Action open to users and admin
     #
+    print("source_serial_no")
     submit = {"approved": "no",
             "requested": "false",
             "user": ""}
@@ -580,6 +569,7 @@ def req_source_conf(source_serial_no):
     # Action on clicking the REQUEST button on the SOURRCE REQUEST Page
     # Action open to users and admin
     #
+    print("req_source_conf")
     sources=list(mongo.db.sources.find_one({"serial_number": source_serial_no}))
 
     # Update the source record
@@ -599,7 +589,7 @@ def del_source_conf(source_serial_no):
     #
     # Gets source data from the mongo db and generates a table
     #
-
+    print("del_source_conf")
     # Restrict access to admin users only
     if session["role"] == "admin":
         mongo.db.sources.delete_one({"serial_number": source_serial_no})
@@ -614,7 +604,7 @@ def update_source():
     #
     # called when the admin user selects a source for update via a query
     #
-
+    print("update_source")
     # Restrict access to admin users only
     if session["role"] == "admin":
         query = request.form.get("query")
@@ -636,7 +626,7 @@ def delete_source():
     #
     # called when the admin user selects a source for deletion via a query
     #
-
+    print("delete_source")
     # Restrict access to admin users only
     if session["role"] == "admin":
         query = request.form.get("query")
@@ -659,39 +649,88 @@ def update_source_resp(source_serial_no):
     #
     # Called when data relating to a source requires update
     #
-
-    # Restrict access to admin users only
+    print("update_source_resp")
+   
     if session["role"] == "admin":
-        existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
-        mode = "update"
-        security_codes = mongo.db.security_group.find()
-        departments= mongo.db.departments.find()
-        laboratories = mongo.db.laboratories.find()
-        locations = mongo.db.locations.find()
-        encapsulations = mongo.db.encapsulations.find()
+        existing_source = (mongo.db.sources.find_one({"serial_number": source_serial_no}))
+        security_codes = (mongo.db.security_group.find())
+        departments= (mongo.db.departments.find())
+        laboratories = (mongo.db.laboratories.find())
+        locations = (mongo.db.locations.find())
+        encapsulations = (mongo.db.encapsulations.find())
 
-        return render_template("addSource.html", mode=mode, existing_source=existing_source,
-                security_codes=security_codes, departments=departments,
-                locations=locations, laboratories=laboratories,
-                encapsulations=encapsulations )
+        return render_template("updateSource.html", existing_source=existing_source,
+            security_codes=security_codes, departments=departments,
+            locations=locations, laboratories=laboratories,
+            encapsulations=encapsulations )
     else:
         return render_template("errorPage.html")
+    
 
+@app.route("/update_source_activate", methods=["GET", "POST"])
+def update_source_activate():
+    #
+    # Called when data relating to a source needs to updating in mongodb
+    #
+    print("update_source_activate")
+    
+    if request.method == "POST":
+        # Get source from mongo db
+        existing_source = mongo.db.sources.find_one({"serial_number": request.form.get("serial_number")})
+    
+        # check if source serial number already exists in db
+        if existing_source:    
+            # Get isotope half life
+            isotope = mongo.db.isotope_category.find_one({"isotope": request.form.get("isotope")})
+
+            # Create updated source entry
+            updateSource = {
+                "department": request.form.get("department"),
+                "laboratory": request.form.get("laboratory"),
+                "location": request.form.get("location"),
+                "isotope": request.form.get("isotope"),
+                "half_life": isotope["halflife"],
+                "half_life_units": "years",
+                "original_activity": request.values.get("original_activity"),
+                "original_activity_units": request.values.get("original_activity_units"),
+                "activity_now": request.values.get("original_activity"),
+                "activity_now_units": request.values.get("original_activity_units"),
+                "activation_date": request.values.get("activation_date"),
+                "security_group": request.values.get("security_group"),
+                "type": request.values.get("encapsulation")
+                }
+            mongo.db.sources.find_one_and_update({"serial_number": request.form.get("serial_number")},
+                { '$set': updateSource }, return_document = ReturnDocument.AFTER)
+            flash("The source data has been sucessfully updated")
+
+        else:
+            flash("Database error source data has not been updated. Refer to admin user.")
+    
+    if session["role"] == "admin":
+            sources = list(mongo.db.sources.find())
+            return render_template("inventory.html", sources=sources )
+    
+    else:
+        return render_template("errorPage.html")
+    
 
 @app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def delete_source_resp(source_serial_no):
     #
     # Called prior to user clicking button to delete a source from the mongo db 
     #      
-    
+    print("delete_source_resp")
     # Restrict access to admin users only
     if session["role"] == "admin":
         # check if source serial number already exists in db
-        existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})    
-        mode = "delete"
-        flash("You are about to delete", source_serial_no)    
-        # return render_template("addSource.html", mode=mode, existing_source=existing_source)
-        return render_template("deleteSource.html",existing_source=existing_source)
+        try:
+            existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
+            used_times = mongo.db.source_history.count_documents({"serial_number": source_serial_no})
+            flash("You are about to delete", source_serial_no)
+            return render_template("deleteSource.html",existing_source=existing_source, used_times=used_times)
+        except Exception:
+            flash("Database error source does not exist")
+            return render_template("errorPage.html")
     else:
         return render_template("errorPage.html")
 

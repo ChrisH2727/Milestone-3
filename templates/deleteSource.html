@@ -33,37 +33,48 @@
 
                             </div>
                             <div class="row">
-                                <div class=" col l4 s12 m6" >
+                                <div class=" col l3 s12 m6" >
                                     <h5 class="del-card-ul">Isotope: </h5>
                                     <p class="del-card-ul" style="margin-left: 50px;">{{ existing_source.isotope }}</p>
                                     <hr class="del-card-ul del-card-item ">
                                 </div>
-                                <div class="col l4 s12 m6">
+                                <div class="col l3 s12 m6">
                                     <h5 class="del-card-ul">Original Activity: </h5>
                                     <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.original_activity}} {{existing_source.original_activity_units}}</p>
                                     <hr class="del-card-ul del-card-item ">
                                 </div>
-                                <div class="col l4 s12 m6">
+                                <div class="col l3 s12 m6">
                                     <h5 class="del-card-ul">Activation Date: </h5>
                                     <p class="del-card-ul" style="margin-left: 50px;">{{ existing_source.activation_date }}</p>
                                     <hr class="del-card-ul del-card-item ">
                                 </div>
-                                
+                                <div class="col l3 s12 m6">
+                                    <h5 class="del-card-ul">Half Life: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.half_life}} {{existing_source.half_life_units}}</p>
+                                    <hr class="del-card-ul del-card-item ">
+                                </div>
+
                             </div>
                             <div class="row">
-                                <div class="col l4 m4 s12">
-                                    <h5>Encapsulation: <span><small>{{ existing_source.type }}</small></span></h5>
+                                <div class="col l3 s12 m6">
+                                    <h5 class="del-card-ul">Encapsulation: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.security_group}}</p>
+                                    <hr class="del-card-ul del-card-item ">
                                 </div>
-                                <div class="col l4 s12 m6">
-                                    <h5>Half Life: <span><small>{{existing_source.half_life}} {{existing_source.half_life_units}}</small></span></h5>
+                                <div class="col l3 s12 m6">
+                                    <h5 class="del-card-ul">Last used: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.last_used}}</p>
+                                    <hr class="del-card-ul del-card-item ">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m4 l4">
-                                    <h5>Security Group: <span><small>{{ existing_source.security_group }}</small></span></h5>
+                                <div class="col l3 s12 m6">
+                                    <h5 class="del-card-ul">Number of Times Used: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{ used_times}}</p>
+                                    <hr class="del-card-ul del-card-item ">
                                 </div>
-                                <div class="col l4 m4 s12" >
-                                    <h5>Location: <span><small>{{ existing_source.location }}</small></span></h5>
+                                <div class="col l3 s12 m6">
+                                    <h5 class="del-card-ul">Security Group: </h5>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.type}}</p>
+                                    <hr class="del-card-ul del-card-item ">
                                 </div>
                             </div>
                             <div class="row">
