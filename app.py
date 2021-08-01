@@ -114,18 +114,18 @@ def register():
 
     if request.method == "POST":
         # Check if all registration fields have been entered
-        if (not((request.form.get("first_name") and not (request.form.get("first_name").isspace())) and
-            (request.form.get("last_name") and not (request.form.get("last_name").isspace())) and
-            (request.form.get("email") and not (request.form.get("email").isspace())) and
-            (request.form.get("password") and not (request.form.get("password").isspace())) and
-            (request.form.get("repeat_password") and not (request.form.get("repeat_password").isspace())) and
-            (request.form.get("department") and not (request.form.get("department").isspace())) and
-                (request.form.get("research_group") and not (request.form.get("research_group").isspace())))):
-            flash("Please complete all fields before clicking the submit button")
-            return redirect(url_for("register"))
-        else:
-            # clear any exiting flash messages
-            session.pop('_flashes', None)
+        #if (not((request.form.get("first_name") and not (request.form.get("first_name").isspace())) and
+        #    (request.form.get("last_name") and not (request.form.get("last_name").isspace())) and
+        #    (request.form.get("email") and not (request.form.get("email").isspace())) and
+        #    (request.form.get("password") and not (request.form.get("password").isspace())) and
+        #    (request.form.get("repeat_password") and not (request.form.get("repeat_password").isspace())) and
+        #    (request.form.get("department") and not (request.form.get("department").isspace())) and
+        #        (request.form.get("research_group") and not (request.form.get("research_group").isspace())))):
+        #    flash("Please complete all fields before clicking the submit button")
+        #    return redirect(url_for("register"))
+        #else:
+        #    # clear any exiting flash messages
+        #    session.pop('_flashes', None)
         
         # check if email already exists in db.
         existing_user = mongo.db.users.find_one(
@@ -778,13 +778,27 @@ def manage_isotopes():
         return render_template("errorPage.html")
 
 
-@app.route("/delete_isotope_resp/<isotope_id>", methods=["GET", "POST"])
-def delete_isotope_resp(isotope_id):
+@app.route("/delete_isotope/<isotope>", methods=["GET", "POST"])
+def delete_isotope(isotope):
     #
-    # Called to delete an isotope from the list in mongo db 
+    # Called to  confirm deletion of an isotope from the list in mongo db 
     #
-    mongo.db.isotope_category.delete_one({"_id": ObjectId(isotope_id)})     
+    if session["role"] == "admin":
+        existing_isotope=mongo.db.isotope_category.find_one({"isotope": isotope})     
+        flash("Your are about to delete isotope: {}".format(isotope))
+        return render_template("isotopeDelete.html", existing_isotope=existing_isotope)
+    else:
+        return render_template("errorPage.html")
+
+@app.route("/delete_isotope_resp/<isotope>", methods=["GET", "POST"])
+def delete_isotope_resp(isotope):
+    #
+    # Called to  confirm deletion of an isotope from the list in mongo db 
+    #
+    mongo.db.isotope_category.delete_one({"isotope": isotope})     
     return redirect(url_for("manage_isotopes"))
+
+
 
 #-------------------------Error Handlers------------------------------
 @app.errorhandler(404) 

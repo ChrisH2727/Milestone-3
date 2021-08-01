@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!--Delete isotope type-->
+<div class="row">
+  <div class="col s12 m12 l8 offset-l2">
+    <div class="card blue lighten-3">
+      <div class="card-content black-text">
+        <span class="card-title">Delete Isotope</span>
+        <div class="card white black-text">
+          
+            <div class="row">
+                <div class="col l4 m6 s12">
+                    <h5 class="del-card-ul">Isotope: </h5>
+                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_isotope.isotope}}</p>
+                    <hr class="del-card-ul del-card-item ">
+                </div> 
+                <div class="col l4 m6 s12">
+                    <h5 class="del-card-ul">Half Life: </h5>
+                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_isotope.halflife}} Years</p>
+                    <hr class="del-card-ul del-card-item ">
+                </div>
+                <div class="card-action col s12 l4 M6">
+                <a href="{{ url_for('delete_isotope_resp', isotope=existing_isotope.isotope) }}" class="btn-small  teal lighten-2">
+                    <i class="fas fa-trash-restore-alt"></i> Delete</a>  
+                  
+              </div>
+            </div>  
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
