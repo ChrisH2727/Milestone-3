@@ -25,15 +25,13 @@
               <div class="row">
                 <div class="input-field col s12">
                   <!--Full password regex is complex and could take weeks to test!-->
-                  <input id="password" type="password" name="password" class="validate" minlength="8" maxlength="24"
-                    pattern="^[a-zA-Z0-9]{8-24}">
+                  <input id="password" type="password" name="password" class="validate" minlength="8" maxlength="24">
                   <label for="password">New password</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="repeat_password" type="password" name="repeat_password" class="validate" minlength="8"
-                    maxlength="24" pattern="^[a-zA-Z0-9]{8-24}">
+                  <input id="repeat_password" type="password" name="repeat_password" class="validate" minlength="8" maxlength="24">
                   <label for="repeat_password">Repeat password</label>
                 </div>
               </div>
@@ -65,7 +63,13 @@
                 </button>
               </div>
             </form>
-
+            <div class="row">
+              <div class="col s12 l12 m12">
+                  <p class="center-align reglog">
+                      Already Registered?
+                      <a href="{{ url_for('login') }}" class="dark-green-text text-darken-4">Login</a>
+                  </p>
+              </div>
         </div>
       </div>
     </div>    

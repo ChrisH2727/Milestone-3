@@ -28,14 +28,14 @@
             <li><a href="{{ url_for('add_source') }}">Add Source</a></li>
             <li><a href="{{ url_for('delete_source') }}">Delete Source</a></li>
             <li><a href="{{ url_for('update_source') }}">Update Source</a></li>
-            <li><a href="{{ url_for('manage_isotopes') }}">Manage Isotopes</a></li>
+            <li><a href="{{ url_for('manage_isotopes') }}">Isotope Stetings</a></li>
         </ul>
 
         <ul id="source-dropdown2" class="dropdown-content">
             <li><a href="{{ url_for('add_source') }}">Add Source</a></li>
             <li><a href="{{ url_for('delete_source') }}">Delete Source</a></li>
             <li><a href="{{ url_for('update_source') }}">Update Source</a></li>
-            <li><a href="{{ url_for('manage_isotopes') }}">Manage Isotopes</a></li>
+            <li><a href="{{ url_for('manage_isotopes') }}">Isotope Settings</a></li>
         </ul>
 
         <ul id="inventory-dropdown" class="dropdown-content">
@@ -51,9 +51,9 @@
         </ul>
         <nav class="nav-extended" >
             <div class="nav-wrapper indigo darken-2">
-                <a href="#" class="brand-logo logo-shift"><i class="fas fa-atom"> Faculty of
+                <a href="/physicsFaculty.html"  target="_blank" class="brand-logo logo-shift"><i class="fas fa-atom"> Faculty of
                         Physics</i></a>
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                <a href="/physicsFaculty.html" target="_blank" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     
                     {% if session.in_use%}
@@ -67,9 +67,6 @@
                             <li><a class="dropdown-trigger" data-target="source-dropdown2">Source <i
                                 class="fas fa-caret-down rm-padding"></i></a></li>
                         {% endif %}
-                    {% else %}
-                        <li><a href="{{ url_for('register') }}">Register</a></li>
-                        <!--li><a href="{{ url_for('login') }}">Login</a></li-->
                     {% endif %}
 
                 </ul>
@@ -85,14 +82,11 @@
                 <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
                 {% if session.role|lower == "admin"|lower %}
                     <li><a href="{{ url_for('get_user') }}">User Access</a></li>
-                    <li><a class="dropdown-trigger" href="#!" data-target="inventory-dropdown">Inventory <i
+                    <li><a class="dropdown-trigger" data-target="inventory-dropdown">Inventory <i
                         class="fas fa-caret-down"></i></a></li>
-                    <li><a class="dropdown-trigger" href="#!" data-target="source-dropdown">Source <i
+                    <li><a class="dropdown-trigger" data-target="source-dropdown">Source <i
                         class="fas fa-caret-down"></i></a></li>
                 {% endif %}
-            {% else %}
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-                <!--li><a href="{{ url_for('login') }}">Login</a></li-->
             {% endif %}
         </ul>
     </header>

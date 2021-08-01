@@ -10,7 +10,8 @@
                     <div class="card white black-text">
                         <div class="row">
                             <div class="input-field col l3 m6">
-                                <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" required>
+                                <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" required
+                                minlength="2" maxlength="24" pattern="^[a-zA-Z0-9]{2-24}">
                                 <label for="serial_number">Serial Number</label>
                             </div>
 

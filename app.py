@@ -37,47 +37,44 @@ def login():
     
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
-                {"email": request.form.get("email").lower(),
-                    "password": request.form.get("password").lower()})
+            {"email": request.form.get("email").lower(),
+                "password": request.form.get("password").lower()})
 
         if existing_user:
             # Check if user already has an open session
-            # if existing_user["status"] == "logged_out":
-                # Check if users account has been approved
-                if existing_user["approved"] == "approved":
-                    # session cookie for role "admin" or "user"
-                    session["role"] = existing_user["role"]
-                    # session cookie for users first name
-                    session["user"] = existing_user["first"]
-                    # session cookie for in_use
-                    session["in_use"] = True
+            # Check if users account has been approved
+            if existing_user["approved"] == "approved":
+                # session cookie for role "admin" or "user"
+                session["role"] = existing_user["role"]
+                # session cookie for users first name
+                session["user"] = existing_user["first"]
+                # session cookie for in_use
+                session["in_use"] = True
+                # session cookie for user email
+                session["email"] = existing_user["email"]
 
-                    # Set user status to logged out
-                    user_status = {"status": "logged_in"}
-                    mongo.db.users.find_one_and_update({"first": session["user"]},
-                            {'$set': user_status}, return_document=ReturnDocument.AFTER)
+                # Set user status to logged out
+                user_status = {"status": "logged_in"}
+                mongo.db.users.find_one_and_update({"first": session["user"]},
+                    {'$set': user_status}, return_document=ReturnDocument.AFTER)
                     
-                    # Add an entry to the user login history
-                    login_entry = {
-                        "first": existing_user["first"].lower(),
-                        "last": existing_user["last"].lower(),
-                        "email": request.form.get("email").lower(),
-                        "login_date": datetime.today().strftime('%d-%m-%y'),
-                        "logout_date": ""
-                    }
-                    mongo.db.login_history.insert_one(login_entry)
-                    return redirect(url_for("userAccount"))
-                else:
-                    flash("Account not approved or suspended")
-                    return redirect(url_for("login"))
-            # else:
-            #    flash("Please log out before logging in again")
-            #    return redirect(url_for("login"))
+                # Add an entry to the user login history
+                login_entry = {
+                    "first": existing_user["first"].lower(),
+                    "last": existing_user["last"].lower(),
+                    "email": request.form.get("email").lower(),
+                    "login_date": datetime.today().strftime('%d-%m-%y'),
+                    "logout_date": ""
+                }
+                mongo.db.login_history.insert_one(login_entry)
+                return redirect(url_for("userAccount"))
+            else:
+                flash("Account not approved or suspended")
+                return redirect(url_for("login"))
         else:
             # invalid password match or user name or email
             flash("Incorrect Username and/or Password")
             return redirect(url_for("login"))
-
     return render_template("login.html")
 
 
@@ -89,12 +86,12 @@ def logout():
 
     # Add date to the user login history
     user_history = {"logout_date": datetime.today().strftime('%d-%m-%y')}
-    mongo.db.login_history.find_one_and_update({"first": session["user"]},
+    mongo.db.login_history.find_one_and_update({"first": session["email"]},
             {'$set': user_history}, return_document=ReturnDocument.AFTER)
     
     # Set user status to logged out
     user_status = {"status": "logged_out"}
-    mongo.db.users.find_one_and_update({"first": session["user"]},
+    mongo.db.users.find_one_and_update({"first": session["email"]},
             {'$set': user_status}, return_document=ReturnDocument.AFTER)
 
     # Code line from Code Institute Mini Project
@@ -106,7 +103,9 @@ def logout():
         session.pop("role")
     if session.get("in_use"):
         session.pop("in_use")
-    
+    if session.get("email"):
+        session.pop("email")
+
     return render_template("login.html")
 
 
@@ -150,7 +149,7 @@ def register():
             "approved": "approve",
             "role": "user",
             "approved_date": "",
-            "deleted_date":""
+            "deleted_date": ""
         }
         mongo.db.users.insert_one(register)
         flash("You have sucessfully registered, please wait for your request to be approved")
@@ -170,8 +169,6 @@ def usage_report():
     source_num = []
     for source in source_types:
         source_num.append(mongo.db.sources.count_documents({"isotope": source}))
-    print(source_types)
-    print(source_num)
 
     # Determine Logins per day
     logins = mongo.db.login_history.find().distinct("login_date")
@@ -311,7 +308,7 @@ def get_userb(user_id):
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
 
     # User cannot action his/her own account
-    if existing_user["first"] == session["user"]:
+    if existing_user["email"] == session["email"]:
         flash("You cannot action your own user account")
     else:
         # Admin user approves first time registration 
@@ -355,7 +352,7 @@ def get_userc(user_id):
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
     
     # User cannot action his/her own account
-    if existing_user["first"] == session["user"]:
+    if existing_user["email"] == session["email"]:
         flash("You cannot action your own user account")
     else:
         # Admin user toggles another user account between admin/user roles
@@ -379,7 +376,7 @@ def get_userdelete(user_id):
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
     
     # User cannot delete his/her own account 
-    if existing_user["first"] == session["user"]:
+    if existing_user["email"] == session["email"]:
         flash("You cannot delete your own user account")
 
     # Admin user cannot be deleted/removed
@@ -529,7 +526,7 @@ def source_request():
     # Action on selecting the SOURCE REQUEST option
     # Action open to users and admin
     #
-    print("source_request")
+
     query = request.form.get("query")
     mode = "request"
     if query:
@@ -549,7 +546,6 @@ def del_source_req(source_serial_no):
     # Action when user deletes a source request before authorised by admin
     # Action open to users and admin
     #
-    print("source_serial_no")
     submit = {"approved": "no",
             "requested": "false",
             "user": ""}
@@ -558,8 +554,7 @@ def del_source_req(source_serial_no):
             { '$set': submit }, return_document = ReturnDocument.AFTER)
 
     # Get list of sources held by the user
-    userfirst = session["user"]
-    loanSources = list(mongo.db.sources.find({"user": userfirst}))
+    loanSources = list(mongo.db.sources.find({"user": session["email"]}))
     return redirect(url_for("userAccount"))
 
 
@@ -569,11 +564,10 @@ def req_source_conf(source_serial_no):
     # Action on clicking the REQUEST button on the SOURRCE REQUEST Page
     # Action open to users and admin
     #
-    print("req_source_conf")
     sources=list(mongo.db.sources.find_one({"serial_number": source_serial_no}))
 
     # Update the source record
-    submit = {"requested": "true", "user": session["user"]} 
+    submit = {"requested": "true", "user": session["email"]} 
     mongo.db.sources.update({"serial_number": source_serial_no},{"$set": submit})
     
     flash("Source has been requested - please wait for your request to be approved")
@@ -739,7 +733,7 @@ def delete_source_resp(source_serial_no):
 def userAccount():
 
     # User already logged in so use session cookie as key to user details
-    existing_user = mongo.db.users.find_one({"first": session["user"]})
+    existing_user = mongo.db.users.find_one({"email": session["email"]})
     user_id = existing_user["_id"]
 
     if request.method == "POST":
@@ -758,8 +752,8 @@ def userAccount():
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})    
     
     # Get list of sources held by the user
-    userfirst = existing_user["first"]
-    loanSources = list(mongo.db.sources.find({"user": userfirst}))
+    loanSources = list(mongo.db.sources.find({"user": session["email"]}))
+
     return render_template("userAccount.html",
             user=existing_user, usersources=loanSources)
 
@@ -778,7 +772,7 @@ def manage_isotopes():
 
     # get isotope list   
     if session["role"] == "admin":
-        isotopes = list(mongo.db.isotope_category.find())   
+        isotopes = list(mongo.db.isotope_category.find())
         return render_template("isotopeTypes.html", isotopes=isotopes)
     else:
         return render_template("errorPage.html")

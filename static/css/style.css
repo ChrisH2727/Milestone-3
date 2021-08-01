@@ -9,6 +9,9 @@
 .input-field>label{
   font-size: 1.6rem;
 }
+.input-field.col label {
+  left: 1rem;
+}
 nav ul a{
   font-size: 1.6rem;
 }
@@ -92,7 +95,10 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, ta
 .del-card-item{
   width:80%;
 }
-
+.reglog{
+  font-size: larger;
+  font-weight: bold;
+}
 
 /*********************************Nav Bar***********************************/
 nav .nav-title {

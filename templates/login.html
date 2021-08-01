@@ -13,7 +13,7 @@
         <div class="card white black-text" <div class="row">
           <form class="col s12" method="POST" action="{{ url_for('login') }}">
             <div class="row">
-              <div class="input-field col s12">
+              <div class="input-field col s12 l9 m9">
                 <!--regex first charater must be alpha-->
                 <input id="email" type="email" name="email" class="validate"
                   <pattern="^[A-Za-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{1,4}[^\\S]+$" required>
@@ -21,7 +21,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="input-field col s12">
+              <div class="input-field col s12 l9 m9">
                 <!--Full password regex is complex and could take weeks to test!-->
                 <input id="password" type="password" name="password" class="validate" minlength="2" maxlength="24"
                   required pattern="^[a-zA-Z0-9]{2-24}">
@@ -34,6 +34,14 @@
               </button>
             </div>
           </form>
+          <div class="row">
+            <div class="col s12 l12 m12">
+                <p class="center-align reglog">
+                    New To The Department?
+                    <a href="{{ url_for('register') }}" class="dark-green-text text-darken-4">Register Your Account</a>
+                </p>
+            </div>
+        </div>
         </div>
       </div>
     </div>
