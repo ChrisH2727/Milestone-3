@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col s12 m12 l10 offset-l1">
+        <div class="card blue lighten-3 center-align">
+            <div class="card-content black-text"> 
+                <span class="card-title">Update Isotope</span>    
+                <form method="POST"action="{{ url_for('isotopes_update_conf', isotope_id=existing_isotope._id)}}" class="form-horizontal"> 
+                    <div class="card white black-text">
+                        <div class="row">
+                            <div class="input-field col l3 m6 s12" >
+                                <input id="isotope" type="text" name="isotope" class="validate" minlength="2" maxlength="24"  
+                                value= {{existing_isotope.isotope }} pattern="^[a-zA-Z0-9]{2-24}" required>
+                                <label for="isotope">Isotope</label>
+                            </div>
+
+                            <div class="input-field col l3 m6 s12">
+                                <input id="halflife" type="text" name="halflife" class="validate" minlength="1" maxlength="24"
+                                value= {{existing_isotope.halflife }} pattern="^[0-9.]{2-24}" required>
+                                <label for="halflife">Half Life</label>
+                            </div>
+                            <div class="input-field col l3 m6 s12">    
+                                <button class="btn-large deep-orange accent-3" type="submit" name="action">
+                                Update <i class="fas fa-cloud-upload-alt"></i>
+                                </button>  
+                                <button class="btn-large deep-green accent-3" onClick="window.location.reload(true)">
+                                Clear <i class="fas fa-trash-restore-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>       
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

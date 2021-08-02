@@ -12,12 +12,12 @@
             <div class="row">
               <div class="input-field col s12 l4">
                 <input id="isotope" type="text" name="isotope" class="validate" minlength="2" maxlength="24"
-                required pattern="^[a-zA-Z0-9]{2-24}" required>
+                pattern="^[a-zA-Z0-9]{2-24}" required>
                 <label for="isotope">Isotope</label>
               </div>
               <div class="input-field col s12 l4">
                 <input id="halflife" type="text" name="halflife" class="validate" minlength="1" maxlength="24"
-                required pattern="^[0-9.]{2-24}"required>
+                pattern="^[0-9.]{2-24}" required>
                 <label for="halflife">Half Life</label>
               </div>
               <div class="card-action col s12 l4">
@@ -45,6 +45,7 @@
               <th>Isotope</th>
               <th>Half Life</th>
               <th>Delete</th>
+              <th>Update</th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +55,9 @@
                 <td>{{ isotope.halflife }} years</td>
                 <td>
                   <a href="{{ url_for('delete_isotope', isotope=isotope.isotope) }}" class="btn-small  teal lighten-2">Delete</a>
+                </td>
+                <td>
+                  <a href="{{ url_for('update_isotope', isotope=isotope.isotope) }}" class="btn-small  teal lighten-2">Update</a>
                 </td>
               </tr>
             {% endfor %}

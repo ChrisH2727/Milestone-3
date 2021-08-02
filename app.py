@@ -311,7 +311,7 @@ def get_userb(user_id):
     if existing_user["email"] == session["email"]:
         flash("You cannot action your own user account")
     else:
-        # Admin user approves first time registration 
+        # Admin user approves first time registration
         if existing_user["approved"] == "approve":
             submit = {"approved": "approved",
                       "approved_date": datetime.today().strftime('%d-%m-%y'),
@@ -348,9 +348,9 @@ def get_userc(user_id):
     #
     # Called when an admin user gives admin rights to another user
     #
-    
+
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-    
+
     # User cannot action his/her own account
     if existing_user["email"] == session["email"]:
         flash("You cannot action your own user account")
@@ -458,7 +458,7 @@ def add_source():
     # Called when an admin user adds a new source to the source inventory
     # or when an admin user updates an exiting source
     #
-    print("add_source")
+
     if request.method == "POST":
         # Get source from mongo db
         existing_source = mongo.db.sources.find_one(
@@ -523,7 +523,7 @@ def add_source():
 @app.route("/source_request", methods=["GET", "POST"])
 def source_request():
     #
-    # Action on selecting the SOURCE REQUEST option
+    # Called on selecting the SOURCE REQUEST option
     # Action open to users and admin
     #
 
@@ -543,7 +543,7 @@ def source_request():
 @app.route("/del_source_req/<source_serial_no>" , methods=["GET", "POST"])
 def del_source_req(source_serial_no):
     #
-    # Action when user deletes a source request before authorised by admin
+    # Called when user deletes a source request before authorised by admin
     # Action open to users and admin
     #
     submit = {"approved": "no",
@@ -757,6 +757,7 @@ def userAccount():
     return render_template("userAccount.html",
             user=existing_user, usersources=loanSources)
 
+
 #-------------------------Manage isotope types------------------------
 @app.route("/manage_isotopes", methods=["GET", "POST"])
 def manage_isotopes():
@@ -790,6 +791,7 @@ def delete_isotope(isotope):
     else:
         return render_template("errorPage.html")
 
+
 @app.route("/delete_isotope_resp/<isotope>", methods=["GET", "POST"])
 def delete_isotope_resp(isotope):
     #
@@ -798,6 +800,48 @@ def delete_isotope_resp(isotope):
     mongo.db.isotope_category.delete_one({"isotope": isotope})     
     return redirect(url_for("manage_isotopes"))
 
+
+@app.route("/update_isotope/<isotope>", methods=["GET", "POST"])
+def update_isotope(isotope):
+    #
+    # Called to update an isotope type in the isotope_category collection and
+    # to update all references to the isotope in the source collection
+    #
+    if session["role"] == "admin":
+        existing_isotope=mongo.db.isotope_category.find_one({"isotope": isotope})     
+        return render_template("isotopeUpdate.html", existing_isotope=existing_isotope)
+    else:
+        return render_template("errorPage.html")
+
+
+@app.route("/isotopes_update_conf/<isotope_id>", methods=["GET", "POST"])
+def isotopes_update_conf(isotope_id):
+    #
+    #  Called to list out isotope types to the admin user
+    #
+    if request.method == "POST":
+        isotope_update = {
+                        "isotope": request.form.get("isotope"),
+                        "halflife": request.form.get("halflife")
+                        }
+
+        # Update the source inventory (db collection)
+        existing_isotope = mongo.db.isotope_category.find_one({"_id": ObjectId(isotope_id)})
+        mongo.db.sources.update_many({"isotope": existing_isotope["isotope"]},
+            { '$set': isotope_update })
+    
+        # Update the db colection of isotope categories
+        mongo.db.isotope_category.find_one_and_update({"_id": ObjectId(isotope_id)},
+            { '$set': isotope_update })
+
+        flash("Isotope type sucessfully updated")
+
+    # get isotope list   
+    if session["role"] == "admin":
+        isotopes = list(mongo.db.isotope_category.find())
+        return render_template("isotopeTypes.html", isotopes=isotopes)
+    else:
+        return render_template("errorPage.html")
 
 
 #-------------------------Error Handlers------------------------------

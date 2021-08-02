@@ -5,7 +5,7 @@
   height:600px;
 }
 
-/********************General Styling To Augment Material*****************************/
+/********************General Styling To Augment Materialize*****************************/
 .input-field>label{
   font-size: 1.6rem;
 }
@@ -58,7 +58,6 @@ body {
   min-width: 76px;
   border-radius: 5px; 
 }
-
 
 /****************************Collapsable Body******************************/
 

@@ -2,7 +2,7 @@ $(document).ready(function () {
   // jQurey functions sourced from Materialize - https://www.tutorialspoint.com/materialize/
   $('.sidenav').sidenav();
   $(".dropdown-trigger").dropdown();
-  $('.datepicker').datepicker();
+  $('.datepicker').datepicker({maxDate: new Date(), format: 'dd-mm-yy'});
   $('select').formSelect();
   $('.collapsible').collapsible();
 
