@@ -284,18 +284,23 @@ def return_source_resp(source_serial_no):
     mongo.db.source_history.find_one_and_update({"serial_number": source_serial_no},
             { '$set': submit }, return_document = ReturnDocument.AFTER)
 
-    # Update the  source document in mongodb with return date and removal approval status
-    submit = {"last_used" : inDate,
-                "approved" : "no",
-                "requested" : "false",
-                "user" : ""
-                }
-    mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
-            { '$set': submit }, return_document = ReturnDocument.AFTER)
+    # Check if the source has been deleted from the inventory
     
-    flash("Source Returned To Inventory")
-    return approve_request()
-
+    if mongo.db.sources.find_one({"serial_number": source_serial_no}):
+        # Update the  source document in mongodb with return date and removal approval status
+        submit = {"last_used": inDate,
+                    "approved": "no",
+                    "requested": "false",
+                    "user": ""
+                    }
+        mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
+                {'$set': submit}, return_document = ReturnDocument.AFTER)
+    
+        flash("Source Returned To Inventory")
+        return approve_request()
+    else:
+        flash("Source has been deleted from the inventory")
+        return approve_request()
 
 @app.route("/get_userb/<user_id>", methods=["GET", "POST"])
 def get_userb(user_id):
@@ -388,9 +393,19 @@ def get_userdelete(user_id):
         flash("A user account must be suspended for it to be deleted")
 
     else: 
-        mongo.db.users.delete_one({"_id": ObjectId(user_id)})
-        flash("user account sucessfuly deleted")
+        return render_template("userDelete.html", existing_user=existing_user)
 
+    users = list(mongo.db.users.find())
+    return render_template("user.html", users=users)
+
+
+@app.route("/delete_user_resp/<user_email>", methods=["GET", "POST"])
+def delete_user_resp(user_email):
+    #
+    # Called to  confirm deletion of a user account from mongo db 
+    #
+    mongo.db.users.delete_one({"email": user_email})
+    flash("user account sucessfuly deleted")
     users = list(mongo.db.users.find())
     return render_template("user.html", users=users)
 
