@@ -1,59 +1,62 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-Welcome ChrisH2727,
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use.
+<h1 align="center">Radioisotope Inventory Management</h1>
 
-## Gitpod Reminders
+<span id="isotope"></span>
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+![Portfolio website](readmeimg/isotope.jpg)
 
-`python3 -m http.server`
+A university physics faculty is required to maintain stock of radioactive sources for teaching and research purposes.
 
-A blue button should appear to click: _Make Public_,
+While individule radioactive sources do not pose a risk to health of students using them, collectively and in the wrong hands they could become a danger to the student community and security risk.
 
-Another blue button should appear to click: _Open Browser_.
+It is therefore crutial that the scientific staff contol student or accademic usage of these radioactive sources.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidently make it public then you can create a new one with _Regenerate API Key_.
-
-## Updates Since The Instructional Video
-
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+**[Access the application here.](https://isotope-3.herokuapp.com/)**
 
 ---
 
-Happy coding!
+## Index 
+
+- <a href="#ux">1. User experience (UX)</a>
+  - <a href="#ux-goals">1.1. Project goals</a>
+  - <a href="#ux-stories">1.2 User stories</a>
+  - <a href="#ux-design">1.3 Design</a>
+  - <a href="#ux-architecture">1.4 Information architecture</a>
+  - <a href="#ux-mockup">1.5 Wire Frames</a>
+- <a href="#features">2. Features</a>
+  - <a href="#features-existing">2.1 Existing features</a>
+  - <a href="#features-future">2.2 Features left to implement in the future</a>
+- <a href="#technologies">3. Technologies used</a>
+- <a href="#testing">4. Testing</a>
+- <a href="#deployment">5. Deployment</a>
+- <a href="#credits">6. Credits</a>
+- <a href="#Acknowledge">7. Acknowledge</a>
+- <a href="#Acknowledge">8. Disclaimer</a>
+
+---
+
+<span id="ux"></span>
+
+<h1>1. User experience (UX)</h1>
+
+<span id="ux-goals"></span>
+
+### 1.1 Project goals 
+
+- Develop a full-stack application that allows users to access a common dataset.
+- Develop a full-stack site that uses HTML, CSS, JavaScript, Python+Flask, MongoDB.
+
+- Creat a website where students and accademic staff can:
+    - register and be approved to use radioactive sources
+    - see and select a radioactive source from a list of available radioactive sources and submit a request to use one.
+
+- Create a website through which scientific staff can:
+    - manage radioactive source allocation to students and accademic staff
+    - Create Read Update and Delete radioactive source characteristic details
+     
+- Creating a website that is:
+    - Simple to understand and easy to navigate
+    - Presents different levels of access to information for students/accademics and scientific staff.
+
+<span id="ux-stories"></span>

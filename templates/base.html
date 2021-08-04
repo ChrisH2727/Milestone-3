@@ -51,9 +51,9 @@
         </ul>
         <nav class="nav-extended" >
             <div class="nav-wrapper indigo darken-2">
-                <a href="/physicsFaculty.html"  target="_blank" class="brand-logo logo-shift"><i class="fas fa-atom"> Faculty of
+                <a href="physicsFaculty.html"  target="_blank" class="brand-logo logo-shift"><i class="fas fa-atom"> Faculty of
                         Physics</i></a>
-                <a href="/physicsFaculty.html" target="_blank" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     
                     {% if session.in_use%}
@@ -77,7 +77,7 @@
         <ul class="sidenav" id="mobile-demo">
 
             {% if session.in_use%}
-                <li><a href="{{ url_for('userAccount') }}">{{session.user}}</a></li>
+                <li><a href="{{ url_for('userAccount') }}">{{session.user}}'s Profile</a></li>
                 <li><a href="{{ url_for('logout') }}">Log out</a></li>
                 <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
                 {% if session.role|lower == "admin"|lower %}
