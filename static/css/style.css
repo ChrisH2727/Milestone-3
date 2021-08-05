@@ -72,6 +72,9 @@ letter-spacing: 0px;
 .center-button{
   text-align: center;
 }
+.del-card{
+  margin-left: 50px
+}
 
 /****************************Collapsable Body******************************/
 
@@ -112,6 +115,7 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, ta
   font-size: larger;
   font-weight: bold;
 }
+
 
 /*********************************Nav Bar***********************************/
 nav .nav-title {

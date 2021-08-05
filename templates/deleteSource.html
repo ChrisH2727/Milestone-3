@@ -58,7 +58,7 @@
                             <div class="row">
                                 <div class="col l3 s12 m6">
                                     <h5 class="del-card-ul">Encapsulation: </h5>
-                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.security_group}}</p>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.type}}</p>
                                     <hr class="del-card-ul del-card-item ">
                                 </div>
                                 <div class="col l3 s12 m6">
@@ -73,13 +73,13 @@
                                 </div>
                                 <div class="col l3 s12 m6">
                                     <h5 class="del-card-ul">Security Group: </h5>
-                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.type}}</p>
+                                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_source.security_group}}</p>
                                     <hr class="del-card-ul del-card-item ">
                                 </div>
                             </div>
                             <div class="row">
                                 <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"
-                                class="btn-large light-blue darken-4 lg-btn-add "> Delete <i class="fas fa-cloud-upload-alt"></i></a>
+                                class="btn-large deep-orange accent-3 lg-btn-add "> Delete <i class="fas fa-cloud-upload-alt"></i></a>
                                 <a href="{{ url_for('get_sources') }}"  class="lg-btn-add btn-large deep-green accent-3">  
                                 Clear <i class="fas fa-trash-restore-alt"></i></a>
                             </div>

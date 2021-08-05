@@ -11,21 +11,22 @@
             <div class="row">
                 <div class="col l4 m6 s12">
                     <h5 class="del-card-ul">User Name: </h5>
-                    <p class="del-card-ul" style="margin-left: 50px;">{{existing_user.first}} {{existing_user.last}}</p>
+                    <!--Styling only works if used locally-->
+                    <p class="del-card-ul capitalize" style="margin-left: 50px;">{{existing_user.first}} {{existing_user.last}}</p>
                     <hr class="del-card-ul del-card-item ">
                 </div> 
                 <div class="col l4 m6 s12">
                     <h5 class="del-card-ul">User Email: </h5>
+                    <!--Styling only works if used locally-->
                     <p class="del-card-ul" style="margin-left: 50px;">{{existing_user.email}}</p>
                     <hr class="del-card-ul del-card-item ">
                 </div>
                 <div class="card-action col s12 l4 m6">
-                <a href="{{ url_for('delete_user_resp', user_email=existing_user.email) }}" class="btn-small  teal lighten-2">
+                <a href="{{ url_for('delete_user_resp', user_email=existing_user.email) }}" class="btn-large  deep-orange accent-3 lg-btn-add">
                     <i class="fas fa-trash-restore-alt"></i> Delete</a>  
                   
               </div>
             </div>  
-          
         </div>
       </div>
     </div>

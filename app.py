@@ -601,19 +601,7 @@ def req_source_conf(source_serial_no):
     return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
-@app.route("/del_source_conf/<source_serial_no>" , methods=["GET", "POST"])
-def del_source_conf(source_serial_no):
-    #
-    # Gets source data from the mongo db and generates a table
-    #
-    print("del_source_conf")
-    # Restrict access to admin users only
-    if session["role"] == "admin":
-        mongo.db.sources.delete_one({"serial_number": source_serial_no})
-        sources = list(mongo.db.sources.find())
-        return render_template("inventory.html", sources=sources)
-    else:
-        return render_template("errorPage.html")
+
 
 
 @app.route("/update_source", methods=["GET", "POST"])
@@ -638,49 +626,6 @@ def update_source():
         return render_template("errorPage.html")
 
 
-@app.route("/delete_source", methods=["GET", "POST"])
-def delete_source():
-    #
-    # called when the admin user selects a source for deletion via a query
-    #
-    print("delete_source")
-    # Restrict access to admin users only
-    if session["role"] == "admin":
-        query = request.form.get("query")
-        mode = "delete"
-        if query:
-            # line of code from Code Institute tuition Data "Centric Design Mini Project"
-            sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
-            showsources = "true"
-            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
-        else:
-            showsources = "false"
-            sources = []
-            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
-    else:
-        return render_template("errorPage.html")
-
-
-@app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
-def update_source_resp(source_serial_no):
-    #
-    # Called when data relating to a source requires update
-    #
-     
-    if session["role"] == "admin":
-        existing_source = (mongo.db.sources.find_one({"serial_number": source_serial_no}))
-        security_codes = (mongo.db.security_group.find())
-        departments= (mongo.db.departments.find())
-        laboratories = (mongo.db.laboratories.find())
-        locations = (mongo.db.locations.find())
-        encapsulations = (mongo.db.encapsulations.find())
-
-        return render_template("updateSource.html", existing_source=existing_source,
-            security_codes=security_codes, departments=departments,
-            locations=locations, laboratories=laboratories,
-            encapsulations=encapsulations )
-    else:
-        return render_template("errorPage.html")
     
 
 @app.route("/update_source_activate", methods=["GET", "POST"])
@@ -728,7 +673,73 @@ def update_source_activate():
     
     else:
         return render_template("errorPage.html")
-    
+
+
+@app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
+def update_source_resp(source_serial_no):
+    #
+    # Called when data relating to a source requires update
+    #
+     
+    if session["role"] == "admin":
+        existing_source = (mongo.db.sources.find_one({"serial_number": source_serial_no}))
+        security_codes = (mongo.db.security_group.find())
+        departments= (mongo.db.departments.find())
+        laboratories = (mongo.db.laboratories.find())
+        locations = (mongo.db.locations.find())
+        encapsulations = (mongo.db.encapsulations.find())
+
+        return render_template("updateSource.html", existing_source=existing_source,
+            security_codes=security_codes, departments=departments,
+            locations=locations, laboratories=laboratories,
+            encapsulations=encapsulations )
+    else:
+        return render_template("errorPage.html")
+
+
+@app.route("/delete_source", methods=["GET", "POST"])
+def delete_source():
+    #
+    # called when the admin user selects a source for deletion via a query
+    #
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        query = request.form.get("query")
+        mode = "delete"
+        if query:
+            # line of code from Code Institute tuition Data "Centric Design Mini Project"
+            sources = list(mongo.db.sources.find({"$text": {"$search": query}}))
+            showsources = "true"
+            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+        else:
+            showsources = "false"
+            sources = []
+            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+    else:
+        return render_template("errorPage.html")
+
+
+@app.route("/del_source_conf/<source_serial_no>" , methods=["GET", "POST"])
+def del_source_conf(source_serial_no):
+    #
+    # Gets source data from the mongo db and generates a table
+    #
+    print("del_source_conf")
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        existing_source =  mongo.db.sources.find_one({"serial_number": source_serial_no})
+        existing_source_user = existing_source["user"]
+        if existing_source_user:
+            flash("Source: {} is on loan and could not be deleted ".format(source_serial_no))     
+        else:          
+            mongo.db.sources.delete_one({"serial_number": source_serial_no})
+            flash("Source: {} has been deleted".format(source_serial_no))     
+        
+        sources = list(mongo.db.sources.find())
+        return render_template("inventory.html", sources=sources)
+    else:
+        return render_template("errorPage.html")
+
 
 @app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def delete_source_resp(source_serial_no):
@@ -738,15 +749,11 @@ def delete_source_resp(source_serial_no):
     print("delete_source_resp")
     # Restrict access to admin users only
     if session["role"] == "admin":
-        # check if source serial number already exists in db
-        try:
-            existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
-            used_times = mongo.db.source_history.count_documents({"serial_number": source_serial_no})
-            flash("You are about to delete", source_serial_no)
-            return render_template("deleteSource.html",existing_source=existing_source, used_times=used_times)
-        except Exception:
-            flash("Database error source does not exist")
-            return render_template("errorPage.html")
+        existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
+        used_times = mongo.db.source_history.count_documents({"serial_number": source_serial_no})
+        flash("Your are about to delete source: {}".format(source_serial_no))
+        return render_template("deleteSource.html",existing_source=existing_source, used_times=used_times)
+        
     else:
         return render_template("errorPage.html")
 
