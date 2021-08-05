@@ -41,14 +41,16 @@
                 <td>{{ source.security_group }}</td>
                 <td>{{ source.last_used }}</td>
                 <td class="email-cell">{{ source.user }}</td>
-                <td>
+                <td class="center-button">
                   <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
                     class="btn-small light-blue darken-4 sm-btn-add">Update</a>
-                </td>
-                <td>
-                  <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}"
-                    class="btn-small  teal lighten-2 sm-btn-add ">Delete</a>
-                </td>
+                </td >
+                
+                  <td class="center-button" >
+                      <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}"
+                        class="btn-small  deep-orange accent-3 sm-btn-add ">Delete</a> 
+                  </td>
+                
               </tr>
             {% endfor %}  
           </tbody>

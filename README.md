@@ -108,3 +108,61 @@ As this website will predominently be utilised by individual from the scientific
 
 - #### Collapsibles
 Unfortunately tables do not render well on smaller screen devices and so use is made of the **[Collaspible](https://materializecss.com/collapsible.html)** provided by **Materialize**
+
+
+<span id="technologies"></span>
+
+<h1>3. Technologies used</h1>
+
+#### Languages used
+- [Python](https://www.python.org/)
+    - Python provides backend functionality. The math module is used for asorted mathematical operations
+- [HTML5](https://en.wikipedia.org/wiki/HTML5)
+    - HTML5 provides project structure and content for a browser to render. 
+- [CSS3](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
+    - CSS3 provides styling of the HTML5 elements.
+- [jQuery](https://jquery.com/)
+    - jQuery used as the JavaScript functionality.
+
+
+#### Frameworks, libraries and plugins used
+- [Gitpod](https://www.gitpod.io/) 
+    - The GitPod provides the development environment.
+- [Git](https://git-scm.com/)
+    - The Git was used for version control to commit to Git and push to GitHub.
+- [GitHub](https://github.com/)
+    - The GitHub is used as the project repository.
+- [Google Fonts](https://fonts.google.com/)
+    - Google Fonts is used to provide the font roboto for all the text that is used in the project. 
+- [Balsamiq](https://balsamiq.com/)
+    - Balamiq is used to create wireframes.
+- [Materialize](https://materializecss.com/)
+    - Materialize is used extensively for framework design.
+- [MongoDB](https://www.mongodb.com/1)
+    - MongoDB is the fully managed cloud database service used for the project.
+- [Heroku](https://dashboard.heroku.com/)
+    - Heroki is the cloud platform used to deploy the service.
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/)
+    - Flask is the web framework used to provide libraries, tools and technologies for the app.
+- [Jinja](https://jinja.palletsprojects.com/en/2.11.x/)
+    - Jinja is used for templating Python
+- [Werkzeug](https://werkzeug.palletsprojects.com/en/1.0.x/)
+    - Werkzeug is used for password hashing.
+- [Cloud Tables](https://cloudtables.com/)
+    - Used to generate the tables that are rendered
+- [Matplotlib](https://matplotlib.org/)
+    - Python libraries used to generate histograms
+
+
+#### Testing tools used 
+- [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/open) is used to detect problems and test responsiveness.
+- [Autoprefixer](https://autoprefixer.github.io/)
+    - Autoprefixer is used to parse the CSS and to add vendor prefixes to CSS rules. 
+- [W3C Markup Validation Service](https://validator.w3.org/)
+    - The W3C Markup Validation Service is used to check whether there were any errors in the HTML5 code. 
+- [W3C CSS validator](https://jigsaw.w3.org/css-validator/)
+    - The W3C CSS validator is used to check whether there were any errors in the CSS3 code.
+- [JShint](https://jshint.com/)
+    - JShint is a JavaScript validator that is used to check whether there were any errors in the JavaScript code. 
+- [PEP8](http://pep8online.com/)
+    - The PEP8 validator is used to check whether there were any errors in the Python code.

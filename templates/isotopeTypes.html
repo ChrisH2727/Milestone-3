@@ -53,11 +53,11 @@
               <tr>
                 <td>{{ isotope.isotope }}</td>
                 <td>{{ isotope.halflife }} years</td>
-                <td>
-                  <a href="{{ url_for('delete_isotope', isotope=isotope.isotope) }}" class="btn-small  teal lighten-2">Delete</a>
+                <td class="center-button">
+                  <a href="{{ url_for('delete_isotope', isotope=isotope.isotope) }}" class="btn-small  deep-orange accent-3 sm-btn-add">Delete</a>
                 </td>
-                <td>
-                  <a href="{{ url_for('update_isotope', isotope=isotope.isotope) }}" class="btn-small light-blue darken-4">Update</a>
+                <td class="center-button">
+                  <a href="{{ url_for('update_isotope', isotope=isotope.isotope) }}" class="btn-small light-blue darken-4 sm-btn-add">Update</a>
                 </td>
               </tr>
             {% endfor %}

@@ -29,10 +29,12 @@
                                 <td class="capitalise">{{ user.research_group }}</td>
                                 <td>
                                     <a href="{{ url_for('get_userb', user_id=user._id) }}" 
-                                    {% if user.approved=='approve' or  user.approved=='approved' %} 
-                                        class="btn-small  teal lighten-2 sm-btn-add " >{{ user.approved }}
+                                    {% if user.approved=='approve' %} 
+                                        class="btn-small  light-blue darken-1 sm-btn-add " >{{ user.approved }}
+                                    {% elif user.approved=='approved' %}    
+                                        class="btn-small  light-blue darken-4 sm-btn-add " >{{ user.approved }}
                                     {% else %}
-                                        class ="btn-small deep-orange darken-1 sm-btn-add">{{ user.approved }}
+                                        class ="btn-small amber accent-3 sm-btn-add">{{ user.approved }}
                                     {% endif %}
                                     </a>
                                 </td>
@@ -55,13 +57,13 @@
                                     {% if user.role=='admin' %}
                                         class="btn-small  teal lighten-2 sm-btn-add" >Admin
                                     {% else %}
-                                        class ="btn-small deep-orange darken-1 sm-btn-add">User
+                                        class ="btn-small brown lighten-2 sm-btn-add">User
                                     {% endif %}
                                     </a>
                                 </td>
                                 <td>
                                     <a href="{{ url_for('get_userdelete', user_id=user._id) }}" 
-                                        class="btn-small  teal lighten-2 sm-btn-add" >Active </a>
+                                        class="btn-small   deep-orange accent-3 sm-btn-add" >Delete </a>
                                     
                                     </a>
                                 </td>

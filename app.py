@@ -405,10 +405,15 @@ def get_userdelete(user_id):
 @app.route("/delete_user_resp/<user_email>", methods=["GET", "POST"])
 def delete_user_resp(user_email):
     #
-    # Called to  confirm deletion of a user account from mongo db 
-    #
-    mongo.db.users.delete_one({"email": user_email})
-    flash("user account sucessfuly deleted")
+    # Called to  confirm deletion of a user account from mongo db
+    #  
+    user = mongo.db.sources.find_one({"user": user_email})
+
+    if user:
+        flash("User {} has sources on loan and cannot be removed".format(user_email))
+    else:
+        mongo.db.users.delete_one({"email": user_email})
+        flash("user account sucessfuly deleted")
     users = list(mongo.db.users.find())
     return render_template("user.html", users=users)
 
@@ -661,8 +666,7 @@ def update_source_resp(source_serial_no):
     #
     # Called when data relating to a source requires update
     #
-    print("update_source_resp")
-   
+     
     if session["role"] == "admin":
         existing_source = (mongo.db.sources.find_one({"serial_number": source_serial_no}))
         security_codes = (mongo.db.security_group.find())
@@ -815,7 +819,14 @@ def delete_isotope_resp(isotope):
     #
     # Called to  confirm deletion of an isotope from the list in mongo db 
     #
-    mongo.db.isotope_category.delete_one({"isotope": isotope})     
+    
+    # Do not delete source is still on loan
+    sources = list(mongo.db.sources.find({"$and":[{"approved": "yes"}, {"isotope":isotope}]}))
+    if sources:
+        flash("Isotope {} is still on loan and cannot be deleted".format(isotope))
+    else:
+        mongo.db.isotope_category.delete_one({"isotope": isotope})
+
     return redirect(url_for("manage_isotopes"))
 
 
@@ -838,21 +849,25 @@ def isotopes_update_conf(isotope_id):
     #  Called to list out isotope types to the admin user
     #
     if request.method == "POST":
-        isotope_update = {
+        # Do not delete source is still on loan
+        sources = list(mongo.db.sources.find({"$and":[{"approved": "yes"}, {"isotope":isotope}]}))
+        if sources:
+            flash("Isotope {} is still on loan and cannot be updated".format(isotope))
+        else:
+            isotope_update = {
                         "isotope": request.form.get("isotope"),
                         "halflife": request.form.get("halflife")
                         }
 
-        # Update the source inventory (db collection)
-        existing_isotope = mongo.db.isotope_category.find_one({"_id": ObjectId(isotope_id)})
-        mongo.db.sources.update_many({"isotope": existing_isotope["isotope"]},
-            { '$set': isotope_update })
+            # Update the source inventory (db collection)
+            existing_isotope = mongo.db.isotope_category.find_one({"_id": ObjectId(isotope_id)})
+            mongo.db.sources.update_many({"isotope": existing_isotope["isotope"]},
+                { '$set': isotope_update })
     
-        # Update the db colection of isotope categories
-        mongo.db.isotope_category.find_one_and_update({"_id": ObjectId(isotope_id)},
-            { '$set': isotope_update })
-
-        flash("Isotope type sucessfully updated")
+            # Update the db colection of isotope categories
+            mongo.db.isotope_category.find_one_and_update({"_id": ObjectId(isotope_id)},
+                { '$set': isotope_update })
+            flash("Isotope type sucessfully updated")
 
     # get isotope list   
     if session["role"] == "admin":

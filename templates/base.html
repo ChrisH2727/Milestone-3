@@ -28,14 +28,15 @@
             <li><a href="{{ url_for('add_source') }}">Add Source</a></li>
             <li><a href="{{ url_for('delete_source') }}">Delete Source</a></li>
             <li><a href="{{ url_for('update_source') }}">Update Source</a></li>
-            <li><a href="{{ url_for('manage_isotopes') }}">Isotope Stetings</a></li>
         </ul>
 
         <ul id="source-dropdown2" class="dropdown-content">
             <li><a href="{{ url_for('add_source') }}">Add Source</a></li>
             <li><a href="{{ url_for('delete_source') }}">Delete Source</a></li>
             <li><a href="{{ url_for('update_source') }}">Update Source</a></li>
-            <li><a href="{{ url_for('manage_isotopes') }}">Isotope Settings</a></li>
+        </ul>
+        <ul id="settings-dropdown2" class="dropdown-content">
+            <li><a href="{{ url_for('manage_isotopes') }}">Isotopes</a></li>
         </ul>
 
         <ul id="inventory-dropdown" class="dropdown-content">
@@ -44,6 +45,10 @@
             <li><a href=" {{url_for('approve_request') }}">Approve Request</a></li>
         </ul>
 
+        <ul id="settings-dropdown" class="dropdown-content">
+            <li><a href="{{ url_for('manage_isotopes') }}">Isotopes</a></li>
+        </ul>
+        
         <ul id="inventory-dropdown2" class="dropdown-content">
             <li><a href=" {{url_for('get_sources') }}">Full Inventory</a></li>
             <li><a href=" {{url_for('usage_report') }}">Usage Report</a></li>
@@ -68,6 +73,8 @@
                                 class="fas fa-caret-down rm-padding"></i></a></li>
                             <li><a class="dropdown-trigger" data-target="source-dropdown2">Source <i
                                 class="fas fa-caret-down rm-padding"></i></a></li>
+                            <li><a class="dropdown-trigger" data-target="settings-dropdown2">Settings <i
+                                    class="fas fa-caret-down rm-padding"></i></a></li>    
                         {% endif %}
                     {% endif %}
 
@@ -88,6 +95,8 @@
                         class="fas fa-caret-down"></i></a></li>
                     <li><a class="dropdown-trigger" data-target="source-dropdown">Source <i
                         class="fas fa-caret-down"></i></a></li>
+                    <li><a class="dropdown-trigger" data-target="settings-dropdown">Settings <i
+                        class="fas fa-caret-down rm-padding"></i></a></li>        
                 {% endif %}
             {% endif %}
         </ul>
