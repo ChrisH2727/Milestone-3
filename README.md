@@ -60,3 +60,51 @@ It is therefore crutial that the scientific staff contol student or accademic us
     - Presents different levels of access to information for students/accademics and scientific staff.
 
 <span id="ux-stories"></span>
+
+### 1.2 User stories 
+
+**First-time visitor goals:**
+1. As a first time user, I want to be able to register with the application so that I am authorised to use the radioactive sources available in the faculty.
+
+
+**User goals:** 
+ 
+1. As a user I want to login and out of the web application securely
+1. As a user, I want to view my profile. 
+1. As a user, I want to be able to change my password, department and research group.
+1. As a user, I want to view all that radioactive sources that I have on loan. 
+1. As a user, I want to see the radioactive isotopes that are available to use and place a request to use one or more. 
+1. As . 
+
+
+**Admin goals:**
+
+As an admin user I want all  --- 
+
+
+<span id="ux-design"></span>
+
+### 1.3 Design 
+
+- #### Colour scheme 
+The three colours that are used for the radioactive inventory website chosen not to detract from the important information that is presented.
+- **Light yellow** is used for the background to provide contrast for the blue **[Marterialize](https://materializecss.com/cards.html)** cards 
+
+- **Mid Blue** is used for the header and footer. 
+
+- **Light Blue** is used for the card panels and these are further inset with **white** cards panels to provide a heading for the page of section and to focus in on the form or table dispayed. 
+
+- #### Fonts
+Sans serif and cursive are the fallbacks in case the main font isn’t being imported to the site correctly. 
+
+- #### Icons
+In the project, icons are used that are provided by [Font Awesome](https://fontawesome.com/). The Icons that are used have functional purposes such as the hamburger menu and social media icons. 
+
+- #### Images
+The images used are provided by [Shutterstock](https://www.shutterstock.com/).
+
+- #### Tables
+As this website will predominently be utilised by individual from the scientific community, considerable use is made of tables. Scientists like to see information in tables so that they can see patterns of date.  **[Cloud Tables](https://cloudtables.com/)** provides an excelent free to use JQuery plugin for this purpose.
+
+- #### Collapsibles
+Unfortunately tables do not render well on smaller screen devices and so use is made of the **[Collaspible](https://materializecss.com/collapsible.html)** provided by **Materialize**

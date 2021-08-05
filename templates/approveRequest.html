@@ -28,12 +28,12 @@
                                 <td>
                                     {% if source.approved == "no" and source.requested == "true" %}    
                                         <a href="{{ url_for('approve_request_resp', source_serial_no=source.serial_number) }}" 
-                                        class ="btn-small  teal lighten-2" tbl_btn_wd>Approve                      
+                                        class ="btn-small  light-blue darken-4 sm-btn-add">Approve                      
                                         </a>
                                     {% endif %}
                                     {% if source.approved == "yes" and source.requested == "true" %}  
                                         <a href="{{ url_for('return_source_resp', source_serial_no=source.serial_number) }}" 
-                                        class ="btn-small  deep-orange accent-3" tbl_btn_wd>Return                      
+                                        class ="btn-small  sm-btn-add teal lighten-2" >Return                      
                                         </a>
                                     {% endif %}
                                 </td>
@@ -63,7 +63,7 @@
                                             <strong> Isotope: </strong>
                                             <p>{{ source.isotope }}</p>
                                         </div>
-                                        <div class="col s6 m8">
+                                        <div class="col s5 m3">
                                             <strong>Serial Number:</strong>
                                             <p>{{ source.serial_number }}</p>
                                         </div>
@@ -94,12 +94,12 @@
                                         <div class="col s6 m9">
                                             {% if source.approved == "no" and source.requested == "true" %}    
                                                 <a href="{{ url_for('approve_request_resp', source_serial_no=source.serial_number) }}" 
-                                                class ="btn-small  teal lighten-2" tbl_btn_wd>Approve                      
+                                                class ="btn-small  light-blue darken-4 sm-btn-add" >Approve                      
                                                 </a>
                                             {% endif %}
                                             {% if source.approved == "yes" and source.requested == "true" %}  
                                                 <a href="{{ url_for('return_source_resp', source_serial_no=source.serial_number) }}" 
-                                                class ="btn-small  deep-orange accent-3" tbl_btn_wd>Return                      
+                                                class ="btn-small  sm-btn-add teal lighten-2">Return                      
                                                 </a>
                                             {% endif %}
                                         </div>

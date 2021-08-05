@@ -21,7 +21,7 @@
                 <label for="halflife">Half Life</label>
               </div>
               <div class="card-action col s12 l4">
-                <button class="btn-large deep-orange accent-3" name="action" type="submit" name="action">Submit
+                <button class="btn-large light-blue darken-4 lg-btn-add" name="action" type="submit" name="action">Add
                   <i class="fas fa-cloud-upload-alt"></i>
                 </button>
               </div>
@@ -57,7 +57,7 @@
                   <a href="{{ url_for('delete_isotope', isotope=isotope.isotope) }}" class="btn-small  teal lighten-2">Delete</a>
                 </td>
                 <td>
-                  <a href="{{ url_for('update_isotope', isotope=isotope.isotope) }}" class="btn-small  teal lighten-2">Update</a>
+                  <a href="{{ url_for('update_isotope', isotope=isotope.isotope) }}" class="btn-small light-blue darken-4">Update</a>
                 </td>
               </tr>
             {% endfor %}

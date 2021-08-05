@@ -54,11 +54,21 @@ body {
   font-size: 20px;
   height:4rem;
 }
+.btn, .btn-large, .btn-small {
+letter-spacing: 0px;
+}
 .sm-btn-add{
   min-width: 76px;
+  border-radius: 5px;
+}
+.lg-btn-add{
+  min-width: 150px;
   border-radius: 5px; 
 }
-
+.email-cell{
+  max-width: 100px; 
+  overflow:auto;
+}
 /****************************Collapsable Body******************************/
 
 table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, table.dataTable tfoot th {

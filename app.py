@@ -177,15 +177,15 @@ def usage_report():
         login_num.append(mongo.db.login_history.count_documents({"login_date": login}))
 
     # Determine source usage by serial number
-    source_loans = mongo.db.source_history.find().distinct("serial_number")
+    source_loans = list(mongo.db.source_history.find().distinct("serial_number"))
     loans_num = []
     for loans in source_loans:
         loans_num.append(mongo.db.source_history.count_documents({"serial_number": loans}))
 
     # Page only accessible for admin users
     if session["role"] == "admin":
-        
         try:
+            # generate plots
             plt.bar(source_types, source_num, color='green')
             plt.title("Sources by Isotope") 
             plt.savefig('static/assets/sourceUsed.png')
@@ -204,10 +204,13 @@ def usage_report():
         except Exception:
             flash("Database error, unable to generate new reports")    
 
+        # Get all source loan histories
+        source_histories = list(mongo.db.source_history.find())
         return render_template("usageReport.html", name="usage plot",
             url1="static/assets/sourceUsed.png",
             url2="static/assets/loginHistory.png",
-            url3="static/assets/loanHistory.png")
+            url3="static/assets/loanHistory.png",
+            source_histories=source_histories)
 
     else:
         return render_template("errorPage.html")
@@ -222,7 +225,7 @@ def approve_request():
     # clear any exiting flash messages
     session.pop('_flashes', None)
     
-    # Check for any requested but not approved sources 
+    # Check for any requested but not approved sources
     if len(list( mongo.db.sources.find({"requested": "true"}))) == 0:
         showtable = "false"
         flash("You have no further source requests to approve")
