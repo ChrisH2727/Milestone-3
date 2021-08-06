@@ -40,7 +40,7 @@
                 <td>{{ source.type }}</td>
                 <td>{{ source.security_group }}</td>
                 <td>{{ source.last_used }}</td>
-                <td class="email-cell">{{ source.user }}</td>
+                <td class="capitalize">{{ source.first }} {{ source.last }}</td>
                 <td class="center-button">
                   <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
                     class="btn-small light-blue darken-4 sm-btn-add">Update</a>
@@ -168,7 +168,7 @@
                           <strong>Current User: </strong>
                         </div>
                         <div class="col s6 m9" >
-                          <p >{{ source.user }}</p>
+                          <p class="capitalize">{{ source.first }} {{ source.last }}</p>
                         </div>
                       </div>
                       <div class="row">

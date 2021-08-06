@@ -206,6 +206,20 @@ def usage_report():
 
         # Get all source loan histories
         source_histories = list(mongo.db.source_history.find())
+
+        # Get the users first and last name and append to the source list to 
+        # avoid email being shown in the table 
+        for source_history in source_histories:
+            if source_history["user"]:
+                user = (mongo.db.users.find_one({"email": source_history["user"]}))
+                # Check that the user still exists
+                if user:
+                    source_history.update({"first": user["first"]})
+                    source_history.update({"last": user["last"]})
+                else:
+                    source_history.update({"first": ""})
+                    source_history.update({"last": ""})
+
         return render_template("usageReport.html", name="usage plot",
             url1="static/assets/sourceUsed.png",
             url2="static/assets/loginHistory.png",
@@ -304,6 +318,9 @@ def return_source_resp(source_serial_no):
     else:
         flash("Source has been deleted from the inventory")
         return approve_request()
+
+#----------------Create Read Update Delete User Accounts------------------------
+
 
 @app.route("/get_userb/<user_id>", methods=["GET", "POST"])
 def get_userb(user_id):
@@ -406,31 +423,41 @@ def get_userdelete(user_id):
 def delete_user_resp(user_email):
     #
     # Called to  confirm deletion of a user account from mongo db
-    #  
-    user = mongo.db.sources.find_one({"user": user_email})
+    # 
+    # Restrict user account deletion to admin users only
+    if session["role"] == "admin":
+        # Check is user has a source on loan  
+        source_user = mongo.db.sources.find_one({"user": user_email})
+  
+        if source_user:
+            #Get user name from user mongo db user collection
+            user = mongo.db.users.find_one({ "email": user_email})
+            user_name = (user["first"]).capitalize() + " " + (user["last"]).capitalize()
+            flash("User {} has sources on loan and cannot be removed".format(user_name))
 
-    if user:
-        flash("User {} has sources on loan and cannot be removed".format(user_email))
+        else:
+            mongo.db.users.delete_one({"email": user_email})
+            flash("user account sucessfuly deleted")
+
+        users = list(mongo.db.users.find())
+        return render_template("user.html", users=users)
+    
     else:
-        mongo.db.users.delete_one({"email": user_email})
-        flash("user account sucessfuly deleted")
-    users = list(mongo.db.users.find())
-    return render_template("user.html", users=users)
-
+        return render_template("errorPage.html")
 
 @app.route("/get_user")
 def get_user():
     #
-    # Called to display a complete table of all users with eiter admin or user role
+    # Called to display a complete table of all users with either admin or user role
     #
+
+    users = list(mongo.db.users.find())
 
     # Restrict access to admin users only
     if session["role"] == "admin":   
-        users = list(mongo.db.users.find())
         return render_template("user.html", users=users) 
     else:
         return render_template("errorPage.html")
-
 
 #-------------------------Create Read Update Delete Sources------------------------
 
@@ -443,7 +470,20 @@ def get_sources():
     # 
     print("get_sources")
     sources = list(mongo.db.sources.find())
-    
+
+    # Get the users first and last name and append to the source list to avoid email
+    # being shown in the table 
+    for source in sources:
+        if source["user"]:
+            user = (mongo.db.users.find_one({"email": source["user"]}))
+            # Check that the user still exists
+            if user:
+                source.update({"first": user["first"] })
+                source.update({"last": user["last"] })
+            else:
+                source.update({"first": "" })
+                source.update({"last": "" })
+
     for source in sources:
         # If db problem use existing activity
         try:

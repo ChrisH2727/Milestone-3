@@ -39,7 +39,7 @@
               {% for source_history in source_histories %}
                 <tr>
                   <td>{{ source_history.serial_number }}</td>
-                  <td class="email-cell" >{{ source_history.user }}</td>
+                  <td class="capitalize">{{ source_history.first }} {{source_history.last}}</td>
                   <td>{{ source_history.date_out }}</td>
                   <td>{{ source_history.date_in }}</td>
                 </tr>
