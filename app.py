@@ -24,6 +24,8 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 @app.route("/")
+#-------------------------User Login and Registration------------------------------
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -151,6 +153,8 @@ def register():
     return render_template("register.html",departments=departments)
 
 #-------------------------Report Generation-----------------------------------
+
+
 @app.route("/usage_report")
 def usage_report():
     #
@@ -221,6 +225,8 @@ def usage_report():
 
     else:
         return render_template("errorPage.html")
+
+#-------------------------Source Request Management------------------------------
 
 
 @app.route("/approve_request", methods=["GET", "POST"])
@@ -303,14 +309,31 @@ def return_source_resp(source_serial_no):
                     "requested": "false",
                     "user": ""
                     }
-        mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
-                {'$set': submit}, return_document = ReturnDocument.AFTER)
-    
+        mongo.db.sources.find_one_and_update(
+            {"serial_number": source_serial_no}, {'$set': submit})
+
         flash("Source Returned To Inventory")
         return approve_request()
     else:
         flash("Source has been deleted from the inventory")
         return approve_request()
+
+
+@app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
+def delete_source_resp(source_serial_no):
+    #
+    # Called prior to user clicking button to delete a source from the mongo db 
+    #      
+    print("delete_source_resp")
+    # Restrict access to admin users only
+    if session["role"] == "admin":
+        existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
+        used_times = mongo.db.source_history.count_documents({"serial_number": source_serial_no})
+        flash("Your are about to delete source: {}".format(source_serial_no))
+        return render_template("deleteSource.html",existing_source=existing_source, used_times=used_times)
+        
+    else:
+        return render_template("errorPage.html")       
 
 #----------------Create Read Update Delete User Accounts------------------------
 
@@ -461,7 +484,7 @@ def get_sources():
     # Called when the full source inventory is to be read from mongo db
     # Calculates updated source activity 
     # 
-    print("get_sources")
+    
     sources = list(mongo.db.sources.find())
 
     # Get the users first and last name and append to the source list to avoid email
@@ -635,15 +658,12 @@ def req_source_conf(source_serial_no):
     return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
-
-
-
 @app.route("/update_source", methods=["GET", "POST"])
 def update_source():
     #
     # called when the admin user selects a source for update via a query
     #
-    print("update_source")
+    
     # Restrict access to admin users only
     if session["role"] == "admin":
         query = request.form.get("query")
@@ -660,14 +680,11 @@ def update_source():
         return render_template("errorPage.html")
 
 
-    
-
 @app.route("/update_source_activate", methods=["GET", "POST"])
 def update_source_activate():
     #
     # Called when data relating to a source needs to updating in mongodb
     #
-    print("update_source_activate")
     
     if request.method == "POST":
         # Get source from mongo db
@@ -758,38 +775,26 @@ def del_source_conf(source_serial_no):
     #
     # Gets source data from the mongo db and generates a table
     #
-    print("del_source_conf")
+    
     # Restrict access to admin users only
     if session["role"] == "admin":
+        # Find if there is a current user of the source
         existing_source =  mongo.db.sources.find_one({"serial_number": source_serial_no})
         existing_source_user = existing_source["user"]
         if existing_source_user:
             flash("Source: {} is on loan and could not be deleted ".format(source_serial_no))     
-        else:          
+        else:
+            # Go ahead and delete          
             mongo.db.sources.delete_one({"serial_number": source_serial_no})
             flash("Source: {} has been deleted".format(source_serial_no))     
         
         sources = list(mongo.db.sources.find())
-        return render_template("inventory.html", sources=sources)
+        return redirect(url_for("get_sources")) 
     else:
         return render_template("errorPage.html")
 
 
-@app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
-def delete_source_resp(source_serial_no):
-    #
-    # Called prior to user clicking button to delete a source from the mongo db 
-    #      
-    print("delete_source_resp")
-    # Restrict access to admin users only
-    if session["role"] == "admin":
-        existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
-        used_times = mongo.db.source_history.count_documents({"serial_number": source_serial_no})
-        flash("Your are about to delete source: {}".format(source_serial_no))
-        return render_template("deleteSource.html",existing_source=existing_source, used_times=used_times)
-        
-    else:
-        return render_template("errorPage.html")
+
 
 
 @app.route("/userAccount", methods=["GET", "POST"])
