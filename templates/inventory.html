@@ -28,7 +28,7 @@
           <tbody>
             {% for source in sources %}   
               <tr>
-                <td>{{ source.department }}</td>
+                <td class="capitalize">{{ source.department }}</td>
                 <td>{{ source.serial_number }}</td>
                 <td>{{ source.isotope }}</td>
                 <td>{{ source.laboratory }}</td>
@@ -82,13 +82,14 @@
                   <p>{{ source.serial_number }}</p>
                 </div>
               </div>
+
                 <div class="collapsible-body">
                   <div class="row">
                     <div class="col s6 m3">
                       <strong>Department: </strong>
                     </div>
                     <div class="col s6 m9">
-                      <p>{{ source.department }}</p>
+                      <p class="capitalize">{{ source.department }}</p>
                     </div>
                   </div>  
                     <div class="row">
@@ -177,7 +178,7 @@
                         </div>
                       <div class="col s6 m9">
                         <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
-                        class="btn-small  teal lighten-2" tbl_btn_wd>Update </a>
+                        class="btn-small  teal lighten-2 sm-btn-add">Update </a>
                       </div>
                     </div>
                     <div class="row">
@@ -186,7 +187,7 @@
                         </div>
                       <div class="col s6 m9">
                       <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}"
-                        class="btn-small  teal lighten-2" tbl_btn_wd>Delete</a>
+                        class="btn-small  deep-orange accent-3 sm-btn-add">Delete</a>
                       </div>
                     </div>
                   </div>

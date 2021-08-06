@@ -34,46 +34,50 @@ def login():
     # Ensure only login and register nav bar options are available
     if session.get("in_use"):
         session.pop("in_use")
-    
+
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
-            {"email": request.form.get("email").lower(),
-                "password": request.form.get("password").lower()})
+            {"email": request.form.get("email").lower()})
 
         if existing_user:
-            # Check if user already has an open session
-            # Check if users account has been approved
-            if existing_user["approved"] == "approved":
-                # session cookie for role "admin" or "user"
-                session["role"] = existing_user["role"]
-                # session cookie for users first name
-                session["user"] = existing_user["first"]
-                # session cookie for in_use
-                session["in_use"] = True
-                # session cookie for user email
-                session["email"] = existing_user["email"]
+            if check_password_hash(
+                    existing_user["password"], request.form.get("password")):
+                # Check if user already has an open session
+                # Check if users account has been approved
+                if existing_user["approved"] == "approved":
+                    # session cookie for role "admin" or "user"
+                    session["role"] = existing_user["role"]
+                    # session cookie for users first name
+                    session["user"] = existing_user["first"]
+                    # session cookie for in_use
+                    session["in_use"] = True
+                    # session cookie for user email
+                    session["email"] = existing_user["email"]
 
-                # Set user status to logged out
-                user_status = {"status": "logged_in"}
-                mongo.db.users.find_one_and_update({"first": session["user"]},
-                    {'$set': user_status}, return_document=ReturnDocument.AFTER)
+                    # Set user status to logged out
+                    user_status = {"status": "logged_in"}
+                    mongo.db.users.find_one_and_update(
+                        {"first": session["user"]}, {'$set': user_status})
                     
-                # Add an entry to the user login history
-                login_entry = {
-                    "first": existing_user["first"].lower(),
-                    "last": existing_user["last"].lower(),
-                    "email": request.form.get("email").lower(),
-                    "login_date": datetime.today().strftime('%d-%m-%y'),
-                    "logout_date": ""
-                }
-                mongo.db.login_history.insert_one(login_entry)
-                return redirect(url_for("userAccount"))
+                    # Add an entry to the user login history
+                    login_entry = {
+                        "first": existing_user["first"].lower(),
+                        "last": existing_user["last"].lower(),
+                        "email": request.form.get("email").lower(),
+                        "login_date": datetime.today().strftime('%d-%m-%y'),
+                        "logout_date": ""
+                    }
+                    mongo.db.login_history.insert_one(login_entry)
+                    return redirect(url_for("userAccount"))
+                else:
+                    flash("Account not approved or suspended")
+                    return redirect(url_for("login"))
             else:
-                flash("Account not approved or suspended")
-                return redirect(url_for("login"))
+                flash("Incorrect password")
+                return redirect(url_for("login"))            
         else:
-            # invalid password match or user name or email
-            flash("Incorrect Username and/or Password")
+            # invalid user name
+            flash("Incorrect username please register")
             return redirect(url_for("login"))
     return render_template("login.html")
 
@@ -92,10 +96,11 @@ def logout():
     # Set user status to logged out
     user_status = {"status": "logged_out"}
     mongo.db.users.find_one_and_update({"first": session["email"]},
-            {'$set': user_status}, return_document=ReturnDocument.AFTER)
+        {'$set': user_status}, return_document=ReturnDocument.AFTER)
 
     # Code line from Code Institute Mini Project
-    flash("Goodbye, {}".format(session["user"]), "You have been logged out")
+    flash("Goodbye {} you have been logged out".format(
+        (session["user"]).capitalize()))
     # Remove user from session cookies if active
     if session.get("user"):
         session.pop("user")
@@ -113,20 +118,6 @@ def logout():
 def register():
 
     if request.method == "POST":
-        # Check if all registration fields have been entered
-        #if (not((request.form.get("first_name") and not (request.form.get("first_name").isspace())) and
-        #    (request.form.get("last_name") and not (request.form.get("last_name").isspace())) and
-        #    (request.form.get("email") and not (request.form.get("email").isspace())) and
-        #    (request.form.get("password") and not (request.form.get("password").isspace())) and
-        #    (request.form.get("repeat_password") and not (request.form.get("repeat_password").isspace())) and
-        #    (request.form.get("department") and not (request.form.get("department").isspace())) and
-        #        (request.form.get("research_group") and not (request.form.get("research_group").isspace())))):
-        #    flash("Please complete all fields before clicking the submit button")
-        #    return redirect(url_for("register"))
-        #else:
-        #    # clear any exiting flash messages
-        #    session.pop('_flashes', None)
-        
         # check if email already exists in db.
         existing_user = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
@@ -143,7 +134,7 @@ def register():
             "first": request.form.get("first_name").lower(),
             "last": request.form.get("last_name").lower(),
             "email": request.form.get("email").lower(),
-            "password": (request.form.get("password")),
+            "password": generate_password_hash(request.form.get("password")),
             "department": request.form.get("department").lower(),
             "research_group": request.form.get("research_group").lower(),
             "approved": "approve",
@@ -599,6 +590,7 @@ def source_request():
         return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
     else:
         showsources = "false"
+        flash("No matching sequences found.")
         sources = []
         return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
@@ -809,7 +801,7 @@ def userAccount():
         if request.form.get("password") != request.form.get("repeat_password"):
             flash("Please ensure that that your password entries match")
         else:
-            submit = {"password": request.form.get("password"),
+            submit = {"password": generate_password_hash(request.form.get("password")),
                 "department": request.form.get("department").lower(),
                 "research_group": request.form.get("research_group").lower()}
 
