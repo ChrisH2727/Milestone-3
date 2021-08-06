@@ -10,27 +10,27 @@
           
             <form method="POST" action="{{ url_for('register') }}">
               <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s6 m6 l6 ">
                   <!--regex first charater must be alpha-->
                   <input id="first_name" name="first_name" type="text" class="validate" required
                     pattern="^[a-zA-Z]{1}(?:[\w \-]{1,10}[\w\-])?$" minlength="1" maxlength="15">
                   <label for="first_name">First Name</label>
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col s6 m6 l6">
                   <input id="last_name" name="last_name" type="text" class="validate" required
                     pattern="^[a-zA-Z]{1}(?:[\w \-]{1,10}[\w\-])?$" minlength="1" maxlength="15">
                   <label for="last_name">Last Name</label>
                 </div>
               </div>
               <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s12 m6 l6">
                   <!--Full password regex is complex and could take weeks to test!-->
                   <input id="password" type="password" name="password" class="validate" minlength="8" maxlength="24" required>
                   <label for="password">New password</label>
                 </div>
               </div>
               <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s12 m6 l6">
                   <input id="repeat_password" type="password" name="repeat_password" class="validate" minlength="8" maxlength="24" required>
                   <label for="repeat_password">Repeat password</label>
                 </div>
@@ -45,13 +45,18 @@
                 </div>
               </div>
               <div class="row">
-                <div class="input-field col s6">
-                  <!--Regex first three characters must be alpha then any alpha numeric and incuding spaces and "-"-->
-                  <input id="department" type="text" name="department" class="validate"
-                    pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$" minlength="3" maxlength="15" required>
+                <div class="input-field col l6 m6 s12">
+                  <select id="department" name="department" class="validate" required>
+                      <option value="{{ departments.department }}"selected>Select Department</option>
+                      {% for department in departments %}
+                          <option value="{{ department.department }}">{{ department.department }}</option>
+                      {% endfor %}
+                  </select>
                   <label for="department">Department</label>
                 </div>
-                <div class="input-field col s6">
+              </div>
+              <div class="row">
+                <div class="input-field col s6 m6 s12">
                   <input id="research_group" type="text" name="research_group" class="validate"
                     pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$" minlength="3" maxlength="15" required>
                   <label for="research_group">Research Group</label>

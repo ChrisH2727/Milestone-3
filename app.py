@@ -145,8 +145,10 @@ def register():
         mongo.db.users.insert_one(register)
         flash("You have sucessfully registered, please wait for your request to be approved")
         return render_template("login.html")
-
-    return render_template("register.html")
+    
+    # Get all departments
+    departments = list(mongo.db.departments.find())
+    return render_template("register.html",departments=departments)
 
 #-------------------------Report Generation-----------------------------------
 @app.route("/usage_report")
