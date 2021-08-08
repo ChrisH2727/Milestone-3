@@ -51,7 +51,8 @@ def login():
                     session["role"] = existing_user["role"]
                     # session cookie for users first name
                     session["user"] = existing_user["first"]
-                    # session cookie for in_use ensures that menue only displayed to registered users
+                    # session cookie for in_use ensures that menue only 
+                    # displayed to registered users
                     session["in_use"] = True
                     # session cookie for user email
                     session["email"] = existing_user["email"]
@@ -97,11 +98,6 @@ def logout():
         user_history = {"logout_date": datetime.today().strftime('%d-%m-%y')}
         mongo.db.login_history.find_one_and_update({"first": session["email"]},
             {'$set': user_history}, return_document=ReturnDocument.AFTER)
-
-    # Set user status to logged out
-    #user_status = {"status": "logged_out"}
-    #mongo.db.users.find_one_and_update({"first": session["email"]},
-    #    {'$set': user_status}, return_document=ReturnDocument.AFTER)
 
     # Code line from Code Institute Mini Project
     flash("Goodbye {} you have been logged out".format(
@@ -163,7 +159,7 @@ def register():
         departments = []
     return render_template("register.html", departments=departments)
 
-#-------------------------Report Generation-----------------------------------
+# -------------------------Report Generation-----------------------------------
 
 
 @app.route("/usage_report")
@@ -243,7 +239,7 @@ def usage_report():
     else:
         return render_template("errorPage.html")
 
-#-------------------------Source Request Management------------------------------
+# -------------------------Source Request Management-----------------------------
 
 
 @app.route("/approve_request", methods=["GET", "POST"])
@@ -315,8 +311,8 @@ def return_source_resp(source_serial_no):
 
     # Update the  source loan history document in mongodb with return date
     submit = {"date_in" : inDate}
-    mongo.db.source_history.find_one_and_update({"serial_number": source_serial_no},
-            { '$set': submit }, return_document = ReturnDocument.AFTER)
+    mongo.db.source_history.find_one_and_update(
+        {"serial_number": source_serial_no}, {'$set': submit})
 
     # Check if the source has been deleted from the inventory
     
@@ -356,7 +352,7 @@ def delete_source_resp(source_serial_no):
     else:
         return render_template("errorPage.html")       
 
-#----------------Create Read Update Delete User Accounts------------------------
+# ----------------Create Read Update Delete User Accounts-----------------------
 
 
 @app.route("/get_userb/<user_id>", methods=["GET", "POST"])
@@ -629,18 +625,19 @@ def source_request():
 
     query = request.form.get("query")
     mode = "request"
+    # Assume no sources found
+    showsources = "false"
+    sources = []
     if query:
         # Find collection of seached sources not already requested
         sources = list(mongo.db.sources.find({"$and":[{"$text": {"$search": query}}, {"requested":"false"}]}))
         if sources:
             showsources = "true"
-            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
         else:
-            showsources = "false"
             flash("No matching sequences found.")
             sources = []
-            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
-
+    
+    return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 @app.route("/del_source_req/<source_serial_no>" , methods=["GET", "POST"])
 def del_source_req(source_serial_no):
@@ -715,29 +712,33 @@ def update_source_activate():
     
         # check if source serial number already exists in db
         if existing_source:    
-            # Get isotope half life
+            # Get isotope collection
             isotope = mongo.db.isotope_category.find_one({"isotope": request.form.get("isotope")})
 
-            # Create updated source entry
-            updateSource = {
-                "department": request.form.get("department"),
-                "laboratory": request.form.get("laboratory"),
-                "location": request.form.get("location"),
-                "isotope": request.form.get("isotope"),
-                "half_life": isotope["halflife"],
-                "half_life_units": "years",
-                "original_activity": request.values.get("original_activity"),
-                "original_activity_units": request.values.get("original_activity_units"),
-                "activity_now": request.values.get("original_activity"),
-                "activity_now_units": request.values.get("original_activity_units"),
-                "activation_date": request.values.get("activation_date"),
-                "security_group": request.values.get("security_group"),
-                "type": request.values.get("encapsulation")
-                }
-            mongo.db.sources.find_one_and_update({"serial_number": request.form.get("serial_number")},
-                { '$set': updateSource })
-            flash("The source data has been sucessfully updated")
-
+            # Check that isotope entry available in the collection
+            if isotope:
+                # Create updated source entry
+                updateSource = {
+                    "department": request.form.get("department"),
+                    "laboratory": request.form.get("laboratory"),
+                    "location": request.form.get("location"),
+                    "isotope": request.form.get("isotope"),
+                    "half_life": isotope["halflife"],
+                    "half_life_units": "years",
+                    "original_activity": request.values.get("original_activity"),
+                    "original_activity_units": request.values.get("original_activity_units"),
+                    "activity_now": request.values.get("original_activity"),
+                    "activity_now_units": request.values.get("original_activity_units"),
+                    "activation_date": request.values.get("activation_date"),
+                    "security_group": request.values.get("security_group"),
+                    "type": request.values.get("encapsulation")
+                    }
+                mongo.db.sources.find_one_and_update({"serial_number": request.form.get("serial_number")},
+                    { '$set': updateSource })
+                flash("The source data has been sucessfully updated")
+            else:
+                # Do not update the source entry 
+                flash("Database error source data has not been updated. Refer to admin user.")
         else:
             flash("Database error source data has not been updated. Refer to admin user.")
     
