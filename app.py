@@ -24,7 +24,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 @app.route("/")
-#-------------------------User Login and Registration------------------------------
+# -------------------------User Login and Registration--------------------------
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -44,22 +44,22 @@ def login():
         if existing_user:
             if check_password_hash(
                     existing_user["password"], request.form.get("password")):
-                # Check if user already has an open session
+               
                 # Check if users account has been approved
                 if existing_user["approved"] == "approved":
                     # session cookie for role "admin" or "user"
                     session["role"] = existing_user["role"]
                     # session cookie for users first name
                     session["user"] = existing_user["first"]
-                    # session cookie for in_use
+                    # session cookie for in_use ensures that menue only displayed to registered users
                     session["in_use"] = True
                     # session cookie for user email
                     session["email"] = existing_user["email"]
 
                     # Set user status to logged out
-                    user_status = {"status": "logged_in"}
-                    mongo.db.users.find_one_and_update(
-                        {"first": session["user"]}, {'$set': user_status})
+                    #user_status = {"status": "logged_in"}
+                    #mongo.db.users.find_one_and_update(
+                    #    {"first": session["user"]}, {'$set': user_status})
                     
                     # Add an entry to the user login history
                     login_entry = {
@@ -90,15 +90,18 @@ def logout():
     # Called when a user or admin logs out of a session
     #
 
-    # Add date to the user login history
-    user_history = {"logout_date": datetime.today().strftime('%d-%m-%y')}
-    mongo.db.login_history.find_one_and_update({"first": session["email"]},
+    # Check that session is in progress before adding to the login
+    # history. Stops crashing during testing.
+    if session.get("user"):
+        # Add date to the user login history
+        user_history = {"logout_date": datetime.today().strftime('%d-%m-%y')}
+        mongo.db.login_history.find_one_and_update({"first": session["email"]},
             {'$set': user_history}, return_document=ReturnDocument.AFTER)
-    
+
     # Set user status to logged out
-    user_status = {"status": "logged_out"}
-    mongo.db.users.find_one_and_update({"first": session["email"]},
-        {'$set': user_status}, return_document=ReturnDocument.AFTER)
+    #user_status = {"status": "logged_out"}
+    #mongo.db.users.find_one_and_update({"first": session["email"]},
+    #    {'$set': user_status}, return_document=ReturnDocument.AFTER)
 
     # Code line from Code Institute Mini Project
     flash("Goodbye {} you have been logged out".format(
@@ -118,9 +121,12 @@ def logout():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    #
+    # Called to register a new user
+    #
 
     if request.method == "POST":
-        # check if email already exists in db.
+        # check if user email already exists in db.
         existing_user = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
         
@@ -128,6 +134,7 @@ def register():
             flash("User has already been registered, please try again")
             return redirect(url_for("register"))
 
+        # Check for repeat password match
         if request.form.get("password") != request.form.get("repeat_password"):
             flash("Password entries must match, please try again")
             return redirect(url_for("register"))
@@ -148,9 +155,13 @@ def register():
         flash("You have sucessfully registered, please wait for your request to be approved")
         return render_template("login.html")
     
-    # Get all departments
-    departments = list(mongo.db.departments.find())
-    return render_template("register.html",departments=departments)
+    # Get all departments and check is collection is empty
+    if mongo.db.departments.count_documents({}) != 0:
+        departments = list(mongo.db.departments.find())
+    else:
+        flash("Database error detected, please refer to admin user")
+        departments = []
+    return render_template("register.html", departments=departments)
 
 #-------------------------Report Generation-----------------------------------
 
@@ -158,26 +169,30 @@ def register():
 @app.route("/usage_report")
 def usage_report():
     #
-    # Generates reports from the mongodb and renders them for admin user to view
+    # Generates reports from the mongodb and renders them for admin 
+    # users to view.
     #
 
     # Determine sources of isotopes on inventory
     source_types = mongo.db.sources.find().distinct("isotope")
     source_num = []
     for source in source_types:
-        source_num.append(mongo.db.sources.count_documents({"isotope": source}))
+        source_num.append(
+            mongo.db.sources.count_documents({"isotope": source}))
 
     # Determine Logins per day
     logins = mongo.db.login_history.find().distinct("login_date")
     login_num = []
     for login in logins:
-        login_num.append(mongo.db.login_history.count_documents({"login_date": login}))
+        login_num.append(mongo.db.login_history.count_documents(
+            {"login_date": login}))
 
     # Determine source usage by serial number
     source_loans = list(mongo.db.source_history.find().distinct("serial_number"))
     loans_num = []
     for loans in source_loans:
-        loans_num.append(mongo.db.source_history.count_documents({"serial_number": loans}))
+        loans_num.append(mongo.db.source_history.count_documents(
+            {"serial_number": loans}))
 
     # Page only accessible for admin users
     if session["role"] == "admin":
@@ -204,11 +219,12 @@ def usage_report():
         # Get all source loan histories
         source_histories = list(mongo.db.source_history.find())
 
-        # Get the users first and last name and append to the source list to 
-        # avoid email being shown in the table 
+        # Get the users first and last name and append to the source list to
+        # avoid email being shown in the table
         for source_history in source_histories:
             if source_history["user"]:
-                user = (mongo.db.users.find_one({"email": source_history["user"]}))
+                user = (mongo.db.users.find_one(
+                    {"email": source_history["user"]}))
                 # Check that the user still exists
                 if user:
                     source_history.update({"first": user["first"]})
@@ -217,7 +233,8 @@ def usage_report():
                     source_history.update({"first": ""})
                     source_history.update({"last": ""})
 
-        return render_template("usageReport.html", name="usage plot",
+        return render_template(
+            "usageReport.html", name="usage plot",
             url1="static/assets/sourceUsed.png",
             url2="static/assets/loginHistory.png",
             url3="static/assets/loanHistory.png",
@@ -232,7 +249,8 @@ def usage_report():
 @app.route("/approve_request", methods=["GET", "POST"])
 def approve_request():
     #
-    # Called when the admin user wants to see if there are any new source requests to deal with
+    # Called when the admin user wants to see if there are any new source 
+    # requests to deal with
     #
     
     # clear any exiting flash messages
@@ -246,8 +264,8 @@ def approve_request():
         showtable = "true"
 
     existing_sources = list(mongo.db.sources.find({"requested": "true"}))
-    return render_template("approveRequest.html", sources=existing_sources,
-        showtable=showtable)
+    return render_template(
+        "approveRequest.html", sources=existing_sources, showtable=showtable)
 
 
 @app.route("/approve_request_resp<source_serial_no>", methods=["GET", "POST"])
@@ -275,9 +293,9 @@ def approve_request_resp(source_serial_no):
     
     # Update the source document in mongodb
     submit = {"approved": "yes",
-                "last_used":outDate}
-    mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
-            {'$set': submit}, return_document=ReturnDocument.AFTER)
+            "last_used":outDate}
+    mongo.db.sources.find_one_and_update(
+        {"serial_number": source_serial_no}, {'$set': submit})
     
     flash("Source Request Appoved")
 
@@ -327,10 +345,13 @@ def delete_source_resp(source_serial_no):
     print("delete_source_resp")
     # Restrict access to admin users only
     if session["role"] == "admin":
-        existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})
-        used_times = mongo.db.source_history.count_documents({"serial_number": source_serial_no})
+        existing_source = mongo.db.sources.find_one(
+            {"serial_number": source_serial_no})
+        used_times = mongo.db.source_history.count_documents(
+            {"serial_number": source_serial_no})
         flash("Your are about to delete source: {}".format(source_serial_no))
-        return render_template("deleteSource.html",existing_source=existing_source, used_times=used_times)
+        return render_template(
+            "deleteSource.html", existing_source=existing_source, used_times=used_times)
         
     else:
         return render_template("errorPage.html")       
@@ -377,8 +398,8 @@ def get_userb(user_id):
             flash("User Successfully Approved")
 
         # pymongo update has been deprecated use find_one_and_update
-        mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
-            { '$set': submit }, return_document = ReturnDocument.AFTER)
+        mongo.db.users.find_one_and_update(
+            {"_id": ObjectId(user_id)}, {'$set': submit})
 
     users = list(mongo.db.users.find())
     return render_template("user.html", users=users)
@@ -401,8 +422,8 @@ def get_userc(user_id):
             submit = {"role": "user"}
         else:
             submit = {"role": "admin"}    
-        mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
-            { '$set': submit }, return_document = ReturnDocument.AFTER)
+        mongo.db.users.find_one_and_update(
+            {"_id": ObjectId(user_id)}, {'$set': submit})
         flash("User role successfully updated")
     
     users = list(mongo.db.users.find())
@@ -439,7 +460,7 @@ def get_userdelete(user_id):
 def delete_user_resp(user_email):
     #
     # Called to  confirm deletion of a user account from mongo db
-    # 
+    #
     # Restrict user account deletion to admin users only
     if session["role"] == "admin":
         # Check is user has a source on loan  
@@ -611,13 +632,14 @@ def source_request():
     if query:
         # Find collection of seached sources not already requested
         sources = list(mongo.db.sources.find({"$and":[{"$text": {"$search": query}}, {"requested":"false"}]}))
-        showsources = "true"
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
-    else:
-        showsources = "false"
-        flash("No matching sequences found.")
-        sources = []
-        return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+        if sources:
+            showsources = "true"
+            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
+        else:
+            showsources = "false"
+            flash("No matching sequences found.")
+            sources = []
+            return render_template("sourceRequest.html", showsources=showsources, sources=sources, mode=mode)
 
 
 @app.route("/del_source_req/<source_serial_no>" , methods=["GET", "POST"])
@@ -626,12 +648,13 @@ def del_source_req(source_serial_no):
     # Called when user deletes a source request before authorised by admin
     # Action open to users and admin
     #
+
+    # Set up the source entry for avialable to use 
     submit = {"approved": "no",
             "requested": "false",
             "user": ""}
-
     mongo.db.sources.find_one_and_update({"serial_number": source_serial_no},
-            { '$set': submit }, return_document = ReturnDocument.AFTER)
+            { '$set': submit })
 
     # Get list of sources held by the user
     loanSources = list(mongo.db.sources.find({"user": session["email"]}))
@@ -712,7 +735,7 @@ def update_source_activate():
                 "type": request.values.get("encapsulation")
                 }
             mongo.db.sources.find_one_and_update({"serial_number": request.form.get("serial_number")},
-                { '$set': updateSource }, return_document = ReturnDocument.AFTER)
+                { '$set': updateSource })
             flash("The source data has been sucessfully updated")
 
         else:
@@ -794,9 +817,6 @@ def del_source_conf(source_serial_no):
         return render_template("errorPage.html")
 
 
-
-
-
 @app.route("/userAccount", methods=["GET", "POST"])
 def userAccount():
 
@@ -833,11 +853,16 @@ def manage_isotopes():
     #  Called to list out isotope types to the admin user
     #
     if request.method == "POST":
-        isotope_entry = {
+        existing_isotope = mongo.db.isotope_category.find_one(
+            {"isotope": request.form.get("isotope")})
+        if existing_isotope:
+            flash("Duplicated entry, please try again")
+        else:    
+            isotope_entry = {
                         "isotope": request.form.get("isotope"),
                         "halflife": request.form.get("halflife")
                         }
-        mongo.db.isotope_category.insert_one(isotope_entry)
+            mongo.db.isotope_category.insert_one(isotope_entry)
 
     # get isotope list   
     if session["role"] == "admin":
@@ -896,8 +921,8 @@ def isotopes_update_conf(isotope_id):
     #
     if request.method == "POST":
         # Do not delete source is still on loan
-        sources = list(mongo.db.sources.find({"$and":[{"approved": "yes"}, {"isotope":isotope}]}))
-        if sources:
+        existing_source = list(mongo.db.sources.find({"$and":[{"approved": "yes"}, {"isotope":request.form.get("isotope")}]}))
+        if existing_source:
             flash("Isotope {} is still on loan and cannot be updated".format(isotope))
         else:
             isotope_update = {
@@ -922,14 +947,23 @@ def isotopes_update_conf(isotope_id):
     else:
         return render_template("errorPage.html")
 
+#-----------------Error Handlers & Dummy hrefs--------------------------
 
-#-------------------------Error Handlers------------------------------
+
 @app.errorhandler(404) 
 def invalid_route(e):
     #
     # Handles 404 page not found error 
     # 
     return render_template("404error.html")
+
+
+@app.route("/faculty_link", methods=["GET", "POST"]) 
+def faculty_link():
+    #
+    # Handles href to dummy Physics faculty web site
+    # 
+    return render_template("physicsFaculty.html")
 
 #-------------------------Main Loop-----------------------------------
 if __name__ == "__main__":

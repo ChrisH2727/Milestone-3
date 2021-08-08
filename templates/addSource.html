@@ -5,106 +5,113 @@
     <div class="col s12 m12 l10 offset-l1">
         <div class="card blue lighten-3 center-align">
             <div class="card-content black-text">
-            <span class="card-title">Add Source</span>
-                <form method="POST"action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">  
+                <span class="card-title">Add Source</span>
+                <form method="POST" action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">
                     <div class="card white black-text">
-                        <div class="row">
+                        <div class="row input-pad">
                             <div class="input-field col l3 m6">
-                                <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" required
-                                minlength="2" maxlength="24" pattern="^[a-zA-Z0-9]{2-24}">
+                                <input id="serial_number" name="serial_number" type="text" class="validate"
+                                    style="height: 4rem;" required minlength="2" maxlength="24"
+                                    pattern="^[a-zA-Z0-9]{2-24}">
                                 <label for="serial_number">Serial Number</label>
                             </div>
 
-                            <div class="input-field col l3 m6" >
+                            <div class="input-field col l3 m6">
                                 <select id="department" name="department" class="validate" required>
                                     <option value="Select Department" disabled selected>Select Department</option>
-                                {% for department in departments %}
-                                    <option value="{{ department.department }}">{{ department.department }}</option>
-                                {% endfor %}
+                                    {% for department in departments %}
+                                        <option value="{{ department.department }}">{{ department.department }}</option>
+                                    {% endfor %}
                                 </select>
                                 <label for="department">Department</label>
                             </div>
                             <div class="input-field col l3 m6">
                                 <select id="laboratory" name="laboratory" class="validate" required>
                                     <option value="Select Laboratory" disabled selected>Select Laboratory</option>
-                                {% for laboratory in laboratories %}
-                                    <option value="{{ laboratory.laboratory }}">{{ laboratory.laboratory }}</option>
-                                {% endfor %}
+                                    {% for laboratory in laboratories %}
+                                        <option value="{{ laboratory.laboratory }}">{{ laboratory.laboratory }}</option>
+                                    {% endfor %}
                                 </select>
                                 <label for="laborarory">Laboratory</label>
                             </div>
-                            <div class="input-field col l3 m6" >
+                            <div class="input-field col l3 m6">
                                 <select id="location" name="location" class="validate" required>
-                                    <option value="Select Location" disabled selected>Select Location</option>    
-                                {% for location in locations %}
-                                    <option value="{{ location.location }}">{{ location.location }}</option>
-                                {% endfor %}
+                                    <option value="Select Location" disabled selected>Select Location</option>
+                                    {% for location in locations %}
+                                        <option value="{{ location.location }}">{{ location.location }}</option>
+                                    {% endfor %}
                                 </select>
                                 <label for="location">Locations</label>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="input-field col l3 m6" >
+                        <div class="row input-pad">
+                            <div class="input-field col l3 m6">
                                 <select id="isotope" name="isotope" class="validate" required>
-                                <option value="" disabled selected>Select Isotope</option>
-                                {% for isotope in isotope_category %}
-                                    <option value="{{ isotope.isotope }}">{{ isotope.isotope }}</option>
-                                {% endfor %}
+                                    <option value="" disabled selected>Select Isotope</option>
+                                    {% for isotope in isotope_category %}
+                                        <option value="{{ isotope.isotope }}">{{ isotope.isotope }}</option>
+                                    {% endfor %}
                                 </select>
-                            <label for="isotope">Isotope</label>                        
+                                <label for="isotope">Isotope</label>
                             </div>
                             <div class="input-field col l3 s8 m4">
-                                <input id="original_activity" name="original_activity" type="text" class="validate" required style="height: 4rem;">
+                                <input id="original_activity" name="original_activity" type="text" class="validate"
+                                    required style="height: 4rem;">
                                 <label for="original_activity">Original Activity</label>
                             </div>
                             <div class="input-field col l2 s4 m4">
                                 <p>
-                                <label>
-                                    <input name="original_activity_units" type="radio" value="kBq"checked style="height: 4rem;" />
-                                    <span>kBq</span>
-                                </label>
-                                <label>
-                                    <input name="original_activity_units" value="MBq" type="radio" style="height: 4rem;"/>
-                                    <span>MBq</span>
-                                </label>
+                                    <label>
+                                        <input name="original_activity_units" type="radio" value="kBq" checked
+                                            style="height: 4rem;" />
+                                        <span>kBq</span>
+                                    </label>
+                                    <label>
+                                        <input name="original_activity_units" value="MBq" type="radio"
+                                            style="height: 4rem;" />
+                                        <span>MBq</span>
+                                    </label>
                                 </p>
                             </div>
                             <div class="input-field col l3 s12 m4">
-                                <input type="text" id="activation_date" name="activation_date" class="datepicker " required style="height: 4rem;" >
+                                <input type="text" id="activation_date" name="activation_date" class="datepicker "
+                                    required style="height: 4rem;">
                                 <label for="activation_date">Activation Date</label>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row input-pad">
                             <div class="input-field col l4 m4 s8">
                                 <select id="encapsulation" name="encapsulation" class="validate" required>
-                                <option value="" disabled selected>Select Encapsulation</option>
-                                {% for encapsulation in encapsulations %}
-                                    <option value="{{  encapsulation.encapsulation }}">{{  encapsulation.encapsulation }}</option>
-                                {% endfor %}
+                                    <option value="" disabled selected>Select Encapsulation</option>
+                                    {% for encapsulation in encapsulations %}
+                                        <option value="{{  encapsulation.encapsulation }}">{{ encapsulation.encapsulation }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
-                                <label for="encapsulation">Encapsulation</label> 
+                                <label for="encapsulation">Encapsulation</label>
                             </div>
                             <div class="input-field col s12 m6 l4">
                                 <select id="security_group" name="security_group" class="validate" required>
-                                <option value="" disabled selected>Select Security Group</option>
-                                {% for security_code in security_codes %}
-                                    <option value="{{ security_code.security_code }}">{{ security_code.security_code }}</option>
-                                {% endfor %}
+                                    <option value="" disabled selected>Select Security Group</option>
+                                    {% for security_code in security_codes %}
+                                        <option value="{{ security_code.security_code }}">{{ security_code.security_code }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                                 <label for="security_group">Security Group</label>
                             </div>
                         </div>
-                    
+
                         <div class="row">
                             <button class="btn-large deep-orange accent-3" type="submit" name="action">
-                            Add<i class="fas fa-cloud-upload-alt"></i>
-                            </button>       
+                                Add <i class="fas fa-cloud-upload-alt"></i>
+                            </button>
                             <button class="btn-large deep-green accent-3" onClick="window.location.reload(true)">Clear
-                            <i class="fas fa-trash-restore-alt"></i>
+                                <i class="fas fa-trash-restore-alt"></i>
                             </button>
                         </div>
-                    </div>    
+                    </div>
                 </form>
             </div>
         </div>

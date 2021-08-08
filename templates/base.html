@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         type="text/css">
     <!--Required for data tables-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-    <!--Local style sheet-->   
+    <!--Local style sheet-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 
     {% block styles %}
@@ -48,33 +48,34 @@
         <ul id="settings-dropdown" class="dropdown-content">
             <li><a href="{{ url_for('manage_isotopes') }}">Isotopes</a></li>
         </ul>
-        
+
         <ul id="inventory-dropdown2" class="dropdown-content">
             <li><a href=" {{url_for('get_sources') }}">Full Inventory</a></li>
             <li><a href=" {{url_for('usage_report') }}">Usage Report</a></li>
             <li><a href="{{url_for('approve_request') }}">Approve Request</a></li>
         </ul>
-        <nav class="nav-extended" >
+
+        <nav class="nav-extended">
             <div class="nav-wrapper indigo darken-2">
-                <a href="/templates/physicsFaculty.html"  target="_blank" class="brand-logo logo-shift"><i class="fas fa-atom"> Faculty of
-                        Physics</i></a>
-                        {% if session.in_use%}
-                            <a data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
-                        {% endif %}
+                <a href="{{url_for('faculty_link') }}" class="brand-logo logo-shift">
+                    <i class="fas fa-atom"> Faculty of Physics</i></a>
+                {% if session.in_use%}
+                    <a data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                {% endif %}
+
                 <ul class="right hide-on-med-and-down">
-                    
                     {% if session.in_use%}
-                        <li><a href="{{ url_for('userAccount') }} " class="capitalize" >{{session.user}}'s Profile</a></li>
+                        <li><a href="{{ url_for('userAccount') }} " class="capitalize">{{session.user}}'s Profile</a></li>
                         <li><a href="{{ url_for('logout') }}">Log out</a></li>
                         <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
                         {% if session.role|lower == "admin"|lower %}
                             <li><a href="{{ url_for('get_user') }}">User Access</a></li>
                             <li><a class="dropdown-trigger" data-target="inventory-dropdown2">Inventory <i
-                                class="fas fa-caret-down rm-padding"></i></a></li>
+                                        class="fas fa-caret-down rm-padding"></i></a></li>
                             <li><a class="dropdown-trigger" data-target="source-dropdown2">Source <i
-                                class="fas fa-caret-down rm-padding"></i></a></li>
+                                        class="fas fa-caret-down rm-padding"></i></a></li>
                             <li><a class="dropdown-trigger" data-target="settings-dropdown2">Settings <i
-                                    class="fas fa-caret-down rm-padding"></i></a></li>    
+                                        class="fas fa-caret-down rm-padding"></i></a></li>
                         {% endif %}
                     {% endif %}
 
@@ -89,15 +90,15 @@
                 <li><a href="{{ url_for('userAccount') }}">{{session.user}}'s Profile</a></li>
                 <li><a href="{{ url_for('logout') }}">Log out</a></li>
                 <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
-                {% if session.role|lower == "admin"|lower %}
-                    <li><a href="{{ url_for('get_user') }}">User Access</a></li>
-                    <li><a class="dropdown-trigger" data-target="inventory-dropdown">Inventory <i
-                        class="fas fa-caret-down"></i></a></li>
-                    <li><a class="dropdown-trigger" data-target="source-dropdown">Source <i
-                        class="fas fa-caret-down"></i></a></li>
-                    <li><a class="dropdown-trigger" data-target="settings-dropdown">Settings <i
-                        class="fas fa-caret-down rm-padding"></i></a></li>        
-                {% endif %}
+                    {% if session.role|lower == "admin"|lower %}
+                        <li><a href="{{ url_for('get_user') }}">User Access</a></li>
+                        <li><a class="dropdown-trigger" data-target="inventory-dropdown">Inventory <i
+                                    class="fas fa-caret-down"></i></a></li>
+                        <li><a class="dropdown-trigger" data-target="source-dropdown">Source <i class="fas fa-caret-down"></i></a>
+                        </li>
+                        <li><a class="dropdown-trigger" data-target="settings-dropdown">Settings <i
+                                    class="fas fa-caret-down rm-padding"></i></a></li>
+                    {% endif %}
             {% endif %}
         </ul>
     </header>
@@ -125,23 +126,17 @@
             <div class="row">
                 <div class="col l6 ">
                     <h5 class="white-text">Chris Heisig</h5>
-                    <!--p class="grey-text text-lighten-4">More text.</p-->
                 </div>
                 <div class="col l4 offset-l2 offset-s2">
                     <ul>
-                        <li><a class="grey-text text-lighten-3"  target="_blank" href="https://github.com/ChrisH2727/">
-                            <i class="fab fa-git-square social-icon" aria-hidden="true"></i>
-                            <span class="sr-only">Git</span>
+                        <li><a class="grey-text text-lighten-3" target="_blank" href="https://github.com/ChrisH2727/">
+                                <i class="fab fa-git-square social-icon" aria-hidden="true"></i>
+                                <span class="sr-only">Git</span>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <!--div class="footer-copyright">
-            <div class="container-flex">
-                <a class="grey-text text-lighten-4 right" href="#!"></a>
-            </div>
-        </div-->
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -150,8 +145,8 @@
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <!--Required for data tables-->
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
-    
-    <!---->
+
+
     {% block scripts %}
     {% endblock %}
 </body>

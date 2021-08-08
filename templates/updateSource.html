@@ -9,7 +9,7 @@
                 <span class="card-title">Update Source</span>    
                 <form method="POST"action="{{ url_for('update_source_activate')}}" id="update_source_activate" class="form-horizontal"> 
                     <div class="card white black-text">
-                        <div class="row">
+                        <div class="row input-pad">
                             <div class="input-field col l3 m6 s12">
                                 <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" readonly required  
                                 value ="{{existing_source.serial_number}}">
@@ -46,7 +46,7 @@
                                 <label for="location">Locations</label>          
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row input-pad">
                             <div class="input-field col l3 m6" >
                                 <select id="isotope" name="isotope" class="validate" required>
                                     <option value="{{ existing_source.isotope }}" selected>{{ existing_source.isotope }}</option>
@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row input-pad ">
                             <div class="input-field col l4 m4 s8">
                                 <select id="encapsulation" name="encapsulation" class="validate" required>
                                 <option value="{{ existing_source.type }}"  selected>{{ existing_source.type }}</option>
@@ -107,7 +107,7 @@
                                 <label for="security_group">Security Group</label>
                             </div>
                         </div>
-                        <div class="row">    
+                        <div class="row input-pad">    
                             <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action">
                             Update <i class="fas fa-cloud-upload-alt"></i>
                             </button>  

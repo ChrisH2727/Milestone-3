@@ -7,7 +7,7 @@
             <div class="card-content black-text">
                 <span class="card-title">User Details</span>
                 <div class="card white black-text">
-                  <div class="row">
+                  <div class="row input-pad">
                     <div class="input-field col s12 m4">
                         <input id="username" type="text" value=" {{ user.first }} {{user.last}}" class="capitalize"disabled >
                         <label for="username">Name:</label>
@@ -28,27 +28,27 @@
 </div>
 
 <!--Display block of user account details that the user can alter or change-->
-<div class="row">
+<div class="row" style="padding-left: 10px; padding-right: 10px;">
     <div class="col s12 m12 l10 offset-l1 ">
         <div class="card blue lighten-3">
             <div class="card-content black-text">
                 <span class="card-title">Update Account Details</span>
                 <div class="card white black-text">
                 <form method="POST" action="{{ url_for('userAccount') }}">
-                    <div class="row">
+                    <div class="row input-pad">
                         <div class="input-field col s12">
                             <input id="password" type="password" name="password" class="validate">
                             <label for="password">Change password</label>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row input-pad " >
                         <div class="input-field col s12">
                             <input id="repeat_password" type="password" name="repeat_password" class="validate">
                             <label for="repeat_password">Repeat password</label>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row input-pad">
                         <div class="input-field col s6">
                             <input id="department" type="text" value="{{user.department}}" name="department" class="validate capitalize">
                             <label for="department">Department</label>

@@ -8,10 +8,13 @@
 /********************General Styling To Augment Materialize*****************************/
 .input-field>label{
   font-size: 1.6rem;
+  padding-left: 5px;
 }
-.input-field.col label {
-  left: 1rem;
+.input-pad{
+  padding-left: 10px; 
+  padding-right: 10px;"
 }
+padding-left: 10px; padding-right: 10px;"
 nav ul a{
   font-size: 1.2rem;
 }
@@ -77,18 +80,17 @@ letter-spacing: 0px;
 }
 
 /****************************Collapsable Body******************************/
-
 table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, table.dataTable tfoot th {
   padding-left: 2px; 
   padding-right: 2px;
   font-size: 14px;
 }
+
 /****************************Usage Report Charts******************************/
 .plot-scale{
   width: 100%;
   height: auto;
 }
-
 
 /****************************** Card Content***********************************/
 .card .card-title{
@@ -116,8 +118,7 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, ta
   font-weight: bold;
 }
 
-
-/*********************************Nav Bar***********************************/
+/*********************************Nav Bar Augments Materialize CSS**********************/
 nav .nav-title {
   padding-top: 60px;
 }
