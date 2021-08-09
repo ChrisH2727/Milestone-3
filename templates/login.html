@@ -10,13 +10,13 @@
     <div class="card-stacked blue lighten-3">
       <div class="card-content black-text">
         <span class="card-title">Login</span>
-        <div class="card white black-text" <div class="row">
+        <div class="card white black-text">
           <form class="col s11" method="POST" action="{{ url_for('login') }}">
-            <div class="row input-pad" >
-              <div class="input-field col s12 l9 m9" >
+            <div class="row input-pad">
+              <div class="input-field col s12 l9 m9">
                 <!--regex first charater must be alpha-->
-                <input id="email" type="email" name="email" class="validate" 
-                  <pattern="^[A-Za-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{1,4}[^\\S]+$" required>
+                <input id="email" type="email" name="email" class="validate"
+                  pattern="^[A-Za-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{1,4}[^\\S]+$" required>
                 <label for="email">Email</label>
               </div>
             </div>
@@ -46,6 +46,5 @@
       </div>
     </div>
   </div>
-</div>
 </div>
 {% endblock %}

@@ -245,8 +245,8 @@ def usage_report():
 @app.route("/approve_request", methods=["GET", "POST"])
 def approve_request():
     #
-    # Called when the admin user wants to see if there are any new source 
-    # requests to deal with
+    # Called when the admin user wants to see if there 
+    # are any new source requests to deal with
     #
     
     # clear any exiting flash messages
@@ -267,7 +267,8 @@ def approve_request():
 @app.route("/approve_request_resp<source_serial_no>", methods=["GET", "POST"])
 def approve_request_resp(source_serial_no):
     #
-    # Called when an admin user clicks the button to approve the use of a source
+    # Called when an admin user clicks the button to approve 
+    # the use of a source
     #
     
     # clear any exiting flash messages
@@ -310,7 +311,7 @@ def return_source_resp(source_serial_no):
     inDate = datetime.today().strftime('%d-%m-%y')
 
     # Update the  source loan history document in mongodb with return date
-    submit = {"date_in" : inDate}
+    submit = {"date_in": inDate}
     mongo.db.source_history.find_one_and_update(
         {"serial_number": source_serial_no}, {'$set': submit})
 
@@ -336,7 +337,8 @@ def return_source_resp(source_serial_no):
 @app.route("/delete_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def delete_source_resp(source_serial_no):
     #
-    # Called prior to user clicking button to delete a source from the mongo db 
+    # Called prior to user clicking button to delete a source 
+    # from the mongo db 
     #      
     print("delete_source_resp")
     # Restrict access to admin users only
@@ -348,7 +350,7 @@ def delete_source_resp(source_serial_no):
         flash("Your are about to delete source: {}".format(source_serial_no))
         return render_template(
             "deleteSource.html", existing_source=existing_source, used_times=used_times)
-        
+ 
     else:
         return render_template("errorPage.html")       
 
@@ -408,23 +410,26 @@ def get_userc(user_id):
     #
 
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-
-    # User cannot action his/her own account
-    if existing_user["email"] == session["email"]:
-        flash("You cannot action your own user account")
-    else:
-        # Admin user toggles another user account between admin/user roles
-        if existing_user["role"] == "admin":
-            submit = {"role": "user"}
+    # Check existing user available
+    if existing_user:
+        # User cannot action his/her own account
+        if existing_user["email"] == session["email"]:
+            flash("You cannot action your own user account")
         else:
-            submit = {"role": "admin"}    
-        mongo.db.users.find_one_and_update(
-            {"_id": ObjectId(user_id)}, {'$set': submit})
-        flash("User role successfully updated")
-    
-    users = list(mongo.db.users.find())
-    return render_template("user.html", users=users)
+            # Admin user toggles another user account between admin/user roles
+            if existing_user["role"] == "admin":
+                submit = {"role": "user"}
+            else:
+                submit = {"role": "admin"}    
+            mongo.db.users.find_one_and_update(
+                {"_id": ObjectId(user_id)}, {'$set': submit})
+            flash("User role successfully updated")
+        users = list(mongo.db.users.find())
+        
+    else:
+        flash("Database error, user could not be given admin rights")
 
+    return render_template("user.html", users=users)
 
 @app.route("/get_userdelete/<user_id>", methods=["GET", "POST"])
 def get_userdelete(user_id):
@@ -432,22 +437,28 @@ def get_userdelete(user_id):
     # Called when an admin user deletes a normal user account
     #
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+
+    # Check existing user available
+    if existing_user:
+        # User cannot delete his/her own account 
+        if existing_user["email"] == session["email"]:
+            flash("You cannot delete your own user account")
+
+        # Admin user cannot be deleted/removed
+        elif existing_user["role"] == "admin":
+            flash("You cannot delete an Admin user")
     
-    # User cannot delete his/her own account 
-    if existing_user["email"] == session["email"]:
-        flash("You cannot delete your own user account")
+        # User account must be suspended before it can be deleted
+        elif existing_user["approved"] == "approved" or existing_user["approved"] == "approve":
+            flash("A user account must be suspended for it to be deleted")
 
-    # Admin user cannot be deleted/removed
-    elif existing_user["role"] == "admin":
-        flash("You cannot delete an Admin user")
+        else:
+            return render_template(
+                "userDelete.html", existing_user=existing_user)
+
+    else:
+        flash("Database error, user account could not be deleted. Refer to admin user")
     
-    # User account must be suspended before it can be deleted
-    elif existing_user["approved"] == "approved" or existing_user["approved"] == "approve":
-        flash("A user account must be suspended for it to be deleted")
-
-    else: 
-        return render_template("userDelete.html", existing_user=existing_user)
-
     users = list(mongo.db.users.find())
     return render_template("user.html", users=users)
 
@@ -463,7 +474,7 @@ def delete_user_resp(user_email):
         source_user = mongo.db.sources.find_one({"user": user_email})
   
         if source_user:
-            #Get user name from user mongo db user collection
+            # Get user name from user mongo db user collection
             user = mongo.db.users.find_one({ "email": user_email})
             user_name = (user["first"]).capitalize() + " " + (user["last"]).capitalize()
             flash("User {} has sources on loan and cannot be removed".format(user_name))
@@ -511,19 +522,19 @@ def get_sources():
             user = (mongo.db.users.find_one({"email": source["user"]}))
             # Check that the user still exists
             if user:
-                source.update({"first": user["first"] })
-                source.update({"last": user["last"] })
+                source.update({"first": user["first"]})
+                source.update({"last": user["last"]})
             else:
-                source.update({"first": "" })
-                source.update({"last": "" })
+                source.update({"first": ""})
+                source.update({"last": ""})
 
     for source in sources:
         # If db problem use existing activity
         try:
-            serial_number=(source["serial_number"])
-            origin_act=float(source["original_activity"])
-            date_out=source["activation_date"]
-            half_life=float(source["half_life"])
+            serial_number= (source["serial_number"])
+            origin_act= float(source["original_activity"])
+            date_out= source["activation_date"]
+            half_life= float(source["half_life"])
 
             # datetime.datetime.strptime only supported by date time 
             # strftime used else where and requires the datetime component from datetime
@@ -532,7 +543,8 @@ def get_sources():
             from datetime import datetime
 
             # Calculate new activity using equation for radioactive decay
-            new_act=str(round(origin_act*math.exp(((-1*math.log(2)*delta_years)/half_life)),2))
+            new_act= str(
+                round(origin_act*math.exp(((-1*math.log(2)*delta_years)/half_life)),2))
         except Exception:
             new_act = origin_act
 
@@ -552,7 +564,6 @@ def get_sources():
 def add_source():
     #
     # Called when an admin user adds a new source to the source inventory
-    # or when an admin user updates an exiting source
     #
 
     if request.method == "POST":
@@ -707,6 +718,7 @@ def update_source_activate():
     #
     
     if request.method == "POST":
+        
         # Get source from mongo db
         existing_source = mongo.db.sources.find_one({"serial_number": request.form.get("serial_number")})
     
@@ -733,8 +745,10 @@ def update_source_activate():
                     "security_group": request.values.get("security_group"),
                     "type": request.values.get("encapsulation")
                     }
+                
                 mongo.db.sources.find_one_and_update({"serial_number": request.form.get("serial_number")},
                     { '$set': updateSource })
+                
                 flash("The source data has been sucessfully updated")
             else:
                 # Do not update the source entry 
@@ -743,12 +757,10 @@ def update_source_activate():
             flash("Database error source data has not been updated. Refer to admin user.")
     
     if session["role"] == "admin":
-            sources = list(mongo.db.sources.find())
-            return render_template("inventory.html", sources=sources )
-    
+            return redirect(url_for("get_sources"))
+
     else:
         return render_template("errorPage.html")
-
 
 @app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def update_source_resp(source_serial_no):
