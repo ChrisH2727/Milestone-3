@@ -32,29 +32,42 @@
 
     |HTML Page |Errors |Warnings |
     |---|---|---|
-    |Login| None | See comment below, |
-    |Registration| None | See comment below |
+    |login| None | See comment below, |
+    |register| None | See comment below |
     |User Profile| None | Checked with top and side navbar. See comment below|
-    |Source Request| None | Checked with top and side navbar. See comment below|
-    |Logout| None | Checked with top and side navbar. See comment below|
+    |sourceRequest| None | Checked with top and side navbar. All three modes "source update", "source delete" and "source request" covered See comment below|
+    |logout| None | Checked with top and side navbar. See comment below|
     |Approve Source Loan Request | None | Checked with top and side navbar. See comment below|
     |User Access Manangement| None | Checked with top and side navbar.|
-    |Full Inventory Listing| None | Checked with top and side navbar.|
-    |Update Source| None | Checked with top and side navbar.|
+    |userDelete| None | Checked with top and side navbar.|
+    |inventory| None | Checked with top and side navbar.|
+    |updateSource| None | Checked with top and side navbar.|
+    |deleteSource| None | Checked with top and side navbar.|
+    |addSource| None | Checked with top and side navbar.See comment below|
+    |isotopeTypes| None | Checked with top and side navbar.See comment below|
+    |isotopeDelete| None | Checked with top and side navbar. |
+    |usageReport| None | Checked with top and side navbar. |
 
  - **Responsiveness Report**
  
     |HTML Page |1640px |ipadPro |ipad|iphone 5/SE|
     |---|---|---|---|---|
-    |Login| |  |   |   |
-    |Registration|  |
+    |login| |  |   |   |
+    |register|  |
     |User Profile|  | |
     |Source Request|  | |
     |Logout|  | |
     |Approve Source Loan Request | Pass | Pass | Pass |Pass|
     |User Access Manangement| Pass | Pass | Pass |Pass|
-    |Full Inventory Listing| Pass | Pass | Pass |Pass|
-    |Update Sources| Pass | Pass | Pass |Pass|
+    |userDelete |Pass | Pass | Pass |Pass|
+    |inventory| Pass | Pass | Pass |Pass|
+    |updateSources| Pass | Pass | Pass |Pass|
+    |deleteSources| Pass | Pass | Pass |Pass|
+    |addSources| Pass | Pass | Pass |Pass|
+    |isotopeTypes| Pass | Pass | Pass |Pass|
+    |isotopeDelete| Pass | Pass | Pass |Pass|
+    |usageReport| Pass | Pass | Pass | Pass |
+    |404error| Pass | Pass | Pass | Pass |
 
  - **Navigation Report**
  
@@ -69,6 +82,15 @@
     |User Access Manangement| Pass | Pass |
     |Full Inventory Listing| Pass | Pass |
     |Update Sources| Pass | Pass |
+    |404error|Pass|Pass|
+
+- **Browser Report**
+    
+    |Browser|Console errors|Other Issues |
+    |---|---|--- |
+    |Google| none | none observed
+
+
 <h1>2. Use case (functional) test</h1>
 
 <span id="usecase-test"></span>

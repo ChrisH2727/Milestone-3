@@ -2,7 +2,7 @@
 {% block content %}
 
 <!--Add isotope type-->
-<div class="row">
+<div class="row ">
   <div class="col s12 m12 l8 offset-l2">
     <div class="card blue lighten-3">
       <div class="card-content black-text">
@@ -21,7 +21,7 @@
                 <label for="halflife">Half Life</label>
               </div>
               <div class="card-action col s12 l4">
-                <button class="btn-large light-blue darken-4 lg-btn-add" name="action" type="submit" name="action">Add
+                <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action">Add
                   <i class="fas fa-cloud-upload-alt"></i>
                 </button>
               </div>
@@ -34,7 +34,7 @@
 </div>
 
 <!--Tabulate isotopes-->
-<div class="row ">
+<div class="row  hide-on-med-and-down show-on-large">
   <div class="col s12 m12 l8 offset-l2 ">
     <div class="card blue lighten-3">
       <div class="card-content">
@@ -54,15 +54,69 @@
                 <td>{{ isotope.isotope }}</td>
                 <td>{{ isotope.halflife }} years</td>
                 <td class="center-button">
-                  <a href="{{ url_for('delete_isotope', isotope=isotope.isotope) }}" class="btn-small  deep-orange accent-3 sm-btn-add">Delete</a>
+                  <a href="{{ url_for('delete_isotope', isotope=isotope.isotope) }}" 
+                  class="btn-small  deep-orange accent-3 sm-btn-add">Delete</a>
                 </td>
                 <td class="center-button">
-                  <a href="{{ url_for('update_isotope', isotope=isotope.isotope) }}" class="btn-small light-blue darken-4 sm-btn-add">Update</a>
+                  <a href="{{ url_for('update_isotope', isotope=isotope.isotope) }}" 
+                  class="btn-small light-blue darken-4 sm-btn-add">Update</a>
                 </td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row hide-on-large-only">
+  <div class="col s12 m12">
+    <div class="card blue lighten-3">
+      <div class="card-content black-text ">
+        <span class="card-title">Isotope Types</span>
+        <ul class="collapsible ">
+          <!--Collapsible for medium and small screens-->
+          {% for isotope in isotopes %}
+            <li>
+              <div class="collapsible-header white-text blue indigo darken-2 ">
+                <div class="row">
+                  <div class="col s1 m1">
+                    <i class="fas fa-caret-down"> </i>
+                  </div>
+                </div>
+                <div class="col s5 m3">
+                  <strong>Isotope:</strong>
+                  <p>{{ isotope.isotope }}</p>
+                </div>
+                <div class="col s6 m8">
+                  <strong>Half Life:</strong>
+                  <p>{{ isotope.halflife }}</p>
+                </div>
+              </div>
+
+              <div class="collapsible-body">
+                <div class="row">
+                  <div class="col s6 m3 ">
+                    <strong>Update: </strong>
+                  </div>
+                  <div class="col s6 m9">
+                    <a href="{{ url_for('update_isotope', isotope=isotope.isotope) }}" 
+                  class="btn-small light-blue darken-4 sm-btn-add">Update</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s6 m3 ">
+                    <strong>Delete: </strong>
+                  </div>
+                  <div class="col s6 m9">
+                    <a href="{{ url_for('delete_isotope', isotope=isotope.isotope) }}" 
+                    class="btn-small  deep-orange accent-3 sm-btn-add">Delete</a> 
+                  </div>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
   </div>

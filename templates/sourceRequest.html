@@ -16,15 +16,15 @@
           <div class="card white black-text ">
             <div class="row center-align valign-wrapper">
               <div class="col s12 m12 l12 ">
-              {% if mode == "delete" %}
-                <form action="{{ url_for('delete_source') }}" method="post">
-              {% elif mode== "update" %}
-                <form action="{{ url_for('update_source') }}" method="post">
-              {% else %}
-                <form action="{{ url_for('source_request') }}" method="post">
-              {% endif %}
+                {% if mode == "delete" %}
+                  <form action="{{ url_for('delete_source') }}" method="post">
+                {% elif mode== "update" %}
+                  <form action="{{ url_for('update_source') }}" method="post">
+                {% else %}
+                  <form action="{{ url_for('source_request') }}" method="post">
+                {% endif %}
                     <div class="row ">
-                       <div class="input-field col s12 m6 l6">
+                      <div class="input-field col s12 m6 l6">
                         <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
                         <input type="text" name="query" id="query" minlength="3" class="validate" required>
                         <label for="query">Search Source</label>
@@ -35,21 +35,20 @@
                         </button>
                       </div>
                       <div class="col s12 m3 l3">
-                        <a href="{{ url_for('userAccount') }}" class="btn-large deep-green accent-3 lg-btn-add">Cancel<i class="fas fa-times-circle right"></i></a>
+                        <a href="{{ url_for('userAccount') }}" class="btn-large deep-green accent-3 lg-btn-add">Cancel
+                              <i class="fas fa-times-circle right"></i></a>
                       </div>
                     </div>
-                </form>
+                  </form>
+              </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
-<div>
-<!--div class="row">
-  <div class="col s12 m12 l10 offset-l1">
-    <div class="card blue lighten-3"-->
-      {% if showsources == "true" and sources|length >0 %}
+</div>
+<div class="row">
+    {% if showsources == "true" and sources|length >0 %}
       <div class="row hide-on-med-and-down show-on-large">
         <div class="col s12 m10 offset-l1">
           <div class="card blue lighten-3">
@@ -69,50 +68,49 @@
                     <th>Ativity Now</th>
                     <th>Type</th>
                     {% if mode == "update" %}
-                    <th>Update</th>
+                      <th>Update</th>
                     {% elif mode == "delete" %}
-                    <th>Delete</th>
+                      <th>Delete</th>
                     {% else %}
-                    <th>Request</th>
+                      <th>Request</th>
                     {% endif %}
                   </tr>
                 </thead>
                 <tbody>
                   {% for source in sources %}
-                  <tr>
-                    <td>{{ source.department }}</td>
-                    <td>{{ source.serial_number }}</td>
-                    <td>{{ source.isotope }}</td>
-                    <td>{{ source.laboratory }}</td>
-                    <td>{{ source.location }}</td>
-                    <td>{{ source.original_activity }} {{source.original_activity_units}}</td>
-                    <td>{{ source.activation_date }}</td>
-                    <td>{{ source.half_life }} {{source.half_life_units}}</td>
-                    <td>{{ source.activity_now }} {{source.activity_now_units}}</td>
-                    <td>{{ source.type }}</td>
-
-                    {% if mode == "update" %}
-                    <td>
-                      <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
-                        class="btn-small  light-blue darken-4 sm-btn-add" tbl_btn_wd>Update
-                      </a>
-                    </td>
-                    {% elif mode == "delete" %}
+                    <tr>
+                      <td>{{ source.department }}</td>
+                      <td>{{ source.serial_number }}</td>
+                      <td>{{ source.isotope }}</td>
+                      <td>{{ source.laboratory }}</td>
+                      <td>{{ source.location }}</td>
+                      <td>{{ source.original_activity }} {{source.original_activity_units}}</td>
+                      <td>{{ source.activation_date }}</td>
+                      <td>{{ source.half_life }} {{source.half_life_units}}</td>
+                      <td>{{ source.activity_now }} {{source.activity_now_units}}</td>
+                      <td>{{ source.type }}</td>
+                      {% if mode == "update" %}
                       <td>
-                      <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}"
-                        class="btn-small  deep-orange accent-3 sm-btn-add" tbl_btn_wd>Delete
-                      </a>
+                        <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
+                          class="btn-small  light-blue darken-4 sm-btn-add">Update
+                        </a>
                       </td>
+                      {% elif mode == "delete" %}
+                        <td>
+                          <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}"
+                            class="btn-small  deep-orange accent-3 sm-btn-add">Delete
+                          </a>
+                        </td>
                       {% else %}
                         {% if source.requested == "false" %}
                           <td>
                             <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}"
-                              class="btn-small  teal lighten-2" tbl_btn_wd>Request
+                              class="btn-small  teal lighten-2 sm-btn-add">Request
                             </a>
                           </td>
                         {% endif %}
                       {% endif %}
-                  </tr>
+                    </tr>
                   {% endfor %}
                 </tbody>
               </table>
@@ -127,31 +125,31 @@
               <span class="card-title">Available Inventory</span>
               <ul class="collapsible ">
                 {% for source in sources %}
-                <li>
-                  <div class="collapsible-header white-text blue indigo darken-2 ">
-                    <div class="row">
-                      <div class="col s1 m1">
-                        <i class="fas fa-caret-down"> </i>
+                  <li>
+                    <div class="collapsible-header white-text blue indigo darken-2 ">
+                      <div class="row">
+                        <div class="col s1 m1">
+                          <i class="fas fa-caret-down"> </i>
+                        </div>
+                      </div>
+                      <div class="col s5 m3">
+                        <strong> Isotope: </strong>
+                        <p>{{ source.isotope }}</p>
+                      </div>
+                      <div class="col s6 m8">
+                        <strong>Serial Number:</strong>
+                        <p>{{ source.serial_number }}</p>
                       </div>
                     </div>
-                    <div class="col s5 m3">
-                      <strong> Isotope: </strong>
-                      <p>{{ source.isotope }}</p>
-                    </div>
-                    <div class="col s6 m8">
-                      <strong>Serial Number:</strong>
-                      <p>{{ source.serial_number }}</p>
-                    </div>
-                  </div>
-                  <div class="collapsible-body">
-                    <div class="row">
-                      <div class="col s6 m3">
-                        <strong>Department: </strong>
+                    <div class="collapsible-body">
+                      <div class="row">
+                        <div class="col s6 m3">
+                          <strong>Department: </strong>
+                        </div>
+                        <div class="col s6 m9">
+                          <p>{{ source.department }}</p>
+                        </div>
                       </div>
-                      <div class="col s6 m9">
-                        <p>{{ source.department }}</p>
-                      </div>
-                    </div>
                       <div class="row">
                         <div class="col s6 m3">
                           <strong>Laboratory: </strong>
@@ -208,42 +206,35 @@
                           <p>{{ source.type }}</p>
                         </div>
                       </div>
-
                       {% if mode == "update" %}
-                      <div class="col s6 m9">
-                        <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
-                          class="btn-small  teal lighten-2" tbl_btn_wd>Update
-                        </a>
-                      </div>
+                        <div class="col s6 m9">
+                          <a href="{{ url_for('update_source_resp', source_serial_no=source.serial_number) }}"
+                            class="btn-small  teal lighten-2 sm-btn-add ">Update
+                          </a>
+                        </div>
                       {% elif mode == "delete" %}
-                      <div class="col s6 m9">
-                        <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}"
-                          class="btn-small  teal lighten-2" tbl_btn_wd>Delete
-                        </a>
-                      </div>
+                        <div class="col s6 m9">
+                          <a href="{{ url_for('delete_source_resp', source_serial_no=source.serial_number) }}"
+                            class="btn-small  teal lighten-2 sm-btn-add ">Delete
+                          </a>
+                        </div>
                       {% else %}
-                      {% if source.requested == "false" %}
-                      <div class="col s6 m9">
-                        <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}"
-                          class="btn-small  teal lighten-2" tbl_btn_wd>Request
-                        </a>
-                      </div>
-                      {% else %}
-                      <div class="col s6 m9">
-                        <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}"
-                          class="btn-small  deep-orange accent-3" tbl_btn_wd>Not Available
-                        </a>
-                      </div>
+                        {% if source.requested == "false" %}
+                          <div class="col s6 m9">
+                            <a href="{{ url_for('req_source_conf', source_serial_no=source.serial_number) }}"
+                              class="btn-small  teal lighten-2  sm-btn-add">Request
+                            </a>
+                          </div>
+                        {% endif %}
                       {% endif %}
-                      {% endif %}
-                    
-                  </div>
-                </li>
+                    </div>
+                  </li>
                 {% endfor %}
               </ul>
             </div>
           </div>
         </div>
       </div>
-      {% endif %}
-      {% endblock %}
+    </div>
+  {% endif %}
+{% endblock %}

@@ -18,7 +18,7 @@
 
                             <div class="input-field col l3 m6">
                                 <select id="department" name="department" class="validate" required>
-                                    <option value="Select Department" disabled selected>Select Department</option>
+                                    <option value="" disabled selected>Select Department</option>
                                     {% for department in departments %}
                                         <option value="{{ department.department }}">{{ department.department }}</option>
                                     {% endfor %}
@@ -27,16 +27,16 @@
                             </div>
                             <div class="input-field col l3 m6">
                                 <select id="laboratory" name="laboratory" class="validate" required>
-                                    <option value="Select Laboratory" disabled selected>Select Laboratory</option>
+                                    <option value="" disabled selected>Select Laboratory</option>
                                     {% for laboratory in laboratories %}
                                         <option value="{{ laboratory.laboratory }}">{{ laboratory.laboratory }}</option>
                                     {% endfor %}
                                 </select>
-                                <label for="laborarory">Laboratory</label>
+                                <label for="laboratory">Laboratory</label>
                             </div>
                             <div class="input-field col l3 m6">
                                 <select id="location" name="location" class="validate" required>
-                                    <option value="Select Location" disabled selected>Select Location</option>
+                                    <option value="" disabled selected>Select Location</option>
                                     {% for location in locations %}
                                         <option value="{{ location.location }}">{{ location.location }}</option>
                                     {% endfor %}
