@@ -12,6 +12,8 @@
 ---
 <h1>1. Non functional test</h1>
 
+<span id="nonfuctional test"></span>
+
 - **javascript static code analaysis**
 
     ![Jshint Report](testimg/Jshint_report.png)
@@ -23,8 +25,42 @@
     ![WC3 Validation Report](testimg/CSS_report.png)
 
     No errors or wanings reported.
-        
-<span id="nonfuctional test"></span>
+
+- **HTML Validation Report**
+
+    With the inclusion of the Jinja templating engine, it is not possible to paste html code into the validator. Instead the application is run and the browser tools used to expose the html source code. This is then pasted into the validator.
+
+    |HTML Page |Errors |Warnings |
+    |---|---|---|
+    |Login| None | See comment below, |
+    |Registration| None | See comment below |
+    |User Profile| None | Checked with top and side navbar. See comment below|
+    |Source Request| None | Checked with top and side navbar. See comment below|
+    |Logout| None | Checked with top and side navbar. See comment below|
+    |Approve Source Loan Request | None | Checked with top and side navbar. See comment below|
+
+
+ - **Responsiveness Report**
+ 
+    |HTML Page |1640px |ipadPro |ipad|iphone 5/SE|
+    |---|---|---|---|---|
+    |Login| |  |   |   |
+    |Registration**| |  |
+    |User Profile**|  | |
+    |Source Request**|  | |
+    |Logout|  | |
+    |Approve Source Loan Request | Pass | Pass | Pass |Pass|
+
+ - **Navigation Report**
+ 
+    |HTML Page |1640px |ipadPro |ipad|iphone 5/SE|
+    |---|---|---|---|---|
+    |Login| |  |   |   |
+    |Registration| |  |
+    |User Profile|  | |
+    |Source Request|  | |
+    |Logout|  | |
+    |Approve Source Loan Request | Pass | Pass | Pass |Pass|
 
 <h1>2. Use case (functional) test</h1>
 
@@ -272,3 +308,4 @@
 |1| "no source found flash message is displayed before user query's for aan available source|  |
 |2|Clear isotope update button crashed program  |Re-direct code flow to use function "manage_isotopes" |
 |3| Detect condition where the isotope halflife is required as the key to searching for an isotope to update but has been deleted| |
+|4| Approve Source Loan Request Page has email address and not user name|Add python code to display user first name and last name | 

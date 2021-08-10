@@ -260,6 +260,25 @@ def approve_request():
         showtable = "true"
 
     existing_sources = list(mongo.db.sources.find({"requested": "true"}))
+
+
+
+
+    # Get the users first and last name and append to the source list to avoid email
+    # being shown in the table 
+    for source in existing_sources:
+        if source["user"]:
+            user = (mongo.db.users.find_one({"email": source["user"]}))
+            # Check that the user still exists
+            if user:
+                source.update({"first": user["first"]})
+                source.update({"last": user["last"]})
+            else:
+                source.update({"first": ""})
+                source.update({"last": ""})
+
+
+    
     return render_template(
         "approveRequest.html", sources=existing_sources, showtable=showtable)
 
@@ -272,7 +291,7 @@ def approve_request_resp(source_serial_no):
     #
     
     # clear any exiting flash messages
-    session.pop('_flashes', None)
+    # session.pop('_flashes', None)
     
     # Get mongodb record for source to be loaned
     existing_source = mongo.db.sources.find_one({"serial_number": source_serial_no})

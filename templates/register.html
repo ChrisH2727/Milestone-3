@@ -5,79 +5,81 @@
   <div class="col s12 m12 l10 offset-l1">
     <div class="card blue lighten-3">
       <div class=" card-content black-text">
-      <span class="card-title">Register</span>
+        <span class="card-title">Register</span>
         <div class="card white black-text">
-          
-            <form method="POST" action="{{ url_for('register') }}">
-              <div class="row"style="padding-left: 10px; padding-right: 10px;" >
-                <div class="input-field col s6 m6 l6 ">
-                  <!--regex first charater must be alpha-->
-                  <input id="first_name" name="first_name" type="text" class="validate" required
-                    pattern="^[a-zA-Z]{1}(?:[\w \-]{1,10}[\w\-])?$" minlength="1" maxlength="15">
-                  <label for="first_name">First Name</label>
-                </div>
-                <div class="input-field col s6 m6 l5">
-                  <input id="last_name" name="last_name" type="text" class="validate" required
-                    pattern="^[a-zA-Z]{1}(?:[\w \-]{1,10}[\w\-])?$" minlength="1" maxlength="15">
-                  <label for="last_name">Last Name</label>
-                </div>
+          <form method="POST" action="{{ url_for('register') }}">
+            <div class="row input-pad">
+              <div class="input-field col s6 m6 l6 ">
+                <!--regex first charater must be alpha-->
+                <input id="first_name" name="first_name" type="text" class="validate" required
+                  pattern="^[a-zA-Z]{1}(?:[\w \-]{1,10}[\w\-])?$" minlength="1" maxlength="15">
+                <label for="first_name">First Name</label>
               </div>
-              <div class="row input-pad" >
-                <div class="input-field col s12 m6 l6">
-                  <!--Full password regex is complex and could take weeks to test!-->
-                  <input id="password" type="password" name="password" class="validate" minlength="8" maxlength="24" required>
-                  <label for="password">New password</label>
-                </div>
+              <div class="input-field col s6 m6 l5">
+                <input id="last_name" name="last_name" type="text" class="validate" required
+                  pattern="^[a-zA-Z]{1}(?:[\w \-]{1,10}[\w\-])?$" minlength="1" maxlength="15">
+                <label for="last_name">Last Name</label>
               </div>
-              <div class="row input-pad">
-                <div class="input-field col s12 m6 l6">
-                  <input id="repeat_password" type="password" name="repeat_password" class="validate" minlength="8" maxlength="24" required>
-                  <label for="repeat_password">Repeat password</label>
-                </div>
+            </div>
+            <div class="row input-pad">
+              <div class="input-field col s12 m6 l6">
+                <!--Full password regex is complex and could take weeks to test!-->
+                <input id="password" type="password" name="password" class="validate" minlength="8" maxlength="24"
+                  required>
+                <label for="password">New password</label>
               </div>
-              <div class="row input-pad " >
-                <div class="input-field col s12">
-                  <!-- regex pattern provided by  https://ihateregex.io 
+            </div>
+            <div class="row input-pad">
+              <div class="input-field col s12 m6 l6">
+                <input id="repeat_password" type="password" name="repeat_password" class="validate" minlength="8"
+                  maxlength="24" required>
+                <label for="repeat_password">Repeat password</label>
+              </div>
+            </div>
+            <div class="row input-pad ">
+              <div class="input-field col s12">
+                <!-- regex pattern provided by  https://ihateregex.io 
                       Author's Github:https://github.com/geongeorge/i-hate-regex-->
-                  <input id="email" type="email" name="email" class="validate" required
-                    emailObject.pattern="^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$">
-                  <label for="email">Email</label>
-                </div>
+                <input id="email" type="email" name="email" class="validate" required
+                  pattern="^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$">
+                <label for="email">Email</label>
               </div>
-              <div class="row input-pad">
-                <div class="input-field col l6 m6 s12">
-                  <select id="department" name="department" class="validate" required>
-                      <option value="{{ departments.department }}"selected>Select Department</option>
-                      {% for department in departments %}
-                          <option value="{{ department.department }}">{{ department.department }}</option>
-                      {% endfor %}
-                  </select>
-                  <label for="department">Department</label>
-                </div>
+            </div>
+            <div class="row input-pad">
+              <div class="input-field col l6 m6 s12">
+                <select id="department" name="department" class="validate" required>
+                  <option value="" disabled selected>Select Department</option>
+                  {% for department in departments %}
+                  <option value="{{ department.department }}">{{ department.department }}</option>
+                  {% endfor %}
+                </select>
+                <label for="department">Department</label>
               </div>
-              <div class="row input-pad">
-                <div class="input-field col s6 m6 s12">
-                  <input id="research_group" type="text" name="research_group" class="validate"
-                    pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$" minlength="3" maxlength="15" required>
-                  <label for="research_group">Research Group</label>
-                </div>
+            </div>
+            <div class="row input-pad">
+              <div class="input-field col s6 m6 s12">
+                <input id="research_group" type="text" name="research_group" class="validate"
+                  pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$" minlength="3" maxlength="15" required>
+                <label for="research_group">Research Group</label>
               </div>
-              <div class="card-action">
-                <button class="btn-large teal lighten-2" type="submit" name="action">Submit
-                  <i class="fas fa-cloud-upload-alt"></i>
-                </button>
-              </div>
-            </form>
-            <div class="row">
-              <div class="col s12 l12 m12">
-                  <p class="center-align reglog">
-                      Already Registered?
-                      <a href="{{ url_for('login') }}" class="dark-green-text text-darken-4">Login</a>
-                  </p>
-              </div>
+            </div>
+            <div class="card-action">
+              <button class="btn-large teal lighten-2" type="submit" name="action">Submit
+                <i class="fas fa-cloud-upload-alt"></i>
+              </button>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col s12 l12 m12">
+              <p class="center-align reglog">
+                Already Registered?
+                <a href="{{ url_for('login') }}" class="dark-green-text text-darken-4">Login</a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>    
+    </div>
   </div>
 </div>
-{% endblock %}
+  {% endblock %}
