@@ -349,6 +349,8 @@ Non functional testing will be based on the non functional requirements set out 
 - Regex pattern for [email verification](https://ihateregex.io) 
 Author's Github:https://github.com/geongeorge/i-hate-regex
 
+- Handling 404 and 500 errors https://flask.palletsprojects.com/en/1.1.x/patterns/errorpages/
+
 <span id="acknowledgements"></span>
 
 <h1>7. Acknowledgements </h1>

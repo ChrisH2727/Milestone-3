@@ -52,7 +52,7 @@ def login():
                     # session cookie for users first name
                     session["user"] = existing_user["first"]
                     # session cookie for in_use ensures that menue only 
-                    # displayed to registered users
+                    # display navigation bar to registered users
                     session["in_use"] = True
                     # session cookie for user email
                     session["email"] = existing_user["email"]
@@ -250,7 +250,7 @@ def approve_request():
     #
     
     # clear any exiting flash messages
-    session.pop('_flashes', None)
+    #session.pop('_flashes', None)
     
     # Check for any requested but not approved sources
     if len(list( mongo.db.sources.find({"requested": "true"}))) == 0:
@@ -325,7 +325,7 @@ def return_source_resp(source_serial_no):
     #  
     
     # clear any exiting flash messages
-    session.pop('_flashes', None)
+    # session.pop('_flashes', None)
     
     inDate = datetime.today().strftime('%d-%m-%y')
 
@@ -532,6 +532,9 @@ def get_sources():
     # Calculates updated source activity 
     # 
     
+    # display navigation bar to registered users
+    # session["in_use"] = True
+
     sources = list(mongo.db.sources.find())
 
     # Get the users first and last name and append to the source list to avoid email
@@ -584,7 +587,10 @@ def add_source():
     #
     # Called when an admin user adds a new source to the source inventory
     #
-
+ 
+    # Set True incase returning from  404 or 500 error 
+    # session["in_use"] = True
+    
     if request.method == "POST":
         # Get source from mongo db
         existing_source = mongo.db.sources.find_one(
@@ -652,6 +658,7 @@ def source_request():
     # Called on selecting the SOURCE REQUEST option
     # Action open to users and admin
     #
+
 
     query = request.form.get("query")
     mode = "request"
@@ -852,7 +859,7 @@ def del_source_conf(source_serial_no):
 @app.route("/userAccount", methods=["GET", "POST"])
 def userAccount():
 
-    # reenble session in use cookie if coming from a 404 page error
+    # reenble session in use cookie if coming from a 404 or 500 page error
     session["in_use"] = True
 
     # User already logged in so use session cookie as key to user details
@@ -991,9 +998,8 @@ def invalid_route(e):
     # Handles 404 page not found error
     # 
 
-    # Clear the in use cookie to prevent navigation 
-    if session.get("in_use"):
-        session.pop("in_use")
+    # Clear the in use cookie to prevent navigation  
+    # session["in_use"] = False
 
     return render_template("404error.html")
 
@@ -1004,8 +1010,7 @@ def invalid_route(e):
     # 
 
     # Clear the in use cookie to prevent navigation 
-    if session.get("in_use"):
-        session.pop("in_use")
+    # session["in_use"] = False
 
     return render_template("500error.html")
 
