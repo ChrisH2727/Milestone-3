@@ -997,6 +997,17 @@ def invalid_route(e):
 
     return render_template("404error.html")
 
+@app.errorhandler(500) 
+def invalid_route(e):
+    #
+    # Handles 500 server error
+    # 
+
+    # Clear the in use cookie to prevent navigation 
+    if session.get("in_use"):
+        session.pop("in_use")
+
+    return render_template("500error.html")
 
 @app.route("/faculty_link", methods=["GET", "POST"]) 
 def faculty_link():
