@@ -64,7 +64,6 @@
                                 <td>
                                     <a href="{{ url_for('get_userdelete', user_id=user._id) }}" 
                                         class="btn-small   deep-orange accent-3 sm-btn-add" >Delete </a>
-                                    </a>
                                 </td>
                             {% endfor %}
                         </tbody>
@@ -157,7 +156,7 @@
                         <div class="col s6 m9">
                             <a href="{{ url_for('get_userc', user_id=user._id) }}"
                         {% if user.role=='admin' %}
-                            class="btn-small  teal lighten-2 sm-btn-add" >Admin
+                            class ="btn-small  teal lighten-2 sm-btn-add" >Admin
                         {% else %}
                             class ="btn-small brown lighten-2 sm-btn-add">User
                         {% endif %}

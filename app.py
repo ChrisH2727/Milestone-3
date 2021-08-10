@@ -852,6 +852,9 @@ def del_source_conf(source_serial_no):
 @app.route("/userAccount", methods=["GET", "POST"])
 def userAccount():
 
+    # reenble session in use cookie if coming from a 404 page error
+    session["in_use"] = True
+
     # User already logged in so use session cookie as key to user details
     existing_user = mongo.db.users.find_one({"email": session["email"]})
     user_id = existing_user["_id"]
@@ -985,8 +988,13 @@ def isotopes_update_conf(isotope_id):
 @app.errorhandler(404) 
 def invalid_route(e):
     #
-    # Handles 404 page not found error 
+    # Handles 404 page not found error
     # 
+
+    # Clear the in use cookie to prevent navigation 
+    if session.get("in_use"):
+        session.pop("in_use")
+
     return render_template("404error.html")
 
 

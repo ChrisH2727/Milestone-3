@@ -38,30 +38,37 @@
     |Source Request| None | Checked with top and side navbar. See comment below|
     |Logout| None | Checked with top and side navbar. See comment below|
     |Approve Source Loan Request | None | Checked with top and side navbar. See comment below|
-
+    |User Access Manangement| None | Checked with top and side navbar.|
+    |Full Inventory Listing| None | Checked with top and side navbar.|
+    |Update Source| None | Checked with top and side navbar.|
 
  - **Responsiveness Report**
  
     |HTML Page |1640px |ipadPro |ipad|iphone 5/SE|
     |---|---|---|---|---|
     |Login| |  |   |   |
-    |Registration**| |  |
-    |User Profile**|  | |
-    |Source Request**|  | |
-    |Logout|  | |
-    |Approve Source Loan Request | Pass | Pass | Pass |Pass|
-
- - **Navigation Report**
- 
-    |HTML Page |1640px |ipadPro |ipad|iphone 5/SE|
-    |---|---|---|---|---|
-    |Login| |  |   |   |
-    |Registration| |  |
+    |Registration|  |
     |User Profile|  | |
     |Source Request|  | |
     |Logout|  | |
     |Approve Source Loan Request | Pass | Pass | Pass |Pass|
+    |User Access Manangement| Pass | Pass | Pass |Pass|
+    |Full Inventory Listing| Pass | Pass | Pass |Pass|
+    |Update Sources| Pass | Pass | Pass |Pass|
 
+ - **Navigation Report**
+ 
+    |HTML Page |1640px |ipad|
+    |---|---|---|
+    |Login| |  |   |
+    |Registration| |  |
+    |User Profile|  | |
+    |Source Request|  | |
+    |Logout|  | |
+    |Approve Source Loan Request | Pass | Pass |
+    |User Access Manangement| Pass | Pass |
+    |Full Inventory Listing| Pass | Pass |
+    |Update Sources| Pass | Pass |
 <h1>2. Use case (functional) test</h1>
 
 <span id="usecase-test"></span>
@@ -308,4 +315,5 @@
 |1| "no source found flash message is displayed before user query's for aan available source|  |
 |2|Clear isotope update button crashed program  |Re-direct code flow to use function "manage_isotopes" |
 |3| Detect condition where the isotope halflife is required as the key to searching for an isotope to update but has been deleted| |
-|4| Approve Source Loan Request Page has email address and not user name|Add python code to display user first name and last name | 
+|4| Approve Source Loan Request Page has email address and not user name|Add python code to display user first name and last name |
+|5|User management page had button colour mismatch between table and collapsible.|Add html code to give buttons same appearance| 
