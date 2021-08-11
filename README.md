@@ -185,10 +185,36 @@ TBD
 
 <span id="features-existing"></span>
 
+ - Password - at least 8 characters of any type except spaces
+
+ - email - must be in the form xxxxxxx@xxxxx.xxx
+
+ - Research group - at least 3 characters no spaces hyphons and underscores permitted
+
 ### 2.1 Features implemented
 
 - Users must first register to use the service and users accounts must be approved by an admin user.
 
+- The application maintains a database of different radioactive sources with:
+    - 
+
+- Security
+
+    - Password - at least 8 characters of any type except spaces
+
+    - email - must be in the form xxxxxxx@xxxxx.xxx
+
+    - Research group - at least 3 alphanumeric characters no spaces, hyphons and underscores permitted
+
+    - Source serial number - at least 3 alphanumeric characters no spaces, hyphons and underscores permitted
+
+    - Original activity - at least 2 numeric chacaters plus decimal point (?.?) only no white spaces   
+
+    - half life - at least 2 numeric chacaters plus decimal point (?.?) only no white spaces
+
+    - Isotopes - at least 1 uppercase alpha followed bt 1 lowercase alpha followed by 1 numeric digit - no decimal points or white spaces
+
+    - Users are prevented from accessing html pages intended for admin users and are   
 
 <span id="features-future"></span>
 

@@ -59,7 +59,7 @@
             <div class="row input-pad">
               <div class="input-field col s6 m6 s12">
                 <input id="research_group" type="text" name="research_group" class="validate"
-                  pattern="^[a-zA-Z]{3}(?:[\w \-]{1,10}[\w\-])?$" minlength="3" maxlength="15" required>
+                  pattern="^[a-zA-Z0-9_-]{3,40}$" minlength="3" maxlength="40" required>
                 <label for="research_group">Research Group</label>
               </div>
             </div>
