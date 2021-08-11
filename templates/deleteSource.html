@@ -2,7 +2,7 @@
 {% block content %}
 <div class="row">
     <div class="col s12 m12 l10 offset-l1">
-        <div class="card blue lighten-3 center-align">
+        <div class="card blue lighten-3">
             <div class="card-content black-text">
                 <span class="card-title">Delete Source</span>
                 <!--Build up form row by row-->
@@ -80,12 +80,14 @@
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                         </div>
-                        <div class="row">
-                            <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"
-                                class="btn-large deep-orange accent-3 lg-btn-add "> Delete <i
-                                    class="fas fa-cloud-upload-alt"></i></a>
-                            <a href="{{ url_for('get_sources') }}" class="lg-btn-add btn-large deep-green accent-3">
-                                Clear <i class="fas fa-trash-restore-alt"></i></a>
+                        <div class="row input-pad">
+                            <div class = "input-field col s12 m6 l6 center-align">
+                                <a href="{{ url_for('del_source_conf', source_serial_no=existing_source.serial_number) }}"
+                                class="btn-large deep-orange accent-3 lg-btn-add "><i class="fas fa-trash-restore-alt"></i> Delete</a>
+                            </div>
+                            <div class = "input-field col s12 m6 l6 center-align">
+                                <a href="{{ url_for('get_sources') }}" class="lg-btn-add btn-large deep-green accent-3"><i class="fas fa-times-circle left"></i> Clear</a>
+                            </div>   
                         </div>
                     </div>
                 </form>

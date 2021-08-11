@@ -87,7 +87,7 @@
         <ul class="sidenav" id="mobile-demo">
 
             {% if session.in_use%}
-                <li><a href="{{ url_for('userAccount') }}">{{session.user}}'s Profile</a></li>
+                <li><a href="{{ url_for('userAccount') }}" class="capitalize">{{session.user}}'s Profile</a></li>
                 <li><a href="{{ url_for('logout') }}">Log out</a></li>
                 <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
                     {% if session.role|lower == "admin"|lower %}

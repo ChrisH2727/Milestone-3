@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col s12 m12 l10 offset-l1">
-        <div class="card blue lighten-3 center-align">
+        <div class="card blue lighten-3">
             <div class="card-content black-text"> 
                 <span class="card-title">Update Source</span>    
                 <form method="POST" action="{{ url_for('update_source_activate')}}" id="update_source_activate" class="form-horizontal"> 
@@ -107,13 +107,16 @@
                                 <label for="security_group">Security Group</label>
                             </div>
                         </div>
-                        <div class="row input-pad">    
-                            <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action">
-                            Update <i class="fas fa-cloud-upload-alt"></i>
-                            </button>
-                            <a href="{{ url_for('get_sources') }}"
-                            class="btn-large deep-green accent-3 lg-btn-add">Clear<i class="fas fa-trash-restore-alt"></i></a> 
-                            </button>
+                        <div class="row input-pad">
+                            <div class = "input-field col s12 m6 l6 center-align">   
+                                <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action">
+                                    <i class="fas fa-cloud-upload-alt"></i> Update
+                                </button>
+                            </div>
+                            <div class = "input-field col s12 m6 l6 center-align">   
+                                <a href="{{ url_for('get_sources') }}"
+                                class="btn-large deep-green accent-3 lg-btn-add"><i class="fas fa-times-circle left"></i> Clear</a> 
+                            </div> 
                         </div>
                     </div>
                 </form>       

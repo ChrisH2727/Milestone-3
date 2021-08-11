@@ -5,7 +5,7 @@
     <div class="col s12 m12 l10 offset-l1">
         <div class="card blue lighten-3 center-align">
             <div class="card-content black-text">
-                <span class="card-title">Add Source</span>
+                <span class="card-title align-left">Add Source</span>
                 <form method="POST" action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">
                     <div class="card white black-text">
                         <div class="row input-pad">
@@ -104,11 +104,11 @@
                         </div>
 
                         <div class="row">
-                            <button class="btn-large deep-orange accent-3" type="submit" name="action">
-                                Add <i class="fas fa-cloud-upload-alt"></i>
+                            <button class="btn-large deep-orange accent-3 lg-btn-add" type="submit" name="action">
+                                <i class="fas fa-cloud-upload-alt"></i>  Add
                             </button>
-                            <button class="btn-large deep-green accent-3" onClick="window.location.reload(true)">Clear
-                                <i class="fas fa-trash-restore-alt"></i>
+                            <button class="btn-large deep-green accent-3 lg-btn-add" onClick="window.location.reload(true)">
+                                <i class="fas fa-times-circle left"></i> Clear
                             </button>
                         </div>
                     </div>

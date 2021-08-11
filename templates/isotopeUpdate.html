@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col s12 m12 l10 offset-l1">
-        <div class="card blue lighten-3 center-align">
+        <div class="card blue lighten-3">
             <div class="card-content black-text"> 
                 <span class="card-title">Update Isotope</span>    
                 <form method="POST" action="{{ url_for('isotopes_update_conf', isotope_id=existing_isotope._id)}}" class="form-horizontal"> 
@@ -20,13 +20,11 @@
                                 <label for="halflife">Half Life</label>
                             </div>
                             <div class="input-field col l3 m6 s12 center-align">    
-                                <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action">
-                                Update <i class="fas fa-cloud-upload-alt"></i>
+                                <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action"><i class="fas fa-cloud-upload-alt"></i> Update
                                 </button>
                             </div>
                             <div class="input-field col l3 m6 s12 center-align">       
-                                <a href="{{ url_for('manage_isotopes') }}"
-                                class="btn-large deep-green accent-3 lg-btn-add">Clear<i class="fas fa-trash-restore-alt"></i></a>
+                                <a href="{{ url_for('manage_isotopes') }}" class="btn-large deep-green accent-3 lg-btn-add">Clear<i class="fas fa-times-circle left"></i></a>
                             </div>
                         </div>
                     </div>

@@ -338,4 +338,6 @@
 |2|Clear isotope update button crashed program  |Re-direct code flow to use function "manage_isotopes" |
 |3| Detect condition where the isotope halflife is required as the key to searching for an isotope to update but has been deleted| |
 |4| Approve Source Loan Request Page has email address and not user name|Add python code to display user first name and last name |
-|5|User management page had button colour mismatch between table and collapsible.|Add html code to give buttons same appearance| 
+|5|User management page had button colour mismatch between table and collapsible.|Add html code to give buttons same appearance|
+|6|Delete user account page was found not to render on a small screen width|Replace user account page with collapsible for small screen widths|
+|7|Faulty regex pattern for isotope type|Update regex pattern to reflect feature description in README| 
