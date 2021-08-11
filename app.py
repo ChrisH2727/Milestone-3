@@ -870,9 +870,14 @@ def userAccount():
         if request.form.get("password") != request.form.get("repeat_password"):
             flash("Please ensure that that your password entries match")
         else:
-            submit = {"password": generate_password_hash(request.form.get("password")),
-                "department": request.form.get("department").lower(),
-                "research_group": request.form.get("research_group").lower()}
+            # Construct user profile update payload but ensure inputs not blank
+            submit = { }
+            if request.form.get("password") != "":
+                submit.update ({"password": generate_password_hash(request.form.get("password"))})
+            if request.form.get("department") !="":
+                submit.update ({"department": request.form.get("department")})
+            if request.form.get("research_group") !="":
+                submit.update ({"research_group": request.form.get("research_group")})
 
             mongo.db.users.find_one_and_update({"_id": ObjectId(user_id)},
                 { '$set': submit }, return_document = ReturnDocument.AFTER)
@@ -883,9 +888,9 @@ def userAccount():
     
     # Get list of sources held by the user
     loanSources = list(mongo.db.sources.find({"user": session["email"]}))
-
+    departments = list(mongo.db.departments.find())
     return render_template("userAccount.html",
-            user=existing_user, usersources=loanSources)
+            user= existing_user, usersources= loanSources, departments= departments)
 
 
 #-------------------------Manage isotope types------------------------

@@ -49,14 +49,18 @@
                     </div>
 
                     <div class="row input-pad">
-                        <div class="input-field col s6">
-                            <input id="department" type="text" value="{{user.department}}" name="department" class="validate capitalize">
+                        <div class="input-field col l12 m12 s12">
+                            <select id="department" name="department" class="validate">
+                              <option value="{{ user.department }}" selected>{{ user.department }}</option>
+                              {% for department in departments %}
+                                <option value="{{ department.department }}">{{ department.department }}</option>
+                              {% endfor %}
+                            </select>
                             <label for="department">Department</label>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col l12 m12 s12">
                             <input id="research_group" type="text" value="{{user.research_group}}" name="research_group" class="validate capitalize">
-                            <label for="research_group" class = "hide-on-small-only">Research Group</label>
-                            <label for="research_group" class = "hide-on-large-only hide-on-med-only">Group</label>
+                            <label for="research_group" >Research Group</label>
                         </div>
                     </div>
                     <div class="card-action">
