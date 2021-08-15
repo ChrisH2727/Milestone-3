@@ -24,6 +24,7 @@ It is therefore crutial that the scientific staff contol student or accademic st
   - <a href="#ux-design">1.3 Design</a>
   - <a href="#info-architecture">1.4 Information architecture</a>
   - <a href="#wireframes">1.5 Wire Frames</a>
+   -<a href="#navigation-structure">1.6 Navigation Structure</a>
 - <a href="#features">2. Features</a>
   - <a href="#features-existing">2.1 Features Implemented</a>
   - <a href="#features-future">2.2 Features for future implementation</a>
@@ -69,57 +70,59 @@ It is therefore crutial that the scientific staff contol student or accademic st
 
 **Existing user goals:** 
  
-1. As a user, I want to login and out of the web application securely
+2. As a user, I want to login and out of the web application securely
 
-2. As a user, I want to view my registration profil.
+3. As a user, I want to view my registration profile.
 
-3. As a user, I want to change my password, department and research group.
-
-4. As a user, I want to view all the sources that I have loaned so that I can determine which ones I need to return.
+4. As a user, I want to change my password, department and research group.
 
 5. As a user, I want to search for different types of sources that I will need for my research work in the future and view the results.
 
-6. As an user, I want the present activity of the source to be calculated and displayed so that I can confirm that it will be suitable for my work.
+6. As a user, I want to view all the sources that I have loaned so that I can determine which ones I need to return.
 
-7. As a user, I want to create a request for a sources of the required type from the inventory of available sources and have my request approved.
+7. As an user, I want the present activity of the source to be calculated and displayed so that I can confirm that it will be suitable for my work.
 
-8. As a user I want to delete my request prior to its approval if I change my mind regarding the type of source.
+8. As a user, I want to create a request for a sources of the required type from the inventory of available sources and have my request approved.
+
+9. As a user I want to delete my request prior to its approval if I change my mind regarding the type of source.
 
 **Admin user goals:**
 
-1. As an admin user, I want to approve user each registration request so that I can ensure that the correct Health and Safety briefing has been given.
+1. As an admin user I want a simple to setup procedure to permit others users to access the application.  
 
-2. As an admin user, I want to view the registration status of all other users.
+2. As an admin user, I want to approve user each registration request so that I can ensure that the correct Health and Safety briefing has been given.
 
-3. As an admin user, I want to update the access rights of  other users to that of admin to create deputies
+3. As an admin user, I want to view the registration status of all other users.
 
-4. As an admin user, I want to suspend a user account to prevent a user from loaning more sources.
+4. As an admin user, I want to update the access rights of  other users to that of admin to create deputies
 
-5. As an admin user, I want to permanently delete as user acccount, but only if the user has returned all loaned sources
+5. As an admin user, I want to suspend a user account to prevent a user from loaning more sources.
 
-6. As an admin user, I want to view the technical characteristices of all sources so that users can be advised on their selection.
+6. As an admin user, I want to permanently delete as user acccount, but only if the user has returned all loaned sources
 
-7. As an admin user, I want to view the location of all sources on inventory to satisfy a security audit.
+7. As an admin user, I want to view the technical characteristices of all sources so that users can be advised on their selection.
 
-8. As an admin user, I want to create a new entry source entry with the same or different technical charateristc but with a unique serial number.
+8. As an admin user, I want to view the location of all sources on inventory to satisfy a security audit.
 
-9. As an admin user, I want to update the technical characteristics of an existing source if there is an error either by selecting from the full inventory or by searching on the serial number.
+9. As an admin user, I want to create a new entry source entry with the same or different technical charateristc but with a unique serial number.
 
-10. As an admin user, I want to delete a source from the inventory either by selecting from the full inventory or by searching on the serial number, but only if that source has been returned to the inventory.
+10. As an admin user, I want to update the technical characteristics of an existing source if there is an error either by selecting from the full inventory or by searching on the serial number.
 
-11. As an admin user, I want to view all the isotope types available
+11. As an admin user, I want to delete a source from the inventory either by selecting from the full inventory or by searching on the serial number, but only if that source has been returned to the inventory.
 
-12. As an admin user I want to add isotope types and its respective half life to the list.
+12. As an admin user, I want to view all the isotope types available
 
-13. As an admin user I want to update information assocaited with an isotope.
+13. As an admin user I want to add isotope types and its respective half life to the list.
 
-14. As an admin user I want to delete isotope types, but only if all sources of that isotope type are not on loan.
+14. As an admin user I want to update information assocaited with an isotope.
 
-15. As an admin user, I want to view the full history of source loans so that I can spot any patterns.
+15. As an admin user I want to delete isotope types, but only if all sources of that isotope type are not on loan.
 
-16. As an admin user, I want to view how many times a source has been loaned by isotope type so that I can dispose of sources that are not being loaned.
+16. As an admin user, I want to view the full history of source loans so that I can spot any patterns.
 
-17. As an admin user, I want to view how user logins there have been on a given date so that I can assses how the service is being used.  
+17. As an admin user, I want to view how many times a source has been loaned by isotope type so that I can dispose of sources that are not being loaned.
+
+18. As an admin user, I want to view how user logins there have been on a given date so that I can assses how the service is being used.  
 
 **Goals that would appeal to Scientists:**
 
@@ -160,7 +163,7 @@ It is therefore crutial that the scientific staff contol student or accademic st
 - #### Tables
 
     As this website will predominently be utilised by individual from the scientific community, considerable use is made of tables. Scientists like to see information in tables so that they can see patterns of date.  **[Cloud Tables](https://cloudtables.com/)** provides an excelent free to use JQuery plugin for this purpose.
-
+s
 - #### Collapsibles
 
     Unfortunately tables do not render well on smaller screen devices and so use is made of the **[Collaspible](https://materializecss.com/collapsible.html)** provided by **Materialize**
@@ -169,15 +172,27 @@ It is therefore crutial that the scientific staff contol student or accademic st
 
 ### 1.4 Information architecture
 
+![Information Architecture](readmeimg/datastructure.png)
 
+The collections **source** and **user** provide the two main data repositories with collections **department**, **location**, **laboratories**, **encapsuationtype** and **security group** providing a repository for constant data.
 
-TBD
+The collection **source history** and **login history** provide a an activity log allowing admin users to determine which users have loaned sources and how frequently the site is being visited.
+
+The collection **isotope** is considered to be semi permanent data. Over time changing usage patterns may result in some sources of specific isotope type being removed from circuation.
 
 <span id="wireframes"></span>
 
-### 1.4 Wire Frames
+### 1.5 Wire Frames
 
-TBD
+Wireframes are provide [here](readmeimg/WireFrame/datastructure.png) and are best examined inconjunction with the site navigation structure shown in section 1.6
+
+<span id="navigation-structure"></span>
+
+### 1.6 User Navigation Structure
+
+![Navigation Structure](readmeimg/navStructure.png)
+
+The navigation structure shown above is reflected in the side bar visible on small and medium screen width devices. 
 
 <span id="features"></span>
 
@@ -185,18 +200,44 @@ TBD
 
 <span id="features-existing"></span>
 
- - Password - at least 8 characters of any type except spaces
-
- - email - must be in the form xxxxxxx@xxxxx.xxx
-
- - Research group - at least 3 characters no spaces hyphons and underscores permitted
-
 ### 2.1 Features implemented
 
+#### General
+
+- Where information is presented in a tabular for for large screen devices, it is then also presented as collapsible for small screen devices.
+
+#### Users:
 - Users must first register to use the service and users accounts must be approved by an admin user.
 
-- The application maintains a database of different radioactive sources with:
-    - 
+- A user may search the database for a source type and may request its loan. Only sources that are available will be presented. 
+
+- The user may delete the loan request if this has not been approved
+
+- A user may change their password, select another department or enter an new research group.
+
+- A user may view a list of the sources he/she has on loan
+
+#### Admin:
+
+- An admin user must first register as a user.
+
+- An admin user must be promotes to admin status by another admin user.
+
+- An admin user may **suspend** a users account and subsequently reistate it 
+
+- An admin user may delete a user account, but only is the user has returned all sources loaned by him/her.
+
+- An admin user may approve a source load or identify it as returned 
+
+- An admin user may view a full history of source loaned to users as well as key statistics on the number of sources of a particular isotope available, user logins per day and source loaned by serial number.
+
+- An admin user may view the full table of sources available in the inventory and from the table update or delete a source. Note that a source may not be deleted if it is on loan.
+
+- An admin user may create, update or delete a source from the inventory. A source may not be deleted from inventory unless it is identified as returned.
+
+- An admin user may view the list of isotopes types available.
+
+- An admin user may add and update delete an isotope type. Deletion is only possible where sources of that isotope type have been returned to the inventory. 
 
 - Security
 
@@ -214,7 +255,9 @@ TBD
 
     - Isotopes - at least 1 uppercase alpha followed bt 1 lowercase alpha followed by 1 numeric digit - no decimal points or white spaces
 
-    - Users are prevented from accessing html pages intended for admin users and are   
+    - Users are prevented from accessing html pages intended for admin users
+
+    - A user can only be logged in once.
 
 <span id="features-future"></span>
 
@@ -301,11 +344,9 @@ TBD
 
 - **Testing tools used** 
 
-    - [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/open) is used to detect problems and test responsiveness.
-
-    -  [Autoprefixer](https://autoprefixer.github.io/)
-
-        - Autoprefixer is used to parse the CSS and to add vendor prefixes to CSS rules.
+    - [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/open) 
+        
+        - is used to detect problems and test responsiveness.
 
     - [W3C Markup Validation Service](https://validator.w3.org/)
 
@@ -335,7 +376,119 @@ Non functional testing will be based on the non functional requirements set out 
 
 <h1>5. Deployment</h1>
 
-**To be included**
+## Requirements
+
+To deploy or clone this project an account is required for the following services  
+
+- Github
+
+- MongoDB 
+
+- Heroku
+
+## Clone this project to your GitHub repository 
+
+To clone this project, follow the following steps are required: 
+
+- Log in to your GitHub account 
+
+- Create a new repository.
+
+- Navigate to the new repository
+
+- At the bottom of the page select **Import code**
+
+- Enter the URL **https://github.com/ChrisH2727/Milestone-3.git**
+
+- Select the button **Begin Import**
+
+- Navigate to your new git repository and check that the files are present.
+
+## Getting started in your local IDE
+
+- Within your local IDE create a new workspace
+- At the terminal window enter the command **git init** (may not be required)
+- At the terminal window enter the command **git clone** and the URL for the GitHub repository to which cloned the Milestone-3 project above  
+- At the terminal window enter the command  **pip3 install -r requirements.txt**.
+- Create the file **env.py** and add the following environmental variables:
+    
+    import os
+    os.environ.setdefault("IP", "Added by developer")
+    os.environ.setdefault("PORT", "Added by developer")
+    os.environ.setdefault("SECRET_KEY", "Added by developer")
+    os.environ.setdefault("MONGO_URI", "Added by developer")
+    os.environ.setdefault("MONGO_DBNAME", "Added by developer")
+  
+  - MONGO_DBNAME should be the same as the database name created in section **Creating a MongoDB database** 
+
+- Create a .gitignore file in the root directory of the project and  the **env.py** file in the .gitignore.  Add anyother file names that you do not wish to be uploaded to GitHub.
+
+### Creating a MongoDB database
+- Login to your MongoDB account.
+- select **Create a Database**
+- Enter the name of your database and the name of the first collection **sources**
+- Navigate to the database and observe that the first collection **sources** is present
+- Add the additional collections:
+  - **departments**
+  - **encapsulations**
+  - **isotope_category**
+  - **laboratories**
+  - **locations**
+  - **login_history**
+  - **security_group**
+  - **source_history**
+  - **users**
+- For the collection **sources** add the empty string values as per the data architecture description 
+- For the collection **users** add the empty string values as per the data architecture description
+- For the collection **departments** enter the string values:
+  - Physics
+  - Chemistry
+  - Biology
+- For the collection **encapsulations** enter the string values:
+  - disc
+  - capsule
+- For the collection **laboratories** enter the string values:
+  - lab1
+  - lab2
+  - lab3
+ - For the collection **locations** enter the string values:
+  - Top
+  - Middle
+  - Bottom
+ - For the collection **security_group** enter the string values:
+  - 4a
+  - 5d
+  - 5c
+
+1. Create the environment variables 
+    - Create a .gitignore file in the root directory of the project.
+    - Add the env.py file in the .gitignore.
+    - Create the file env.py. This  will contain all the envornment variables.
+    ```
+    Import os
+    os.environ.setdefault("IP", "Added by developer")
+    os.environ.setdefault("PORT", "Added by developer")
+    os.environ.setdefault("SECRET_KEY", "Added by developer")
+    os.environ.setdefault("MONGO_URI", "Added by developer")
+    os.environ.setdefault("MONGO_DBNAME", "Added by developer")
+    ```
+1. Run the app: Open your terminal window in your IDE. Type python3 app.py and run the app.
+
+#### Heroku Deployment  
+1. Set up local workspace for Heroku 
+    - In terminal window of your IDE type: **pip3 freeze -- local > requirements.txt.** (The file is needed for Heroku to know which filed to install.)
+    - In termial window of your IDE type: **python app.py > Procfile** (The file is needed for Heroku to know which file is needed as entry point.)
+2. Set up Heroku: create a Heroku account and create a new app and select your region. 
+3. Deployment method 'Github'
+    - Click on the **Connect to GitHub** section in the deploy tab in Heroku. 
+        - Search your repository to connect with it.
+        - When your repository appears click on **connect** to connect your repository with the Heroku. 
+    - Go to the settings app in Heroku and go to **Config Vars**. Click on **Reveal Config Vars**.
+        - Enter the variables contained in your env.py file. it is about: **IP, PORT, SECRET_KEY, MONGO_URI, MONGO_DBNAME**
+5. Automatic deployment: Go to the deploy tab in Heroku and scroll down to **Aotmatic deployments**. Click on **Enable Automatic Deploys**. By **Manual deploy** click on **Deploy Branch**.
+
+Heroku will receive the code from Github and host the app using the required packages. 
+Click on **Open app** in the right corner of your Heroku account. The app wil open and the live link is available from the address bar. 
 
 
 <span id="credits"></span>
@@ -367,8 +520,6 @@ Non functional testing will be based on the non functional requirements set out 
     - Text input
 
     - Radio button
-
-    - 
 
 - [Cloudtables](https://datatables.net/examples/) html and jQuery examples for the construction of tables that paginate
 

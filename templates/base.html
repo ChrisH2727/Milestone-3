@@ -40,7 +40,7 @@
         </ul>
 
         <ul id="inventory-dropdown" class="dropdown-content">
-            <li><a href="{{ url_for('get_sources') }}">Full Inventory</a></li>
+            <li><a href="{{ url_for('get_sources') }}">Inventory List</a></li>
             <li><a href=" {{url_for('usage_report') }}">Usage Report</a></li>
             <li><a href=" {{url_for('approve_request') }}">Approve Request</a></li>
         </ul>
@@ -50,19 +50,19 @@
         </ul>
 
         <ul id="inventory-dropdown2" class="dropdown-content">
-            <li><a href=" {{url_for('get_sources') }}">Full Inventory</a></li>
+            <li><a href=" {{url_for('get_sources') }}">Inventory List</a></li>
             <li><a href=" {{url_for('usage_report') }}">Usage Report</a></li>
             <li><a href="{{url_for('approve_request') }}">Approve Request</a></li>
         </ul>
 
         <nav class="nav-extended">
             <div class="nav-wrapper indigo darken-2">
-                <a href="{{url_for('faculty_link') }}" class="brand-logo logo-shift">
+                <a href="{{url_for('faculty_link') }}" class="brand-logo">
                     <i class="fas fa-atom"> Faculty of Physics</i></a>
+                     
                 {% if session.in_use%}
                     <a data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 {% endif %}
-
                 <ul class="right hide-on-med-and-down">
                     {% if session.in_use%}
                         <li><a href="{{ url_for('userAccount') }} " class="capitalize">{{session.user}}'s Profile</a></li>
@@ -70,15 +70,14 @@
                         <li><a href="{{ url_for('source_request') }}">Source Request</a></li>
                         {% if session.role|lower == "admin"|lower %}
                             <li><a href="{{ url_for('get_user') }}">User Access</a></li>
-                            <li><a class="dropdown-trigger" data-target="inventory-dropdown2">Inventory <i
+                            <li><a class="dropdown-trigger" data-target="inventory-dropdown2">Inventory<i
                                         class="fas fa-caret-down rm-padding"></i></a></li>
-                            <li><a class="dropdown-trigger" data-target="source-dropdown2">Source <i
+                            <li><a class="dropdown-trigger" data-target="source-dropdown2">Source Management<i
                                         class="fas fa-caret-down rm-padding"></i></a></li>
                             <li><a class="dropdown-trigger" data-target="settings-dropdown2">Settings <i
                                         class="fas fa-caret-down rm-padding"></i></a></li>
                         {% endif %}
                     {% endif %}
-
                 </ul>
                 <div class="nav-title logo-shift text-align:center">Radioisotope Inventory</div>
             </div>
@@ -94,7 +93,7 @@
                         <li><a href="{{ url_for('get_user') }}">User Access</a></li>
                         <li><a class="dropdown-trigger" data-target="inventory-dropdown">Inventory <i
                                     class="fas fa-caret-down"></i></a></li>
-                        <li><a class="dropdown-trigger" data-target="source-dropdown">Source <i class="fas fa-caret-down"></i></a>
+                        <li><a class="dropdown-trigger" data-target="source-dropdown">Source Management<i class="fas fa-caret-down"></i></a>
                         </li>
                         <li><a class="dropdown-trigger" data-target="settings-dropdown">Settings <i
                                     class="fas fa-caret-down rm-padding"></i></a></li>
