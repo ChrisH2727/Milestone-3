@@ -261,6 +261,14 @@ def approve_request():
     # are any new source requests to deal with
     #
 
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
+
     # Check for any requested but not approved sources
     if len(list(mongo.db.sources.find({"requested": "true"}))) == 0:
         showtable = "false"
@@ -293,9 +301,6 @@ def approve_request_resp(source_serial_no):
     # Called when an admin user clicks the button to approve
     # the use of a source
     #
-
-    # clear any exiting flash messages
-    # session.pop('_flashes', None)
 
     # Get mongodb record for source to be loaned
     existing_source = mongo.db.sources.find_one(
@@ -365,21 +370,25 @@ def delete_source_resp(source_serial_no):
     # Called prior to user clicking button to delete a source
     # from the mongo db
     #
-    print("delete_source_resp")
-    # Restrict access to admin users only
-    if session["role"] == "admin":
-        existing_source = mongo.db.sources.find_one(
-            {"serial_number": source_serial_no})
-        used_times = mongo.db.source_history.count_documents(
-            {"serial_number": source_serial_no})
-        flash("Your are about to delete source: {}".format(source_serial_no))
-        return render_template(
-            "deleteSource.html",
-            existing_source=existing_source,
-            used_times=used_times)
 
-    else:
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
         return render_template("errorPage.html")
+
+    existing_source = mongo.db.sources.find_one(
+        {"serial_number": source_serial_no})
+    used_times = mongo.db.source_history.count_documents(
+        {"serial_number": source_serial_no})
+    flash("Your are about to delete source: {}".format(source_serial_no))
+    return render_template(
+        "deleteSource.html",
+        existing_source=existing_source,
+        used_times=used_times)
+
 
 # ----------------Create Read Update Delete User Accounts---
 
@@ -391,6 +400,14 @@ def get_userb(user_id):
     # an account. User approved state starts at "appove" then toggles between
     # "approved" and "suspended"
     #
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
 
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
 
@@ -436,6 +453,14 @@ def get_userc(user_id):
     # Called when an admin user gives admin rights to another user
     #
 
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
+
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
     # Check existing user available
     if existing_user:
@@ -464,6 +489,15 @@ def get_userdelete(user_id):
     #
     # Called when an admin user deletes a normal user account
     #
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
+
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
 
     # Check existing user available
@@ -498,28 +532,32 @@ def delete_user_resp(user_email):
     #
     # Called to  confirm deletion of a user account from mongo db
     #
-    # Restrict user account deletion to admin users only
-    if session["role"] == "admin":
-        # Check is user has a source on loan
-        source_user = mongo.db.sources.find_one({"user": user_email})
 
-        if source_user:
-            # Get user name from user mongo db user collection
-            user = mongo.db.users.find_one({"email": user_email})
-            user_name = (
-                user["first"]).capitalize() + " " + (user["last"]).capitalize()
-            flash("User {} has sources on loan and cannot\
-                 be removed".format(user_name))
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
 
-        else:
-            mongo.db.users.delete_one({"email": user_email})
-            flash("user account sucessfuly deleted")
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
 
-        users = list(mongo.db.users.find())
-        return render_template("user.html", users=users)
+    # Check is user has a source on loan
+    source_user = mongo.db.sources.find_one({"user": user_email})
+
+    if source_user:
+        # Get user name from user mongo db user collection
+        user = mongo.db.users.find_one({"email": user_email})
+        user_name = (
+            user["first"]).capitalize() + " " + (user["last"]).capitalize()
+        flash("User {} has sources on loan and cannot\
+             be removed".format(user_name))
 
     else:
-        return render_template("errorPage.html")
+        mongo.db.users.delete_one({"email": user_email})
+        flash("user account sucessfuly deleted")
+
+    users = list(mongo.db.users.find())
+    return render_template("user.html", users=users)
 
 
 @app.route("/get_user")
@@ -529,13 +567,16 @@ def get_user():
     # users with either admin or user role
     #
 
-    users = list(mongo.db.users.find())
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
 
-    # Restrict access to admin users only
-    if session["role"] == "admin":
-        return render_template("user.html", users=users)
-    else:
+    # Check if user has access to this page
+    if (session["role"] == "user"):
         return render_template("errorPage.html")
+
+    users = list(mongo.db.users.find())
+    return render_template("user.html", users=users)
 
 # -------------------------Create Read Update Delete Sources-----------------
 
@@ -547,8 +588,13 @@ def get_sources():
     # Calculates updated source activity
     #
 
-    # display navigation bar to registered users
-    # session["in_use"] = True
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
 
     sources = list(mongo.db.sources.find())
 
@@ -586,6 +632,7 @@ def get_sources():
                 round(origin_act*math.exp(
                     ((-1*math.log(2)*delta_years)/half_life)), 2))
         except Exception:
+            # if calculation unsucessful use existing activity value
             new_act = origin_act
 
         source_new_act = {"activity_now": new_act}
@@ -593,11 +640,7 @@ def get_sources():
         mongo.db.sources.find_one_and_update(
             {"serial_number": serial_number}, {'$set': source_new_act})
 
-    # Restrict access to admin users only
-    if session["role"] == "admin":
         return render_template("inventory.html", sources=sources)
-    else:
-        return render_template("errorPage.html")
 
 
 @app.route("/add_source", methods=["GET", "POST"])
@@ -606,8 +649,13 @@ def add_source():
     # Called when an admin user adds a new source to the source inventory
     #
 
-    # Set True incase returning from  404 or 500 error
-    # session["in_use"] = True
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
 
     if request.method == "POST":
         # Get source from mongo db
@@ -650,32 +698,24 @@ def add_source():
             mongo.db.sources.insert_one(newSource)
             flash("New source sucessfully added to inventory")
 
-        # Confirm that user has admin rights and can render requested page
-        if session["role"] == "admin":
             sources = list(mongo.db.sources.find())
             return render_template("inventory.html", sources=sources)
-        else:
-            return render_template("errorPage.html")
 
-    # Restrict access to admin users only
-    if session["role"] == "admin":
-        # No post setup html page for adding a new source
-        security_codes = mongo.db.security_group.find()
-        departments = mongo.db.departments.find()
-        laboratories = mongo.db.laboratories.find()
-        locations = mongo.db.locations.find()
-        encapsulations = mongo.db.encapsulations.find()
-        isotope_category = list(mongo.db.isotope_category.find())
-        mode = "add"
-        return render_template("addSource.html", security_codes=security_codes,
-                               departments=departments,
-                               laboratories=laboratories,
-                               locations=locations,
-                               mode=mode,
-                               encapsulations=encapsulations,
-                               isotope_category=isotope_category)
-    else:
-        return render_template("errorPage.html")
+    # No post setup html page for adding a new source
+    security_codes = mongo.db.security_group.find()
+    departments = mongo.db.departments.find()
+    laboratories = mongo.db.laboratories.find()
+    locations = mongo.db.locations.find()
+    encapsulations = mongo.db.encapsulations.find()
+    isotope_category = list(mongo.db.isotope_category.find())
+    mode = "add"
+    return render_template("addSource.html", security_codes=security_codes,
+                           departments=departments,
+                           laboratories=laboratories,
+                           locations=locations,
+                           mode=mode,
+                           encapsulations=encapsulations,
+                           isotope_category=isotope_category)
 
 
 @app.route("/source_request", methods=["GET", "POST"])
@@ -684,6 +724,10 @@ def source_request():
     # Called on selecting the SOURCE REQUEST option
     # Action open to users and admin
     #
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
 
     query = request.form.get("query")
     mode = "request"
@@ -713,6 +757,10 @@ def del_source_req(source_serial_no):
     # Action open to users and admin
     #
 
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
     # Set up the source entry for avialable to use
     submit = {"approved": "no",
               "requested": "false",
@@ -731,6 +779,11 @@ def req_source_conf(source_serial_no):
     # Action on clicking the REQUEST button on the SOURRCE REQUEST Page
     # Action open to users and admin
     #
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
     sources = list(mongo.db.sources.find_one(
         {"serial_number": source_serial_no}))
 
@@ -839,11 +892,7 @@ def update_source_activate():
             flash("Database error source data\
                  has not been updated. Refer to admin user.")
 
-    if session["role"] == "admin":
         return redirect(url_for("get_sources"))
-
-    else:
-        return render_template("errorPage.html")
 
 
 @ app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
@@ -852,25 +901,30 @@ def update_source_resp(source_serial_no):
     # Called when data relating to a source requires update
     #
 
-    if session["role"] == "admin":
-        existing_source = (mongo.db.sources.find_one(
-            {"serial_number": source_serial_no}))
-        security_codes = (mongo.db.security_group.find())
-        departments = (mongo.db.departments.find())
-        laboratories = (mongo.db.laboratories.find())
-        locations = (mongo.db.locations.find())
-        encapsulations = (mongo.db.encapsulations.find())
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
 
-        return render_template(
-            "updateSource.html",
-            existing_source=existing_source,
-            security_codes=security_codes,
-            departments=departments,
-            locations=locations,
-            laboratories=laboratories,
-            encapsulations=encapsulations)
-    else:
+    # Check if user has access to this page
+    if (session["role"] == "user"):
         return render_template("errorPage.html")
+
+    existing_source = (mongo.db.sources.find_one(
+        {"serial_number": source_serial_no}))
+    security_codes = (mongo.db.security_group.find())
+    departments = (mongo.db.departments.find())
+    laboratories = (mongo.db.laboratories.find())
+    locations = (mongo.db.locations.find())
+    encapsulations = (mongo.db.encapsulations.find())
+
+    return render_template(
+        "updateSource.html",
+        existing_source=existing_source,
+        security_codes=security_codes,
+        departments=departments,
+        locations=locations,
+        laboratories=laboratories,
+        encapsulations=encapsulations)
 
 
 @ app.route("/delete_source", methods=["GET", "POST"])
@@ -878,31 +932,36 @@ def delete_source():
     #
     # called when the admin user selects a source for deletion via a query
     #
-    # Restrict access to admin users only
-    if session["role"] == "admin":
-        query = request.form.get("query")
-        mode = "delete"
-        if query:
-            # line of code from Code Institute
-            # tuition Data "Centric Design Mini Project"
-            sources = list(mongo.db.sources.find(
-                {"$text": {"$search": query}}))
-            showsources = "true"
-            return render_template(
-                "sourceRequest.html",
-                showsources=showsources,
-                sources=sources,
-                mode=mode)
-        else:
-            showsources = "false"
-            sources = []
-            return render_template(
-                "sourceRequest.html",
-                showsources=showsources,
-                sources=sources,
-                mode=mode)
-    else:
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
         return render_template("errorPage.html")
+
+    query = request.form.get("query")
+    mode = "delete"
+    if query:
+        # line of code from Code Institute
+        # tuition Data "Centric Design Mini Project"
+        sources = list(mongo.db.sources.find(
+            {"$text": {"$search": query}}))
+        showsources = "true"
+        return render_template(
+            "sourceRequest.html",
+            showsources=showsources,
+            sources=sources,
+            mode=mode)
+    else:
+        showsources = "false"
+        sources = []
+        return render_template(
+            "sourceRequest.html",
+            showsources=showsources,
+            sources=sources,
+            mode=mode)
 
 
 @ app.route("/del_source_conf/<source_serial_no>", methods=["GET", "POST"])
@@ -911,31 +970,39 @@ def del_source_conf(source_serial_no):
     # Gets source data from the mongo db and generates a table
     #
 
-    # Restrict access to admin users only
-    if session["role"] == "admin":
-        # Find if there is a current user of the source
-        existing_source = mongo.db.sources.find_one(
-            {"serial_number": source_serial_no})
-        existing_source_user = existing_source["user"]
-        if existing_source_user:
-            flash("Source: {} is on loan and could not be deleted ".format(
-                source_serial_no))
-        else:
-            # Go ahead and delete
-            mongo.db.sources.delete_one({"serial_number": source_serial_no})
-            flash("Source: {} has been deleted".format(source_serial_no))
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
 
-        # sources = list(mongo.db.sources.find())
-        return redirect(url_for("get_sources"))
-    else:
+    # Check if user has access to this page
+    if (session["role"] == "user"):
         return render_template("errorPage.html")
+
+    # Find if there is a current user of the source
+    existing_source = mongo.db.sources.find_one(
+        {"serial_number": source_serial_no})
+    existing_source_user = existing_source["user"]
+
+    if existing_source_user:
+        flash("Source: {} is on loan and could not be deleted ".format(
+            source_serial_no))
+    else:
+        # Go ahead and delete
+        mongo.db.sources.delete_one({"serial_number": source_serial_no})
+        flash("Source: {} has been deleted".format(source_serial_no))
+
+    return redirect(url_for("get_sources"))
 
 
 @ app.route("/userAccount", methods=["GET", "POST"])
 def userAccount():
+    #
+    # User or admin users profile page
+    #
 
-    # reenble session in use cookie if coming from a 404 or 500 page error
-    session["in_use"] = True
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
 
     # User already logged in so use session cookie as key to user details
     existing_user = mongo.db.users.find_one({"email": session["email"]})
@@ -962,15 +1029,22 @@ def userAccount():
             flash("Your account details have been successfully updated")
 
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-
+ 
     # Get list of sources held by the user
     loanSources = list(mongo.db.sources.find({"user": session["email"]}))
     departments = list(mongo.db.departments.find())
+    
+    if len(loanSources) == 0:
+        showtable = "false"
+    else:
+        showtable = "true"
+
     return render_template(
         "userAccount.html",
         user=existing_user,
         usersources=loanSources,
-        departments=departments)
+        departments=departments,
+        showtable=showtable)
 
 
 # -------------------------Manage isotope types------------------------
@@ -979,6 +1053,15 @@ def manage_isotopes():
     #
     #  Called to list out isotope types to the admin user
     #
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
+
     if request.method == "POST":
         existing_isotope = mongo.db.isotope_category.find_one(
             {"isotope": request.form.get("isotope")})
@@ -991,12 +1074,8 @@ def manage_isotopes():
             }
             mongo.db.isotope_category.insert_one(isotope_entry)
 
-    # get isotope list
-    if session["role"] == "admin":
-        isotopes = list(mongo.db.isotope_category.find())
-        return render_template("isotopeTypes.html", isotopes=isotopes)
-    else:
-        return render_template("errorPage.html")
+    isotopes = list(mongo.db.isotope_category.find())
+    return render_template("isotopeTypes.html", isotopes=isotopes)
 
 
 @app.route("/delete_isotope/<isotope>", methods=["GET", "POST"])
@@ -1004,14 +1083,20 @@ def delete_isotope(isotope):
     #
     # Called to  confirm deletion of an isotope from the list in mongo db
     #
-    if session["role"] == "admin":
-        existing_isotope = mongo.db.isotope_category.find_one(
-            {"isotope": isotope})
-        flash("Your are about to delete isotope: {}".format(isotope))
-        return render_template(
-            "isotopeDelete.html", existing_isotope=existing_isotope)
-    else:
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
         return render_template("errorPage.html")
+
+    existing_isotope = mongo.db.isotope_category.find_one(
+        {"isotope": isotope})
+    flash("Your are about to delete isotope: {}".format(isotope))
+    return render_template(
+        "isotopeDelete.html", existing_isotope=existing_isotope)
 
 
 @app.route("/delete_isotope_resp/<isotope>", methods=["GET", "POST"])
@@ -1038,13 +1123,20 @@ def update_isotope(isotope):
     # Called to update an isotope type in the isotope_category collection and
     # to update all references to the isotope in the source collection
     #
-    if session["role"] == "admin":
-        existing_isotope = mongo.db.isotope_category.find_one(
-            {"isotope": isotope})
-        return render_template(
-            "isotopeUpdate.html", existing_isotope=existing_isotope)
-    else:
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
         return render_template("errorPage.html")
+
+    # Get isotope list and display
+    existing_isotope = mongo.db.isotope_category.find_one(
+        {"isotope": isotope})
+    return render_template(
+        "isotopeUpdate.html", existing_isotope=existing_isotope)
 
 
 @app.route("/isotopes_update_conf/<isotope_id>", methods=["GET", "POST"])
@@ -1052,6 +1144,15 @@ def isotopes_update_conf(isotope_id):
     #
     #  Called to list out isotope types to the admin user
     #
+
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
+
     if request.method == "POST":
         # Do not delete source is still on loan
         existing_source = list(mongo.db.sources.find(
@@ -1078,12 +1179,8 @@ def isotopes_update_conf(isotope_id):
                 {"_id": ObjectId(isotope_id)}, {'$set': isotope_update})
             flash("Isotope type sucessfully updated")
 
-    # get isotope list
-    if session["role"] == "admin":
-        isotopes = list(mongo.db.isotope_category.find())
-        return render_template("isotopeTypes.html", isotopes=isotopes)
-    else:
-        return render_template("errorPage.html")
+    isotopes = list(mongo.db.isotope_category.find())
+    return render_template("isotopeTypes.html", isotopes=isotopes)
 
 # -----------------Error Handlers & Dummy hrefs--------------------------
 
@@ -1092,24 +1189,10 @@ def isotopes_update_conf(isotope_id):
 def invalid_route(e):
     #
     # Handles 404 page not found error
-    #
-
-    # Clear the in use cookie to prevent navigation
-    # session["in_use"] = False
+    # Guidance from
+    # https://flask.palletsprojects.com/en/1.1.x/patterns/errorpages/
 
     return render_template("404error.html")
-
-
-@app.errorhandler(500)
-def invalid_route(e):
-    #
-    # Handles 500 server error
-    #
-
-    # Clear the in use cookie to prevent navigation
-    # session["in_use"] = False
-
-    return render_template("500error.html")
 
 
 @app.route("/faculty_link", methods=["GET", "POST"])
