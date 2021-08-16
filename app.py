@@ -2,7 +2,7 @@ import os
 # import re
 import math
 import matplotlib.pyplot as plt
-# import numpy as np
+import numpy as np
 # import pymongo
 
 from flask import (
@@ -46,26 +46,34 @@ def login():
 
                 # Check if users account has been approved
                 if existing_user["approved"] == "approved":
-                    # session cookie for role "admin" or "user"
-                    session["role"] = existing_user["role"]
-                    # session cookie for users first name
-                    session["user"] = existing_user["first"]
-                    # session cookie for in_use ensures that menue only
-                    # display navigation bar to registered users
-                    session["in_use"] = True
-                    # session cookie for user email
-                    session["email"] = existing_user["email"]
 
-                    # Add an entry to the user login history
-                    login_entry = {
-                        "first": existing_user["first"].lower(),
-                        "last": existing_user["last"].lower(),
-                        "email": request.form.get("email").lower(),
-                        "login_date": datetime.today().strftime('%d-%m-%y'),
-                        "logout_date": ""
-                    }
-                    mongo.db.login_history.insert_one(login_entry)
-                    return redirect(url_for("userAccount"))
+                    # Check if user already logged in
+                    if session.get("user"):
+                        flash("User already logged in, please log out")
+                        return render_template("login.html")
+
+                    else:
+                        # Set up session variable for role "admin" or "user"
+                        # Set up session variable for user first name and email
+                        session["role"] = existing_user["role"]
+                        session["user"] = existing_user["first"]
+                        session["email"] = existing_user["email"]
+
+                        # Set up session variable for in_use ensures that
+                        # menu only display navigation bar to registered users
+                        session["in_use"] = True
+
+                        # Add an entry to the user login history
+                        login_entry = {
+                            "first": existing_user["first"].lower(),
+                            "last": existing_user["last"].lower(),
+                            "email": request.form.get("email").lower(),
+                            "login_date": datetime.today().strftime(
+                                '%d-%m-%y'),
+                            "logout_date": ""
+                        }
+                        mongo.db.login_history.insert_one(login_entry)
+                        return redirect(url_for("userAccount"))
                 else:
                     flash("Account not approved or suspended")
                     return redirect(url_for("login"))
@@ -73,9 +81,9 @@ def login():
                 flash("Incorrect password")
                 return redirect(url_for("login"))
         else:
-            # invalid user name
             flash("Incorrect username please register")
             return redirect(url_for("login"))
+
     return render_template("login.html")
 
 
@@ -85,13 +93,13 @@ def logout():
     # Called when a user or admin logs out of a session
     #
 
-    # Check that session is in progress before adding to the login
-    # history. Stops crashing during testing.
-    if session.get("user"):
-        # Add date to the user login history
-        user_history = {"logout_date": datetime.today().strftime('%d-%m-%y')}
-        mongo.db.login_history.find_one_and_update(
-            {"first": session["email"]}, {'$set': user_history})
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Add logout date to the user login history
+    user_history = {"logout_date": datetime.today().strftime('%d-%m-%y')}
+    mongo.db.login_history.find_one_and_update(
+        {"first": session["email"]}, {'$set': user_history})
 
     # Code line from Code Institute Mini Project
     flash("Goodbye {} you have been logged out".format(
@@ -165,6 +173,14 @@ def usage_report():
     # users to view.
     #
 
+    # Detect 404 page error
+    if not session.get("user"):
+        return render_template("404error.html")
+
+    # Check if user has access to this page
+    if (session["role"] == "user"):
+        return render_template("errorPage.html")
+
     # Determine sources of isotopes on inventory
     source_types = mongo.db.sources.find().distinct("isotope")
     source_num = []
@@ -187,21 +203,23 @@ def usage_report():
         loans_num.append(mongo.db.source_history.count_documents(
             {"serial_number": loans}))
 
-    # Page only accessible for admin users
-    if session["role"] == "admin":
         try:
             # generate plots
             plt.bar(source_types, source_num, color='green')
+            plt.yticks(np.arange(0, 5, 1))
             plt.title("Sources by Isotope")
             plt.savefig('static/assets/sourceUsed.png')
             plt.close()
 
             plt.bar(logins, login_num, color='blue')
             plt.title("User Logins by Day")
+            plt.yticks(np.arange(0, 20, 1))
             plt.savefig('static/assets/loginHistory.png')
             plt.close()
 
             plt.bar(source_loans, loans_num, color='red')
+            plt.yticks(np.arange(0, 10, 1))
+            plt.xticks(rotation='vertical')
             plt.title("Source Loans by Serial Number")
             plt.savefig('static/assets/loanHistory.png')
             plt.close()
@@ -232,9 +250,6 @@ def usage_report():
             url2="static/assets/loginHistory.png",
             url3="static/assets/loanHistory.png",
             source_histories=source_histories)
-
-    else:
-        return render_template("errorPage.html")
 
 # -------------------------Source Request Management--------
 
