@@ -53,7 +53,7 @@
                 <select id="department" name="department" class="validate capitalize">
                   <option value="{{ user.department }}" selected class="capitalize">{{ user.department }}</option>
                   {% for department in departments %}
-                  <option value="{{ department.department }}">{{ department.department }}</option>
+                    <option value="{{ department.department }}">{{ department.department }}</option>
                   {% endfor %}
                 </select>
                 <label for="department">Department</label>
@@ -65,9 +65,11 @@
               </div>
             </div>
             <div class="card-action">
-              <button class="btn-large light-blue darken-4 lg-btn-add" name="action" type="submit"> Submit
-                <i class="fas fa-cloud-upload-alt"></i>
+              <button class="btn-large light-blue darken-4 lg-btn-add" name="action" type="submit">
+                <i class="fas fa-cloud-upload-alt"></i> Submit
               </button>
+              <a href="{{ url_for('userAccount') }}" class="btn-large deep-green accent-3 lg-btn-add">
+                <i class="fas fa-times-circle left"></i>Cancel</a>
             </div>
           </form>
         </div>
@@ -100,23 +102,23 @@
             </thead>
             <tbody>
               {% for source in usersources %}
-              <tr>
-                <td>{{ source.serial_number }}</td>
-                <td>{{ source.isotope }}</td>
-                <td>{{ source.original_activity }} {{source.original_activity_units}}</td>
-                <td>{{ source.activation_date }}</td>
-                <td>{{ source.half_life }} {{source.half_life_units}}</td>
-                <td>{{ source.activity_now }} {{source.activity_now_units}}</td>
-                <td>{{ source.type }}</td>
-                <td>{{ source.security_group }}</td>
-                <td>{{ source.approved }}</td>
-                <td>
-                  {% if source.approved == "no" %}
-                  <a href=" {{ url_for('del_source_req', source_serial_no=source.serial_number) }}"
-                    class="btn-small  light-blue darken-4 tbl_btn_wd">Delete Request</a>
-                  {% endif %}
-                </td>
-              </tr>
+                <tr>
+                  <td>{{ source.serial_number }}</td>
+                  <td>{{ source.isotope }}</td>
+                  <td>{{ source.original_activity }} {{source.original_activity_units}}</td>
+                  <td>{{ source.activation_date }}</td>
+                  <td>{{ source.half_life }} {{source.half_life_units}}</td>
+                  <td>{{ source.activity_now }} {{source.activity_now_units}}</td>
+                  <td>{{ source.type }}</td>
+                  <td>{{ source.security_group }}</td>
+                  <td>{{ source.approved }}</td>
+                  <td>
+                    {% if source.approved == "no" %}
+                      <a href=" {{ url_for('del_source_req', source_serial_no=source.serial_number) }}" 
+                      class="btn-small  light-blue darken-4 tbl_btn_wd">Delete Request</a>
+                    {% endif %}
+                  </td>
+                </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -196,7 +198,6 @@
                       <p>{{ source.security_group }}</p>
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col s6 m3">
                       <strong>Request Approved: </strong>

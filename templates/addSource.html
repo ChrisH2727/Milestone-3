@@ -3,9 +3,9 @@
 
 <div class="row">
     <div class="col s12 m12 l10 offset-l1">
-        <div class="card blue lighten-3 center-align">
+        <div class="card blue lighten-3 left-align">
             <div class="card-content black-text">
-                <span class="card-title align-left">Add Source</span>
+                <span class="card-title ">Add Source</span>
                 <form method="POST" action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">
                     <div class="card white black-text">
                         <div class="row input-pad">
@@ -104,12 +104,13 @@
                         </div>
 
                         <div class="row">
-                            <button class="btn-large deep-orange accent-3 lg-btn-add" type="submit" name="action">
-                                <i class="fas fa-cloud-upload-alt"></i>  Add
-                            </button>
-                            <button class="btn-large deep-green accent-3 lg-btn-add" onClick="window.location.reload(true)">
-                                <i class="fas fa-times-circle left"></i> Clear
-                            </button>
+                            <div class="col s12 m12 l6">
+                                <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action">
+                                    <i class="fas fa-cloud-upload-alt"></i>  Add
+                                </button>
+                                <a href="{{ url_for('add_source') }}" class="btn-large deep-green accent-3 lg-btn-add">
+                                    <i class="fas fa-times-circle left"></i>Cancel</a>
+                            </div>
                         </div>
                     </div>
                 </form>

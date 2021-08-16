@@ -52,7 +52,8 @@ TBD
     |isotopeDelete| None | Checked with top and side navbar. |
     |usageReport| None | Checked with top and side navbar. |
 
-    base.html includes a section element, the content of which only becomes visible to the browser when a flash message is rendered. This throws up a validator warning.    
+    base.html includes a section element, the content of which only becomes visible to the browser when a flash message is rendered. This throws up a validator warning.
+    base.html is validated as part of every other html file.    
 
  - **Responsiveness Report**
  
@@ -74,10 +75,8 @@ TBD
     |isotopeUpdate| Pass | Pass | Pass |Pass|Pass|
     |usageReport| Pass | Pass | Pass | Pass |Pass|
     |404error| Pass | Pass | Pass | Pass |Pass|
-    |500error| Pass | Pass | Pass | Pass |Pass|
+    |physicsFaculty| Pass | Pass | Pass | Pass |Pass|
     |errorPage| Pass | Pass | Pass | Pass |Pass|
-    |physicsFaculty|
-
 
  - **Navigation Report**
  
@@ -575,4 +574,8 @@ The following test steps setup an initial user with admin rights, isotopes and s
 |6|Delete user account page was found not to render on a small screen width|Replace user account page with collapsible for small screen widths|
 |7|Faulty regex pattern for isotope type|Update regex pattern to reflect feature description in README|
 |8|Update to user profile caused null content password|Add check for null content password|
-|9|First user to register must have admin rights to permit subsequent users to register.|Detect special registration condition where the number of users registered is equal to zero and set admin rights. 
+|9|First user to register must have admin rights to permit subsequent users to register.|Detect special registration condition where the number of users registered is equal to zero and set admin rights.
+|10|Update Account Detail page missing a cancel button | Add cancel button and re-validate html code|
+|11|requestSource.html Space between "Find" and "Cancel" buttons too far apart| Remove div element and make col wider. Re-validate html code |
+|12|addSource.html Buttons incorrectly located and not in keeping with the rest of the site| Move the location of the buttons and re-validate html code|
+|13|updateSource.html Cancel update button directed to the wrong url|Redirect update button to update_source and re-validate html code|   
