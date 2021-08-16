@@ -376,6 +376,19 @@ Non functional testing will be based on the non functional requirements set out 
 
 <h1>5. Deployment</h1>
 
+## Using the application
+
+
+The application may be accessed **[Here](https://isotope-3.herokuapp.com/)**. Three user accounts have been set up:
+
+| User Name| User password|Type|
+|---|---|---|
+|**joe.black@anyuniversity.com**|**new2new2**|**admin**|
+|**niels.bohr@anyuniversity.com**|**new2new2**|**user**|
+|**fred.hoyle@anyuniversity.com**|**new2new2**|**user**|
+
+
+
 ## Requirements
 
 To deploy or clone this project an account is required for the following services  

@@ -1,20 +1,16 @@
 import os
-# import re
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-# import pymongo
-
+from datetime import datetime
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
-# from pymongo import ReturnDocument
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
-from datetime import datetime
 
 app = Flask(__name__)
 
@@ -1029,11 +1025,11 @@ def userAccount():
             flash("Your account details have been successfully updated")
 
     existing_user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
- 
+
     # Get list of sources held by the user
     loanSources = list(mongo.db.sources.find({"user": session["email"]}))
     departments = list(mongo.db.departments.find())
-    
+
     if len(loanSources) == 0:
         showtable = "false"
     else:
