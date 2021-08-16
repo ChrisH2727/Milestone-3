@@ -580,4 +580,5 @@ The following test steps setup an initial user with admin rights, isotopes and s
 |10|Update Account Detail page missing a cancel button | Add cancel button and re-validate html code|
 |11|requestSource.html Space between "Find" and "Cancel" buttons too far apart| Remove div element and make col wider. Re-validate html code |
 |12|addSource.html Buttons incorrectly located and not in keeping with the rest of the site| Move the location of the buttons and re-validate html code|
-|13|updateSource.html Cancel update button directed to the wrong url|Redirect update button to update_source and re-validate html code|   
+|13|updateSource.html Cancel update button directed to the wrong url|Redirect update button to update_source and re-validate html code|
+|14|isotopeType.html missing Cancel button|Add Cancel button to isotopeType.html|   
