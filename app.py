@@ -65,8 +65,7 @@ def login():
                             "last": existing_user["last"].lower(),
                             "email": request.form.get("email").lower(),
                             "login_date": datetime.today().strftime(
-                                '%d-%m-%y'),
-                            "logout_date": ""
+                                '%d-%m-%y')
                         }
                         mongo.db.login_history.insert_one(login_entry)
                         return redirect(url_for("userAccount"))
@@ -92,13 +91,8 @@ def logout():
     if not session.get("user"):
         return render_template("404error.html")
 
-    # Add logout date to the user login history
-    user_history = {"logout_date": datetime.today().strftime('%d-%m-%y')}
-    mongo.db.login_history.find_one_and_update(
-        {"first": session["email"]}, {'$set': user_history})
-
     # Code line from Code Institute Mini Project
-    flash("Goodbye {} you have been logged out".format(
+    flash("Goodbye {} you have logged out".format(
         (session["user"]).capitalize()))
     # Remove user from session cookies if active
     if session.get("user"):
@@ -1196,6 +1190,7 @@ def faculty_link():
     #
     # Handles href to dummy Physics faculty web site
     #
+    
     return render_template("physicsFaculty.html")
 
 

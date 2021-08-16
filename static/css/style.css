@@ -16,9 +16,17 @@
 }
 nav ul a{
   font-size: 1.2rem;
+  padding-left: 5px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+.icon-shift{
+    padding-top: 0px;
+    padding-left:5px;
+
 }
 .logo-shift{
-    margin-left: 20px;
+  margin-left: 5px;
 }
 nav .brand-logo{
   padding-top: 10px;
@@ -129,4 +137,9 @@ nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
 }
 .rm-padding{
   padding-top: 0px;
+}
+
+/*********************************Table **********************/
+.tblwd{
+  width:100%;
 }

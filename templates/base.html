@@ -56,12 +56,13 @@
         </ul>
 
         <nav class="nav-extended">
+
             <div class="nav-wrapper indigo darken-2">
                 <a href="{{url_for('faculty_link') }}" class="brand-logo">
-                    <i class="fas fa-atom"> Faculty of Physics</i></a>
-                     
+                    <i class="fas fa-atom icon-shift"> Faculty of Physics</i></a>
+
                 {% if session.in_use%}
-                    <a data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                    <a data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars icon-shift"></i></a>
                 {% endif %}
                 <ul class="right hide-on-med-and-down">
                     {% if session.in_use%}
@@ -71,20 +72,19 @@
                         {% if session.role|lower == "admin"|lower %}
                             <li><a href="{{ url_for('get_user') }}">User Access</a></li>
                             <li><a class="dropdown-trigger" data-target="inventory-dropdown2">Inventory<i
-                                        class="fas fa-caret-down rm-padding"></i></a></li>
-                            <li><a class="dropdown-trigger" data-target="source-dropdown2">Source Management<i
-                                        class="fas fa-caret-down rm-padding"></i></a></li>
+                                    class="fas fa-caret-down rm-padding"></i></a></li>
+                            <li><a class="dropdown-trigger" data-target="source-dropdown2">Sources<i
+                                    class="fas fa-caret-down rm-padding"></i></a></li>
                             <li><a class="dropdown-trigger" data-target="settings-dropdown2">Settings <i
-                                        class="fas fa-caret-down rm-padding"></i></a></li>
+                                    class="fas fa-caret-down rm-padding"></i></a></li>
                         {% endif %}
                     {% endif %}
                 </ul>
-                <div class="nav-title logo-shift text-align:center">Radioisotope Inventory</div>
+                <div class="nav-title logo-shift">Radioisotope Inventory</div>
             </div>
         </nav>
         <!-- mobile sidenav -->
         <ul class="sidenav" id="mobile-demo">
-
             {% if session.in_use%}
                 <li><a href="{{ url_for('userAccount') }}" class="capitalize">{{session.user}}'s Profile</a></li>
                 <li><a href="{{ url_for('logout') }}">Log out</a></li>
@@ -93,8 +93,8 @@
                         <li><a href="{{ url_for('get_user') }}">User Access</a></li>
                         <li><a class="dropdown-trigger" data-target="inventory-dropdown">Inventory <i
                                     class="fas fa-caret-down"></i></a></li>
-                        <li><a class="dropdown-trigger" data-target="source-dropdown">Source Management<i class="fas fa-caret-down"></i></a>
-                        </li>
+                        <li><a class="dropdown-trigger" data-target="source-dropdown">Source Management<i
+                                    class="fas fa-caret-down"></i></a></li>
                         <li><a class="dropdown-trigger" data-target="settings-dropdown">Settings <i
                                     class="fas fa-caret-down rm-padding"></i></a></li>
                     {% endif %}
@@ -130,10 +130,11 @@
                     <div class="col l4 offset-l2 offset-s2">
                         <ul>
                             <li>
-                                <a class="grey-text text-lighten-3" target="_blank" href="https://github.com/ChrisH2727/">
+                                <a class="grey-text text-lighten-3" target="_blank"
+                                    href="https://github.com/ChrisH2727/">
                                     <i class="fab fa-git-square social-icon" aria-hidden="true"></i>
                                     <span class="sr-only">Git</span>
-                                </a>     
+                                </a>
                             </li>
                         </ul>
                     </div>
