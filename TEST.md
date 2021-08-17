@@ -592,4 +592,5 @@ The following test steps setup an initial user with admin rights, isotopes and s
 |11|addSource.html Buttons incorrectly located and not in keeping with the rest of the site| Move the location of the buttons and re-validate html code|
 |12|updateSource.html Cancel update button directed to the wrong url|Redirect update button to update_source and re-validate html code|
 |13|isotopeType.html missing Cancel button|Add Cancel button to isotopeType.html|
-|14|Nav bar elements clash at small screen sizes|Re-factor Nav-bar in base.html|   
+|14|Nav bar elements clash at small screen sizes|Re-factor Nav-bar in base.html|
+|15|Defect variable "date_out" spelt "data_out" caused db error|Corrected spelling|   

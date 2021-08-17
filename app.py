@@ -298,9 +298,10 @@ def approve_request_resp(source_serial_no):
 
     # Create a source loan history entry document in mongodb
     outDate = datetime.today().strftime('%d-%m-%y')
+
     sourceLoan = {
         "serial_number": source_serial_no,
-        "data_out": outDate,
+        "date_out": outDate,
         "date_in": "",
         "user": existing_source["user"],
         "laboratory": existing_source["laboratory"]
@@ -323,9 +324,6 @@ def return_source_resp(source_serial_no):
     #
     # Called when an admin user returns a source to the inventory
     #
-
-    # clear any exiting flash messages
-    # session.pop('_flashes', None)
 
     inDate = datetime.today().strftime('%d-%m-%y')
 
@@ -663,7 +661,7 @@ def add_source():
 
             # Create new source entry
             newSource = {
-                "serial_number": request.form.get("serial_number"),
+                "serial_number": request.form.get("serial_number").lower(),
                 "department": request.form.get("department"),
                 "laboratory": request.form.get("laboratory"),
                 "location": request.form.get("location"),
