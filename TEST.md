@@ -536,6 +536,27 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
     - **Test Method**
 
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and select **Usage Report**
+
+        - Confirm how many time scource with serial number sc001 has been loan out
+
+        - Navigate to **Source Request**
+
+        - In the search box type **Disk**
+
+        - Select source **sc001** and click on **Request**
+
+        - Navigate to **Inventory** and the **Approve Request**
+
+        - Click on **Aprove**
+
+        - Navigate to **Inventory** and select **Usage Report**
+
+        - Confirm how many time scource with serial number sc001 has been loan out
+ 
+
     - **Expected Outcome**
 
     - **Tested Outcome**
@@ -544,27 +565,75 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
     - **Test Method**
 
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and select **Usage Report**
+
+        - Confirm the User Logins by day
+
+        - logout
+
+        - login as **fred.hoyle@anyuniversity.com** and password **new2new2**
+
+        - logout
+
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and select **Usage Report**
+
+        - Confirm the User Logins by day has increased by 2   
+
     - **Expected Outcome**
 
+        - Logins per day has increased by 2
+
     - **Tested Outcome**
+
+        - Logins per day has increased by 2: 
+        
+            ![High Screen Width](testimg/userlogin1.png)
+
+            ![High Screen Width](testimg/userlogin2.png) 
+
 
 27. As a scientist, I want to see information presented in a tabular form where possible so that I can spot patterns in the data.
 
-    - **Test Method**
-
-    - **Expected Outcome**
-
-    - **Tested Outcome**
+    - Tested in 28 
 
 28. As a user or admin user, I may want to view information on small screen width devices which do not lend themselves to displaying data in tabular form.
 
     - **Test Method**
 
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and select **Inventory List**
+
+        - Using the browser tool kit set the screen size to 1024px
+
+        - Confirm that the inventory is displayed in tabular form
+
+        - Reduce the screen width to 760px
+
+        - Confirm that the same inventory is displayed as a collapsible.
+
+        - Navigate to **User Access** and repeat the above steps
+
+        - Navigate to **Settings** and the **Isotopes** and repeat the above steps    
+
     - **Expected Outcome**
+
+        - Information displayed in a tabular form on a screen widths 1024px and up is displayed as a collapsible on lower screen widths.   
 
     - **Tested Outcome**
 
-29. As a user or admin user, I want to confirm any delete action that results in the permanet removal of information from the data base.
+        - Source data displayed both in tabular form and as a collapsible: 
+        
+            ![High Screen Width](testimg/highScreenWidth.png)
+
+            ![High Screen Width](testimg/lowScreenWidth.png) 
+
+
+29. As a user or admin user, I want to confirm any delete action that results in the permanent removal of information from the data base.
 
     - **Test Method**
 

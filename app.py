@@ -188,58 +188,59 @@ def usage_report():
     # Determine source usage by serial number
     source_loans = list(
         mongo.db.source_history.find().distinct("serial_number"))
+
     loans_num = []
     for loans in source_loans:
         loans_num.append(mongo.db.source_history.count_documents(
             {"serial_number": loans}))
 
-        try:
-            # generate plots
-            plt.bar(source_types, source_num, color='green')
-            plt.yticks(np.arange(0, 5, 1))
-            plt.title("Sources by Isotope")
-            plt.savefig('static/assets/sourceUsed.png')
-            plt.close()
+    try:
+        # generate plots
+        plt.bar(source_types, source_num, color='green')
+        plt.yticks(np.arange(0, 5, 1))
+        plt.title("Sources by Isotope")
+        plt.savefig('static/assets/sourceUsed.png')
+        plt.close()
 
-            plt.bar(logins, login_num, color='blue')
-            plt.title("User Logins by Day")
-            plt.yticks(np.arange(0, 20, 1))
-            plt.savefig('static/assets/loginHistory.png')
-            plt.close()
+        plt.bar(logins, login_num, color='blue')
+        plt.title("User Logins by Day")
+        plt.yticks(np.arange(0, 20, 1))
+        plt.savefig('static/assets/loginHistory.png')
+        plt.close()
 
-            plt.bar(source_loans, loans_num, color='red')
-            plt.yticks(np.arange(0, 10, 1))
-            plt.xticks(rotation='vertical')
-            plt.title("Source Loans by Serial Number")
-            plt.savefig('static/assets/loanHistory.png')
-            plt.close()
+        plt.bar(source_loans, loans_num, color='red')
+        plt.yticks(np.arange(0, 10, 1))
+        plt.xticks(rotation='vertical')
+        plt.title("Source Loans by Serial Number")
+        plt.savefig('static/assets/loanHistory.png')
+        plt.close()
 
-        except Exception:
-            flash("Database error, unable to generate new reports")
+    except Exception:
+        flash("Database error, unable to generate new reports")
 
-        # Get all source loan histories
-        source_histories = list(mongo.db.source_history.find())
+    # Get all source loan histories
+    source_histories = list(mongo.db.source_history.find())
 
-        # Get the users first and last name and append to the source list to
-        # avoid email being shown in the table
-        for source_history in source_histories:
-            if source_history["user"]:
-                user = (mongo.db.users.find_one(
-                    {"email": source_history["user"]}))
-                # Check that the user still exists
-                if user:
-                    source_history.update({"first": user["first"]})
-                    source_history.update({"last": user["last"]})
-                else:
-                    source_history.update({"first": ""})
-                    source_history.update({"last": ""})
+    # Get the users first and last name and append to the source list to
+    # avoid email being shown in the table
+    for source_history in source_histories:
+        if source_history["user"]:
+            user = (mongo.db.users.find_one(
+                {"email": source_history["user"]}))
+            # Check that the user still exists
+            if user:
+                source_history.update({"first": user["first"]})
+                source_history.update({"last": user["last"]})
+            else:
+                source_history.update({"first": ""})
+                source_history.update({"last": ""})
 
-        return render_template(
-            "usageReport.html", name="usage plot",
-            url1="static/assets/sourceUsed.png",
-            url2="static/assets/loginHistory.png",
-            url3="static/assets/loanHistory.png",
-            source_histories=source_histories)
+    return render_template(
+        "usageReport.html", name="usage plot",
+        url1="static/assets/sourceUsed.png",
+        url2="static/assets/loginHistory.png",
+        url3="static/assets/loanHistory.png",
+        source_histories=source_histories)
 
 # -------------------------Source Request Management--------
 
@@ -777,7 +778,7 @@ def req_source_conf(source_serial_no):
 
     # Update the source record
     submit = {"requested": "true", "user": session["email"]}
-    mongo.db.sources.update(
+    mongo.db.sources.update_one(
         {"serial_number": source_serial_no}, {"$set": submit})
 
     flash("Source has been requested - please\
@@ -1188,7 +1189,7 @@ def faculty_link():
     #
     # Handles href to dummy Physics faculty web site
     #
-    
+
     return render_template("physicsFaculty.html")
 
 
