@@ -58,6 +58,8 @@
     base.html is validated as part of every other html file.    
 
  - **Responsiveness Report**
+
+    Check to confirm the visual appearance of the page on each device type.
  
     |HTML Page |1640px |ipadPro |ipad|iphone 5/SE|iphone X
     |---|---|---|---|---|---|
@@ -77,22 +79,31 @@
     |isotopeUpdate| Pass | Pass | Pass |Pass|Pass|
     |usageReport| Pass | Pass | Pass | Pass |Pass|
     |404error| Pass | Pass | Pass | Pass |Pass|
-    |physicsFaculty| Pass | Pass | Pass | Pass |Pass|
     |errorPage| Pass | Pass | Pass | Pass |Pass|
 
  - **Navigation Report**
  
-    |HTML Page |1640px |ipad|
+    Check to confirm that button and links navigate to the correct location.
+
+    |HTML Page |1640px |ipad |
     |---|---|---|
-    |Login| |  |   |
-    |Registration| |  |
-    |User Profile|  | |
-    |Source Request|  | |
-    |Approve Source Loan Request | Pass | Pass |
-    |User Access Manangement| Pass | Pass |
-    |Full Inventory Listing| Pass | Pass |
-    |Update Sources| Pass | Pass |
-    |404error|Pass|Pass|
+    |login|Pass |Pass|
+    |register| Pass |Pass|
+    |userAccount| Pass |Pass|
+    |sourceRequest| Pass |Pass|
+    |approveRequest | Pass | Pass |
+    |user| Pass | Pass |
+    |userDelete |Pass | Pass |
+    |inventory| Pass | Pass |
+    |updateSources| Pass | Pass |
+    |deleteSources| Pass | Pass |
+    |addSources| Pass | Pass |
+    |isotopeTypes| Pass | Pass |
+    |isotopeDelete| Pass | Pass |
+    |isotopeUpdate| Pass | Pass |
+    |usageReport| Pass | Pass |
+    |404error| Pass | Pass |
+    |errorPage| Pass | Pass |
 
 - **Browser Report**
     
@@ -568,18 +579,17 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
 |No|Defect Description |Defect resolution |
 |---|----------------- |----------------- |
-|1| "no source found flash message is displayed before user query's for an available source|Check query return for an empty string.  |
+|1| "no source found flash message is displayed before user query's for an available source|Check query return for an empty string and prevent flash message.  |
 |2|Clear isotope update button crashed program  |Re-direct code flow to use function "manage_isotopes" |
-|3| Detect condition where the isotope halflife is required as the key to searching for an isotope to update but has been deleted| ? |
-|4| Approve Source Loan Request Page has email address and not user name|Add python code to display user first name and last name |
-|5|User management page had button colour mismatch between table and collapsible.|Add html code to give buttons same appearance|
-|6|Delete user account page was found not to render on a small screen width|Replace user account page with collapsible for small screen widths|
-|7|Faulty regex pattern for isotope type|Update regex pattern to reflect feature description in README|
-|8|Update to user profile caused null content password|Add check for null content password|
-|9|First user to register must have admin rights to permit subsequent users to register.|Detect special registration condition where the number of users registered is equal to zero and set admin rights.
-|10|Update Account Detail page missing a cancel button | Add cancel button and re-validate html code|
-|11|requestSource.html Space between "Find" and "Cancel" buttons too far apart| Remove div element and make col wider. Re-validate html code |
-|12|addSource.html Buttons incorrectly located and not in keeping with the rest of the site| Move the location of the buttons and re-validate html code|
-|13|updateSource.html Cancel update button directed to the wrong url|Redirect update button to update_source and re-validate html code|
-|14|isotopeType.html missing Cancel button|Add Cancel button to isotopeType.html|
-|15|Nav bar elements clash at small screen sizes|Re-factor Nav-bar in base.html|   
+|3| Approve Source Loan Request Page has email address and not user name|Add python code to display user first name and last name |
+|4|User management page had button colour mismatch between table and collapsible.|Add html code to give buttons same appearance|
+|5|Delete user account page was found not to render on a small screen width|Replace user account page with collapsible for small screen widths|
+|6|Faulty regex pattern for isotope type|Update regex pattern to reflect feature description in README|
+|7|Update to user profile caused null content password|Add check for null content password|
+|8|First user to register must have admin rights to permit subsequent users to register.|Detect special registration condition where the number of users registered is equal to zero and set admin rights.
+|9|Update Account Detail page missing a cancel button | Add cancel button and re-validate html code|
+|10|requestSource.html Space between "Find" and "Cancel" buttons too far apart| Remove div element and make col wider. Re-validate html code |
+|11|addSource.html Buttons incorrectly located and not in keeping with the rest of the site| Move the location of the buttons and re-validate html code|
+|12|updateSource.html Cancel update button directed to the wrong url|Redirect update button to update_source and re-validate html code|
+|13|isotopeType.html missing Cancel button|Add Cancel button to isotopeType.html|
+|14|Nav bar elements clash at small screen sizes|Re-factor Nav-bar in base.html|   

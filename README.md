@@ -379,7 +379,7 @@ Non functional testing will be based on the non functional requirements set out 
 ## Using the application
 
 
-The application may be accessed **[Here](https://isotope-3.herokuapp.com/)**. Three user accounts have been set up:
+The application may be accessed **[Here](https://isotope-3.herokuapp.com/)**. Three user accounts have been set up to aid the first time user:
 
 | User Name| User password|Type|
 |---|---|---|
@@ -401,7 +401,7 @@ To deploy or clone this project an account is required for the following service
 
 ## Clone this project to your GitHub repository 
 
-To clone this project, follow the following steps are required: 
+The following steps are required to clone this project to your GitHub repository: 
 
 - Log in to your GitHub account 
 
@@ -420,89 +420,180 @@ To clone this project, follow the following steps are required:
 ## Getting started in your local IDE
 
 - Within your local IDE create a new workspace
+
 - At the terminal window enter the command **git init** (may not be required)
+
 - At the terminal window enter the command **git clone** and the URL for the GitHub repository to which cloned the Milestone-3 project above  
+
 - At the terminal window enter the command  **pip3 install -r requirements.txt**.
+
 - Create the file **env.py** and add the following environmental variables:
     
-    import os
-    os.environ.setdefault("IP", "Added by developer")
-    os.environ.setdefault("PORT", "Added by developer")
-    os.environ.setdefault("SECRET_KEY", "Added by developer")
-    os.environ.setdefault("MONGO_URI", "Added by developer")
-    os.environ.setdefault("MONGO_DBNAME", "Added by developer")
+        import os
+    
+        os.environ.setdefault("IP", IP address in the form "0.0.0.0")
+
+        os.environ.setdefault("PORT", PORT address in the form "5000")
+    
+        os.environ.setdefault("SECRET_KEY", sequence of alfanumeric characters chosen by the developer "?????????")
+    
+        os.environ.setdefault("MONGO_URI", ""mongodb+srv://*username*:*password*>@cluster0.hfxth.mongodb.net/*database-name*retryWrites=true&w=majority")Added by developer")
+    
+        os.environ.setdefault("MONGO_DBNAME", "*database-name*")
+
   
-  - MONGO_DBNAME should be the same as the database name created in section **Creating a MongoDB database** 
+  *database-name* should be the same as the database name created in section **Creating a MongoDB database** 
 
 - Create a .gitignore file in the root directory of the project and  the **env.py** file in the .gitignore.  Add anyother file names that you do not wish to be uploaded to GitHub.
 
 ### Creating a MongoDB database
-- Login to your MongoDB account.
-- select **Create a Database**
-- Enter the name of your database and the name of the first collection **sources**
-- Navigate to the database and observe that the first collection **sources** is present
-- Add the additional collections:
-  - **departments**
-  - **encapsulations**
-  - **isotope_category**
-  - **laboratories**
-  - **locations**
-  - **login_history**
-  - **security_group**
-  - **source_history**
-  - **users**
-- For the collection **sources** add the empty string values as per the data architecture description 
-- For the collection **users** add the empty string values as per the data architecture description
-- For the collection **departments** enter the string values:
-  - Physics
-  - Chemistry
-  - Biology
-- For the collection **encapsulations** enter the string values:
-  - disc
-  - capsule
-- For the collection **laboratories** enter the string values:
-  - lab1
-  - lab2
-  - lab3
- - For the collection **locations** enter the string values:
-  - Top
-  - Middle
-  - Bottom
- - For the collection **security_group** enter the string values:
-  - 4a
-  - 5d
-  - 5c
 
-1. Create the environment variables 
-    - Create a .gitignore file in the root directory of the project.
-    - Add the env.py file in the .gitignore.
-    - Create the file env.py. This  will contain all the envornment variables.
-    ```
-    Import os
-    os.environ.setdefault("IP", "Added by developer")
-    os.environ.setdefault("PORT", "Added by developer")
-    os.environ.setdefault("SECRET_KEY", "Added by developer")
-    os.environ.setdefault("MONGO_URI", "Added by developer")
-    os.environ.setdefault("MONGO_DBNAME", "Added by developer")
-    ```
-1. Run the app: Open your terminal window in your IDE. Type python3 app.py and run the app.
+- Login to your MongoDB account.
+
+- select **Create a Database**
+
+- Enter the name of your *database* and the name of the first collection **sources**
+
+- Navigate to the database and observe that the first collection **sources** is present
+
+- Add the additional collections:
+
+  - **departments**
+
+  - **encapsulations**
+
+  - **isotope_category**
+
+  - **laboratories**
+
+  - **locations**
+
+  - **login_history**
+
+  - **security_group**
+
+  - **source_history**
+
+  - **users**
+
+- For the collection **sources** add the empty string values as per the data architecture description 
+
+- For the collection **users** add the empty string values as per the data architecture description
+
+- For the collection **departments** enter the string values:
+
+    - Physics
+
+    - Chemistry
+
+    - Biology
+
+- For the collection **encapsulations** enter the string values:
+
+    - Disk
+
+    - Capsule
+
+- For the collection **laboratories** enter the string values:
+
+    - lab1
+
+    - lab2
+
+    - lab3
+
+ - For the collection **locations** enter the string values:
+    - Top-shelf
+
+    - Middle-shelf
+ 
+    - Bottom-shelf
+ 
+ - For the collection **security_group** enter the string values:
+    
+     - 4a
+ 
+     - 5d
+ 
+     - 5c
+
+## Running the application for the first time
+
+-  Open the IDE terminal window and enter the following to run the application: 
+
+    - **python3 app.py**
+
+-  Once the app has started:
+
+    ![Opening The Application](readmeimg/openingApp.png)
+
+-   Click on the *Register an Account* text
+
+    ![Register first account](readmeimg/firstAccount.png)
+
+-   The first account is always set up as an admin account so that further accounts may be approved.
 
 #### Heroku Deployment  
-1. Set up local workspace for Heroku 
-    - In terminal window of your IDE type: **pip3 freeze -- local > requirements.txt.** (The file is needed for Heroku to know which filed to install.)
-    - In termial window of your IDE type: **python app.py > Procfile** (The file is needed for Heroku to know which file is needed as entry point.)
-2. Set up Heroku: create a Heroku account and create a new app and select your region. 
+
+-   In the IDE terminal window enter the following:
+
+    - **pip3 freeze -- local > requirements.txt** This is required by Heroku to determine the frameworks, libraries, tools and languages needed to run the application.
+
+    - **python app.py > Procfile** This is required by Heroku to determine how to initiate execution of the application
+
+- Log into your Heroku account: 
+
+    - Click on the **new** button
+    
+    - Select **Create new app**
+
+    - Enter a name for the app (this must be unique)
+
+    - Enter your geographic region
+
+    - Click **Create App**  
+
 3. Deployment method 'Github'
+
     - Click on the **Connect to GitHub** section in the deploy tab in Heroku. 
+
         - Search your repository to connect with it.
+
         - When your repository appears click on **connect** to connect your repository with the Heroku. 
-    - Go to the settings app in Heroku and go to **Config Vars**. Click on **Reveal Config Vars**.
-        - Enter the variables contained in your env.py file. it is about: **IP, PORT, SECRET_KEY, MONGO_URI, MONGO_DBNAME**
-5. Automatic deployment: Go to the deploy tab in Heroku and scroll down to **Aotmatic deployments**. Click on **Enable Automatic Deploys**. By **Manual deploy** click on **Deploy Branch**.
 
-Heroku will receive the code from Github and host the app using the required packages. 
-Click on **Open app** in the right corner of your Heroku account. The app wil open and the live link is available from the address bar. 
+    - Click on the **settings** button 
+    
+    - Check that the app name displayed is the chosen name for your app
+    
+    - Click on **Reveal Config Vars**.
 
+    - Enter the variables from the env.py file created in the previous section:
+        
+        - **IP**, 
+        
+        - **PORT**
+
+        - **SECRET_KEY**, 
+        
+        - **MONGO_URI** (with the correct Mongodb username, password and database ) 
+        
+        - **MONGO_DBNAME**
+
+    - Navigate to the **deploy** tab in Heroku (make sure that this is for your app) 
+    
+     - Find the section **Deployments method**
+
+     - Select **GitHub**
+
+     - Find the section **Connect to GitHub**
+
+     - Search fo the GitHub **repo name** and select
+
+     - Find the section **Automatic deployments**. 
+     
+     - Click on **Enable Automatic Deploys From Master**
+
+    - At the top of the page click on **Open App** to launch. Make a note of the URL for future reference.
 
 <span id="credits"></span>
 
@@ -541,11 +632,15 @@ Author's Github:https://github.com/geongeorge/i-hate-regex
 
 - Handling 404 and 500 errors https://flask.palletsprojects.com/en/1.1.x/patterns/errorpages/
 
+- matplotlib  https://matplotlib.org/stable/gallery/index.html examples on drawing charts in Python.
+
 <span id="acknowledgements"></span>
 
 <h1>7. Acknowledgements </h1>
 
+- To my mentor **Precious Ljege** for help in understanding security requirements
 
+- To all the staff Code Institute providing **Tutor Assistance** 
 
 <span id="disclaimer"></span>
 
