@@ -448,9 +448,63 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
     - **Test Method**
 
+        - Login as **fred.hoyle@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Request Source**
+
+        - In the search box enter **Disk** and select sources sc001
+
+        - log out
+
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and then **Approve Request**
+
+        - Approve Fred Hoyle's request for sources sc001.
+
+        - Navigate to **User Access**
+
+        - Click on **Delete** against Fred Hoyle
+
+        - Confirm that it is not possible to delete Fred Hoyle's account unless it has been suspended.
+
+        - Click on the **Approved** button against Fred Hoyle's account to suspend the account.
+
+        - Click on the **Delete** button against Fred Hoyle's account.
+
+        - Confirm that it is not possible to delete Fred Hoyle's account as he still has a source on loan.
+
+        - Navigate to **Inventory** and then **Approve Request**
+
+        - Click on the **Return** button for source sc001.
+
+        - Navigate to **User Access** and click on the **Delete** button against Fred Hoyle's account
+
+        - Confirm that Fred Hoyle's account has been deleted
+
+
     - **Expected Outcome**
 
+        - An account cannot be deleted if not first suspended
+
+        - An account cannot be deleted if the user has sources on loan
+
+        - An account can only be deleted if the the user has been suspended and has no sources on loan
+
     - **Tested Outcome**
+
+        - An account cannot be deleted unless it has been suspended
+
+            ![Delete Non Suspended account](testimg/deleteNonSuspAccount.png)
+
+        - An account cannot be deleted if the user still has source on loan
+
+            ![Delete account with sources on loan](testimg/deleteFredFailed.png)
+
+        - An account can only be deleted if the the user has been suspended and has no sources on loan
+
+            ![Account delete successful](testimg/AccountFredDelete.png)
+
 
 15. As an admin user, I want to view the technical characteristices of all sources so that users can be advised on their selection.
 
