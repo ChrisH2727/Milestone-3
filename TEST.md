@@ -496,25 +496,77 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
     - **Test Method**
 
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Settings** and then **Isotopes**
+
+        - Confirm that the list of isotopes is displayed
+
     - **Expected Outcome**
+
+        - Isotope list displayed
 
     - **Tested Outcome**
 
-21. As an admin user I want to add isotope types and its respective half life to the list.
+        - Isotope type list 
+
+            ![Isotope type list](testimg/isotopeList.png)
+
+21. As an admin user I want to add isotope types and their respective half lives to the list.
 
     - **Test Method**
 
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Settings** and then **Isotopes**
+
+        - Enter the isotope Co60 with a half life of 4.75 years
+
+        - Confirm that the entry is rejected as a duplicate
+
+        - Enter the isotope Co56 with a half life of 77 years
+
+        - Confirm that the isotope list now includes Co56
+
     - **Expected Outcome**
 
+        - Duplicate isotope entries are rejected
+
+        - New isotope types can be added to the list
+
     - **Tested Outcome**
+
+        - Duplicate isotope entries are rejected
+    
+            ![Isotope type list](testimg/isotopeDuplicate.png)
+    
+        - An entry for isotope Co56 is created
+
+            ![Isotope type list](testimg/isotopeCo56.png)
 
 22. As an admin user I want to update information assocaited with an isotope.
 
     - **Test Method**
 
+        - Login as **niels.bohr@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Settings** and then **Isotopes**
+
+        - Click the **Update** button against isotope C56
+
+        - Change the half life to 77.27 years
+
+        - View the list of isotopes and confirm that isotope C56 now has a half life of 77.27 years
+
     - **Expected Outcome**
 
+        - The isotope half life of a source may be updated by another admin user
+
     - **Tested Outcome**
+
+        - Updated isotope C56
+
+            ![Isotope type list](testimg/isotopeCo56Change.png)
 
 23. As an admin user I want to delete isotope types, but only if all sources of that isotope type are not on loan.
 
@@ -527,10 +579,44 @@ The following test steps setup an initial user with admin rights, isotopes and s
 24. As an admin user, I want to view the full history of source loans so that I can spot any patterns.
 
     - **Test Method**
+        
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Source Request**
+
+        - In the search box type **Disk**
+
+        - Select source **sc001** and click on **Request**
+
+        - In the search box type **Disk**
+
+        - Select source **sc003** and click on **Request**
+
+        - Navigate to **Inventory** and the **Approve Request**
+
+        - Click on **Approve** to approve the loan of both sources
+
+        - Navigate to **Inventory** and the **Usage Report**
+
+        - Confirm that both sources with serial numbers sc001 and sc003 have an out date but no **in_date**.
+
+        - Navigate to **Inventory** and the **Approve Request**
+
+        - Click on return against source sc001
+
+        - Navigate to **Inventory** and the **Usage Report**
+
+        - Confirm that source with serial number sc001 has an associated **in_date**
 
     - **Expected Outcome**
 
+        - The source loan history shows source sc001 loaned out and returned and source sc003 still on loan.
+
     - **Tested Outcome**
+ 
+        - Loan history of sources sc001 and sc003 
+
+            ![Source History ](testimg/sourceHistory.png)
 
 25. As an admin user, I want to view how many times a source has been loaned by isotope type so that I can dispose of sources that are not being loaned.
 
