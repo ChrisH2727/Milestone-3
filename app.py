@@ -328,10 +328,14 @@ def return_source_resp(source_serial_no):
 
     inDate = datetime.today().strftime('%d-%m-%y')
 
-    # Update the  source loan history document in mongodb with return date
+    # Create update to the source_history document in mongodb with return date
     submit = {"date_in": inDate}
+
+    # Find occurance of source serial number in source_history collection
+    # with date_in empty date_in
     mongo.db.source_history.find_one_and_update(
-        {"serial_number": source_serial_no}, {'$set': submit})
+        {"$and": [{"serial_number": source_serial_no},
+         {"date_in": ""}]}, {'$set': submit})
 
     # Check if the source has been deleted from the inventory
 

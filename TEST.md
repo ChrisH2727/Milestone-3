@@ -554,12 +554,19 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
         - Navigate to **Inventory** and select **Usage Report**
 
-        - Confirm how many time scource with serial number sc001 has been loan out
- 
+        - Confirm how many time scource with serial number sc001 has been loan out 
 
     - **Expected Outcome**
 
+        - The number of times source sc001 has been loaned has increased by 1
+
     - **Tested Outcome**
+
+     - The number of times source sc001 has been loaned out has increased by 1: 
+        
+        ![Source loan ](testimg/sourcesBySer1.png)
+
+        ![Source loan ](testimg/sourcesBySer2.png)
 
 26. As an admin user, I want to view how user logins there have been on a given date so that I can assses how the service is being used.  
 
