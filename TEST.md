@@ -941,6 +941,14 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
         - Confirm that the user is requested to re-confirm the deletion request
 
+         - Navigate to **User Access**
+
+         - Ensure that the user account for user **Fred Hoyle** has been suspended
+
+        - Click on **Delete** for user **Fred Hoyle**
+
+        - Confirm that the user is requested to re-confirm the deletion request
+
 
     - **Expected Outcome**
 
@@ -948,15 +956,21 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
         - The user is requested to confirm the deletion of isotope type **Co60**
 
+        - The user is requested to confirm the deletion of the account for **Fred Hoyle**
+
     - **Tested Outcome**
 
-        - The user is requested to confirm the deletion of source **sc001**
+        - The admin user is requested to confirm the deletion of source **sc001**
 
             ![Delete confirm](testimg/deleteConfirm.png) 
 
-        - The user is requested to confirm the deletion of isotope **Co60**
+        - The admin user is requested to confirm the deletion of isotope **Co60**
 
             ![Delete confirm](testimg/isotopeConfirm.png) 
+
+        - The admin user is requested to confirm the deletion of user **Fred Hyole**
+
+            ![Delete confirm](testimg/userConfirm.png)     
 
 <h1>3. Defects</h1>
 
