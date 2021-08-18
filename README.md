@@ -427,6 +427,14 @@ The following steps are required to clone this project to your GitHub repository
 
 - At the terminal window enter the command  **pip3 install -r requirements.txt**.
 
+- At the terminal window enter the command **pip3 install matpplotlib**
+
+- At the terminal window enter the command **pip3 install flask**
+
+- At the terminal window enter the command **pip3 install flask_pymong**
+
+- At the terminal window enter the command **pip3 install dnspython**
+
 - Create the file **env.py** and add the following environmental variables:
     
         import os

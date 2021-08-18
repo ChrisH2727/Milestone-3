@@ -993,4 +993,5 @@ The following test steps setup an initial user with admin rights, isotopes and s
 |13|isotopeType.html missing Cancel button|Add Cancel button to isotopeType.html|
 |14|Nav bar elements clash at small screen sizes|Re-factor Nav-bar in base.html|
 |15|Defect variable "date_out" spelt "data_out" caused db error|Corrected spelling in python code and validate functionality|
-|16|Source search criteria prior to the deletion of an isotope type inadequate|Update search criteria to make sure that both requested or aproved source loans are covered for a given isotope type|    
+|16|Source search criteria prior to the deletion of an isotope type inadequate|Update search criteria to make sure that both requested or aproved source loans are covered for a given isotope type|
+|17|No tools on Source search|Materialize tool tip sourch search icon|    
