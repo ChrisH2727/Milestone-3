@@ -509,12 +509,12 @@ def get_userdelete(user_id):
             flash("A user account must be suspended for it to be deleted")
 
         else:
+            flash("Your are about to delete a user account.")
             return render_template(
                 "userDelete.html", existing_user=existing_user)
 
     else:
-        flash("Database error, user account could not be\
-             deleted. Refer to admin user")
+        flash("User not found. Refer to admin user")
 
     users = list(mongo.db.users.find())
     return render_template("user.html", users=users)

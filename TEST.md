@@ -338,7 +338,7 @@ The following test steps setup an initial user with admin rights, isotopes and s
         
         - Niels has requested no sources 
         - Fred has a request open for source **SC002**
-        -**SC001** is avaiable to be loaned out 
+        -**SC001** is available to be loaned out 
 
     - **Tested Outcome**
 
@@ -348,7 +348,7 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
             ![Freds Loan](testimg/FredsLoan.png)
 
-            ![Avaiable Sources](testimg/availbleSources.png)
+            ![Available Sources](testimg/availbleSources.png)
         
         **The loan status of a source is immediatelly reflected after users actions** 
 
@@ -542,14 +542,14 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
         - All source data including the current user of the source is displayed in tabular form for any admin user to view
 
-        - A source list is not avaialable to non admin users
+        - A source list is not available to non admin users
 
     - **Tested Outcome**
         - Complete inventory of sources and currect users. The view is available to both Niels Bohr and Joe Black 
 
             ![Sources and users](testimg/sourceOnLoan.png)
 
-        - The inventory view is not avaialble to user Fred Hoyle as a user
+        - The inventory view is not available to user Fred Hoyle as a user
 
             ![Sources and users](testimg/FredsLoan.png)
 
@@ -599,18 +599,95 @@ The following test steps setup an initial user with admin rights, isotopes and s
 18. As an admin user, I want to update the technical characteristics of an existing source if there is an error either by selecting from the full inventory or by searching on the serial number.
 
     - **Test Method**
+    
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
 
+        - Navigate to **Inventory** and then **Inventory List**
+
+        - Click on **Update** against source with serial number **sc005**
+
+        - Change the **Laboratory** from **lab 1** to **lab 2** and click on **Update**
+
+        - Navigate to **Sources** and then **Update Source**
+
+        - In the search box enter **I131** and click on **Find**
+
+        - Click on the **Update** button for source **sc007**
+
+        - Change the **Laboratory** from **lab 2** to **lab 3** and click on **Update**
+
+        - Confirm that source **sc005** has been updated to **Lab 2** and that source **sc007** has been updated to **Lab 3**
+    
     - **Expected Outcome**
 
+        - Source **sc005** has been updated to **Lab 2** and that source **sc007** has been updated to **Lab 3**
+
     - **Tested Outcome**
+
+        - Source **sc005** has been updated to **Lab 2** and that source **sc007** has been updated to **Lab 3**
+
+        - Before update
+
+            ![Sources prior to update](testimg/updateSource1.png)
+
+        - After update
+
+            ![Sources post update](testimg/updateSource2.png)
+
 
 19. As an admin user, I want to delete a source from the inventory either by selecting from the full inventory or by searching on the serial number, but only if that source has been returned to the inventory.
 
     - **Test Method**
 
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and then **Inventory List**
+
+        - Click on **Delete** against source with serial number **sc005**
+
+        - Click on **Delete** again to confirm
+
+        - Confirm that source **sc005** could not be deleted because it is still on loan to user Niels Bohr
+
+        - Navigate to **Sources** and then **Delete Source**
+
+        - Enter **I131** and click on the **Delete** button
+
+        - Click again on **Delete** to confirm deletion
+
+        - Confirm that source **sc005** cannot be deleted because it is still on loan to user Niels Bohr
+
+        - Navigate to **Inventory** and then **Inventory List**
+
+        - Click on **Delete** against source with serial number **sc007**
+
+        - Click on **Delete** again to confirm
+
+        - Confirm that source **sc007** is deleted
+
+        - Navigate to **Sources** and then **Delete Source**
+
+        - Click on **Delete** against source with serial number **sc002**
+
+        - Click on **Delete** again to confirm
+
+        - Confirm that sources **sc007** and **sc002** have been deleted
+    
     - **Expected Outcome**
 
+        - Source **sc005** is on loan to user Niels Bohr and cannot be deleted
+
+        - Source **sc007** is deleted via the **Inventory List** and source **sc002** deleted by searching for the source.
+
     - **Tested Outcome**
+
+        - Source **sc005** is not deleted
+
+          ![Isotope type list](testimg/failedDelete1.png)
+
+        - Sources **sc007** and **sc002** successfully deleted
+
+          ![Isotope type list](testimg/sucessDelete.png)
 
 20. As an admin user, I want to view all the isotope types available
 
@@ -756,7 +833,7 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
         - Navigate to **Inventory** and the **Approve Request**
 
-        - Click on **Aprove**
+        - Click on **Approve**
 
         - Navigate to **Inventory** and select **Usage Report**
 
@@ -850,10 +927,36 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
     - **Test Method**
 
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and select **Inventory List**
+
+        - Click on **Delete** for source **sc001**
+
+        - Confirm that the user is requested to re-confirm the deletion request 
+
+        - Navigate to **Settings** and then **Isotope**
+
+        - Click on **Delete** for isotope **C60**
+
+        - Confirm that the user is requested to re-confirm the deletion request
+
+
     - **Expected Outcome**
+
+        - The user is requested to confirm the deletion of source **sc001**
+
+        - The user is requested to confirm the deletion of isotope type **Co60**
 
     - **Tested Outcome**
 
+        - The user is requested to confirm the deletion of source **sc001**
+
+            ![Delete confirm](testimg/deleteConfirm.png) 
+
+        - The user is requested to confirm the deletion of isotope **Co60**
+
+            ![Delete confirm](testimg/isotopeConfirm.png) 
 
 <h1>3. Defects</h1>
 
@@ -875,4 +978,5 @@ The following test steps setup an initial user with admin rights, isotopes and s
 |12|updateSource.html Cancel update button directed to the wrong url|Redirect update button to update_source and re-validate html code|
 |13|isotopeType.html missing Cancel button|Add Cancel button to isotopeType.html|
 |14|Nav bar elements clash at small screen sizes|Re-factor Nav-bar in base.html|
-|15|Defect variable "date_out" spelt "data_out" caused db error|Corrected spelling|   
+|15|Defect variable "date_out" spelt "data_out" caused db error|Corrected spelling in python code and validate functionality|
+|16|Source search criteria prior to the deletion of an isotope type inadequate|Update search criteria to make sure that both requested or aproved source loans are covered for a given isotope type|    
