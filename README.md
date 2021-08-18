@@ -82,7 +82,7 @@ It is therefore crutial that the scientific staff contol student or accademic st
 
 7. As an user, I want the present activity of the source to be calculated and displayed so that I can confirm that it will be suitable for my work.
 
-8. As a user, I want to create a request for a sources of the required type from the inventory of available sources and have my request approved.
+8. As a user, I want to create a request for a sources of the required type from the inventory of available sources and have my request approved. Note, that it is assumed that accademic staff will know the characteristics of the source that they are searching for. 
 
 9. As a user I want to delete my request prior to its approval if I change my mind regarding the type of source.
 
@@ -209,7 +209,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 #### Users:
 - Users must first register to use the service and users accounts must be approved by an admin user.
 
-- A user may search the database for a source type and may request its loan. Only sources that are available will be presented. 
+- A user may search the database for a source type and may request its loan. Only sources that are available will be presented. Although the search facility is provided with a tooltip, it is assumed that accademic staff will know the characteristics of the source that they requre.
 
 - The user may delete the loan request if this has not been approved
 

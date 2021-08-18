@@ -287,15 +287,26 @@ The following test steps setup an initial user with admin rights, isotopes and s
     - **Test Method**
 
         - Select the navigation item **Source Request**
+
+        - Hover over the search box icon and confirm that a tooltip appears
+
+        - Confirm that the tooltip appears
+
         - Into the search box type **Disk**
+        
         - Click **Find**
+        
         - Request source **sc001** 
 
     - **Expected Outcome**
 
+        - A tooltip appears to assist the user in the search process 
+
         - The user is able to select from available sources fitting the search criteria.
 
     - **Tested Outcome**
+
+        - The tooltip appears 
 
         - The user is able to search for available sources
 
@@ -304,10 +315,15 @@ The following test steps setup an initial user with admin rights, isotopes and s
     - **Test Method**
 
         - Open another browser window and navigate to the application website
+
         - Login as **fred.hoyle@anyuniversity.com* password: **new2new2**
+        
         - Select the navigation item **Source Request**
+        
         - Into the search box type **Disk**
+        
         - Click **Find**
+        
         - Request source **sc002**
 
    - **Expected Outcome**
@@ -327,17 +343,25 @@ The following test steps setup an initial user with admin rights, isotopes and s
     - **Test Method**
 
         - Select user profile for Niels
+        
         - Confirm that Niels has requested source SC001 from the **Loan Sources** table.
+        
         - click **Delete**
+        
         - Select the user profile for Fred
+        
         - Select the Navigation item **Source Request**
+        
         - Enter the search criteria **Disk**
+        
         - Confirm that source **SC001** is again available 
 
     - **Expected Outcome**
         
         - Niels has requested no sources 
+        
         - Fred has a request open for source **SC002**
+        
         -**SC001** is available to be loaned out 
 
     - **Tested Outcome**
