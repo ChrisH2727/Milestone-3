@@ -510,25 +510,91 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
     - **Test Method**
 
+        - Login as **niels.bohr@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Request Source** 
+
+        - In the search box enter **capsule** and select the source and click on enter
+
+        - Logout
+
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and then **Inventory List**
+
+        - Confirm that the complete list of available sources is displayed and that Fred Hoyle has a source on loan.
+
+        - Logout
+
+        - Login as **niels.bohr@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Inventory** and then **Inventory List**
+
+        - Confirm that admin user Niels Bohr has the same source inventory view as Joe Black
+
+        - logout
+
+        - Login as **fred.hoyle@anyuniversity.com** with password **new2new2**
+
+        - Confirm that user Fred Hoyle is not able to navigate to  **Inventory** and then **Inventory List**
+
     - **Expected Outcome**
 
+        - All source data including the current user of the source is displayed in tabular form for any admin user to view
+
+        - A source list is not avaialable to non admin users
+
     - **Tested Outcome**
+        - Complete inventory of sources and currect users. The view is available to both Niels Bohr and Joe Black 
+
+            ![Sources and users](testimg/sourceOnLoan.png)
+
+        - The inventory view is not avaialble to user Fred Hoyle as a user
+
+            ![Sources and users](testimg/FredsLoan.png)
+
 
 16. As an admin user, I want to view the location of all sources on inventory to satisfy a security audit.
 
-    - **Test Method**
-
-    - **Expected Outcome**
-
-    - **Tested Outcome**
+    Tested in 15
 
 17. As an admin user, I want to create a new entry source entry with the same or different technical charateristc but with a unique serial number.
 
     - **Test Method**
 
+        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+
+        - Navigate to **Sources** and **Add Source**
+
+        - Enter an source serial number **sc001** and complete the remainder of the form.
+
+        - Confirm that a source with an existing serial number cannot be entered
+
+        - Navigate to **Sources** and **Add Source**
+
+        - Enter an source serial number **sc006** and complete the remainder of the form as for source sc001.
+
+        - Click on **Add**
+
+        - Navigate to **Inventory** and then **Inventory List**
+
+        - Confirm that sources **sc001** and **sc006** are identical except for the serial number 
+
     - **Expected Outcome**
 
+        - The can be no duplicate source serial numbers
+
+        - Sources **sc001** and **sc006** have the same specification
+
     - **Tested Outcome**
+
+        - Duplicate source serial numbers not permitted
+
+            ![Add source exiting serial number](testimg/addSourceExistingSerNum.png)
+
+        - Sources can have the same specification, but must have unique serial numbers
+
+            ![Add source unique serial number](testimg/addSourceSuccess.png)
 
 18. As an admin user, I want to update the technical characteristics of an existing source if there is an error either by selecting from the full inventory or by searching on the serial number.
 

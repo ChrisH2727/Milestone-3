@@ -1100,7 +1100,10 @@ def delete_isotope_resp(isotope):
 
     # Do not delete source is still on loan
     sources = list(mongo.db.sources.find(
-        {"$and": [{"approved": "yes"}, {"isotope": isotope}]}))
+        {"$and": [{"$or": [
+            {"approved": "yes"}, {"requested": "true"}]},
+            {"isotope": isotope}]}))
+
     if sources:
         flash("Isotope {} is still on loan and\
              cannot be deleted".format(isotope))
