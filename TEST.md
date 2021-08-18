@@ -114,6 +114,11 @@
     |Firefox | none|as expected | none observed, no navigation issues |
     |Opera |none | as expected | none observed, no navigation issues |
 
+- **Site Security**
+
+    - Without first logging into the application enter the following url http://isotope-3.herokuapp.com/userAccount into a browser and confirm that 404 Error page is displayed. Click on the **Return** button to return to the login page. 
+
+    - Login as **fred.hoyle@anyuniversity.com** password **new2new2** enter the following url http://isotope-3.herokuapp.com/get_sources into a browser and confirm that **Unauthorised Access** page is displayed. Click on the **Return** button to return to the profile page.
 
 <h1>2. Use case (functional) test</h1>
 
@@ -125,25 +130,43 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
 - **Test Method**
     - Launch the application
+
     - confirm that the login page is displayed
+    
     - click on **Register Your Account**
+    
     - Enter the following registration details:
+    
         - First name: **Joe**
+    
         - Last name: **Black**
+    
         - Email: **joe.black@anyuniversity.com**
+    
         - Password: **new2new2**
+    
         - Repeat password: **new2new2**
+    
         - Department: **Chemistry** *selected from dropdown*
+    
         - Research Group: **Life_after_death**
+    
     - Click **submit**
+    
     - Click on **Login**
+    
         - Enter the Email: **joe.black@anyuniversity.com**
+    
         - Password: **new2new2**
 
     - **Expected Outcome**
+    
         - The user registers successfully
+    
         - The user logs-in successfully
+    
         - The users profile page is displayed
+    
         - The user has admin rights  
 
     - **Tested Outcome**
@@ -155,7 +178,9 @@ The following test steps setup an initial user with admin rights, isotopes and s
         - The navigation bar shows all admin options
 
     - **Test Method**
+    
         - Select **Settings** and the **Isotopes**
+    
         - At the top of the page add each of the following isotopes and its half life:
 
             ![User profile page](testimg/addIsotope.png)
@@ -196,8 +221,7 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
     - **Test Method**
     
-        Select the **logout** navigation option.
-
+        Select the **logout*
 
 2. As a first time user, I want to be able to register with the application so that I am authorised to use the radioactive sources available in the faculty.
 
@@ -1018,4 +1042,5 @@ The following test steps setup an initial user with admin rights, isotopes and s
 |14|Nav bar elements clash at small screen sizes|Re-factor Nav-bar in base.html|
 |15|Defect variable "date_out" spelt "data_out" caused db error|Corrected spelling in python code and validate functionality|
 |16|Source search criteria prior to the deletion of an isotope type inadequate|Update search criteria to make sure that both requested or aproved source loans are covered for a given isotope type|
-|17|No tools on Source search|Materialize tool tip sourch search icon|    
+|17|No tools on Source search|Materialize tool tip sourch search icon|
+|18|CloudTables are rendered with a label "show entries". It appears not to be possible to remove this without removing many of the other table features|Not fixed|    

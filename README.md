@@ -10,7 +10,7 @@ A university physics faculty is required to maintain stock of radioactive source
 
 While individule radioactive sources do not pose a risk to health of students using them, collectively and in the wrong hands they could become a danger to the student community and security risk.
 
-It is therefore crutial that the scientific staff contol student or accademic staff usage of these radioactive sources.
+It is therefore crutial that the scientific staff contol student or academic staff usage of these radioactive sources.
 
 **[Access the application here.](https://isotope-3.herokuapp.com/)**
 
@@ -166,7 +166,7 @@ It is therefore crutial that the scientific staff contol student or accademic st
 s
 - #### Collapsibles
 
-    Unfortunately tables do not render well on smaller screen devices and so use is made of the **[Collaspible](https://materializecss.com/collapsible.html)** provided by **Materialize**
+    Unfortunately tables do not render well on smaller screen devices and so use is made of the **[Collapsible](https://materializecss.com/collapsible.html)** provided by **Materialize**
 
 <span id="info-architecture"></span>
 
@@ -239,6 +239,40 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
 - An admin user may add and update delete an isotope type. Deletion is only possible where sources of that isotope type have been returned to the inventory. 
 
+- Quick User Guide
+    
+    After sucessfully logging in the admin user lands on his profile page and be exposed to the following navigation options:
+
+    ![Admin navigation](readmeimg/adminNav.png)
+
+    - The **Profile Page** permits the admin user to change his/her account details and view the sources he/she has on loan or has requested.It is assumed that admin users may also be academics. 
+
+    - Selecting **Logout** logs the admin user out
+
+    - Selecting **Source Request** permits the admin user to search for an available source. 
+
+    - Selecting **User Access** permits the admin user **approve** a user account to **suspend** another user account and **delete** a user account.
+
+    - Selecting **Inventory** and then **Inventory List** allows the admin user to **view** all sources on inventory, **update** sources and **delete** sources that are not out on loan.
+
+    - Selecting **Inventory** and then **Usage Report** allows the admin user to see how the service is being used.
+
+    - Selecting  **Inventory** and then **Approve Request** allows the admin user to **approve** a request for a source and also its **return**
+
+    - Selecting **Sources** allows the admin user to **add** a new source to the inventory, **update** an existing source and **delete** a source.
+
+    -Selecting **Settings** and then **Isotopes** allows the admin user to view all isotopes, **add** an isotope, **update** an isotope and **delete** an isotope.  
+
+    After sucessfully logging in the admin user lands on his profile page and be exposed to the following navigation options:
+
+    ![User Navigation](readmeimg/userNav.png)
+
+    - The **Profile Page** permits the a user to change his/her account details and view the sources he/she has on loan or has requested.
+
+    - Selecting **Logout** logs the user out
+
+    - Selecting **Source Request** permits the user to search for an available source. 
+
 - Security
 
     - Password - at least 8 characters of any type except spaces
@@ -261,7 +295,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
 <span id="features-future"></span>
 
-### 2.1 Features for furture implementation
+### 2.1 Features for future implementation
 
 - The current implementation is restricted to the creation, read, update and deletion of isotope types only. A future revision could be expanded to include more setting such as laboratory location and source encapsulation type.
 
