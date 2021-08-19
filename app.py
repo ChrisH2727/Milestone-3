@@ -907,6 +907,7 @@ def update_source_resp(source_serial_no):
     laboratories = (mongo.db.laboratories.find())
     locations = (mongo.db.locations.find())
     encapsulations = (mongo.db.encapsulations.find())
+    isotope_category = (mongo.db.isotope_category.find())
 
     return render_template(
         "updateSource.html",
@@ -915,7 +916,8 @@ def update_source_resp(source_serial_no):
         departments=departments,
         locations=locations,
         laboratories=laboratories,
-        encapsulations=encapsulations)
+        encapsulations=encapsulations,
+        isotope_category=isotope_category)
 
 
 @ app.route("/delete_source", methods=["GET", "POST"])

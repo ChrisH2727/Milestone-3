@@ -53,7 +53,7 @@
                                 <select id="isotope" name="isotope" class="validate" >
                                     <option value="{{ existing_source.isotope }}" selected>{{ existing_source.isotope }}</option>
                                 {% for isotope in isotope_category %}
-                                    <option value="{{ isotope.isotope }}">{{ isotope.isotope }}  {{ isotope.halflife }} years</option>
+                                    <option value="{{ isotope.isotope }}">{{ isotope.isotope }}</option>
                                 {% endfor %}
                                     </select>
                                 <label for="isotope">Isotope</label>                      
@@ -62,7 +62,7 @@
                                 <div class="input-field col l3 s8 m4">
                                     <input id="original_activity" name="original_activity" type="text" class="validate" 
                                     pattern="^[0-9.]{2,}[0-9]{1,}$" value= "{{existing_source.original_activity}}" style="height: 4rem;">
-                                    <label for="original_activity">Original Activity</label>
+                                    <label for="original_activity" class ="adlabel">Original Activity</label>
                                 </div>
                                 <div class="input-field col l2 s4 m2">
                                     <p>

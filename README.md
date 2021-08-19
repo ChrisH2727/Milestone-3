@@ -150,7 +150,7 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 - #### Fonts
 
-    Sans serif and cursive are the fallbacks in case the main font isn’t being imported to the site correctly. 
+    Very standard -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; 
 
 - #### Icons
 

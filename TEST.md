@@ -34,7 +34,7 @@
 
 - **HTML Validation Report**
 
-    With the inclusion of the Jinja templating engine, it is not possible to paste html code into the validator. Instead the application is run and the browser tools used to expose the html source code. This is then pasted into the validator.
+    With the inclusion of the Jinja templating engine, it is not possible to paste html code into the validator from the source file. Instead the application is run and the browser tools used to expose the html source code. This is then pasted into the validator.
 
     |HTML Page |Errors |Warnings |
     |---|---|---|
@@ -54,8 +54,9 @@
     |isotopeDelete| None | Checked with top and side navbar. |
     |usageReport| None | Checked with top and side navbar. |
 
-    base.html includes a section element, the content of which only becomes visible to the browser when a flash message is rendered. This throws up a validator warning.
-    base.html is validated as part of every other html file.    
+    - base.html includes a section element, the content of which only becomes visible to the browser when a flash message is rendered. This throws up a validator warning.
+    
+    - base.html is validated as part of every other html file.    
 
  - **Responsiveness Report**
 
@@ -126,14 +127,14 @@
 
 1. As an admin user I want a simple to setup procedure to permit others users to access the application.
 
-The following test steps setup an initial user with admin rights, isotopes and sources that will be used for testing.
+    The following test steps setup an initial user with admin rights, isotopes and sources that will be used for testing.
 
 - **Test Method**
     - Launch the application
 
-    - confirm that the login page is displayed
+    - Confirm that the login page is displayed
     
-    - click on **Register Your Account**
+    - Click on **Register Your Account**
     
     - Enter the following registration details:
     
@@ -175,18 +176,19 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
         - The user account details are displayed 
         
-        - The navigation bar shows all admin options
+        - The navigation bar shows all admin navigation options
 
     - **Test Method**
     
         - Select **Settings** and the **Isotopes**
     
-        - At the top of the page add each of the following isotopes and its half life:
+        - At the top of the page add each of the following isotopes and their respective half life:
 
             ![User profile page](testimg/addIsotope.png)
 
     - **Expected Outcome**
-        - The isotope types and its half life is displayed in the list below:
+    
+        - The isotope type and its half life is displayed in the list below:
 
     - **Tested Outcome**
         
@@ -208,7 +210,6 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
         - 3 sources should be entered into the inventory.
 
-
     - **Tested Outcome**
 
         - After each source is entered the full inventory listing should be displayed
@@ -226,25 +227,42 @@ The following test steps setup an initial user with admin rights, isotopes and s
 2. As a first time user, I want to be able to register with the application so that I am authorised to use the radioactive sources available in the faculty.
 
     - **Test Method**
-        - Launch the application
-        - confirm that the login page is displayed
-        - click on **Register Your Account**
-        - Enter the following registration details:
-            - First name: **Niels**
-            - Last name: **Bohr**
-            - Email: **niels.bohr@anyuniversity.com**
-            - Department: **physics** *selected from dropdown*
-            - Research Group: **Quantum_Mechanics**
-        - Click **submit**
 
+        - Launch the application
+    
+        - confirm that the login page is displayed
+    
         - click on **Register Your Account**
+    
         - Enter the following registration details:
-            - First name: **Fred**
-            - Last name: **Hoyle**
-            - Email: **fred.hoyle@anyuniversity.com**
+    
+            - First name: **Niels**
+    
+            - Last name: **Bohr**
+    
+            - Email: **niels.bohr@anyuniversity.com**
+    
             - Department: **physics** *selected from dropdown*
+    
+            - Research Group: **Quantum_Mechanics**
+    
+        - Click **Submit**
+
+        - Click on **Register Your Account**
+    
+        - Enter the following registration details:
+    
+            - First name: **Fred**
+    
+            - Last name: **Hoyle**
+    
+            - Email: **fred.hoyle@anyuniversity.com**
+    
+            - Department: **physics** *selected from dropdown*
+    
             - Research Group: **Astro_Physics**
-        - Click **submit**
+    
+        - Click **Submit**
 
         - Attempt to login using Fred Hoyles email and password
 
@@ -263,12 +281,15 @@ The following test steps setup an initial user with admin rights, isotopes and s
     - **Test Method**
 
         - Enter the username **niels.bohr@anyuniversity.com**
+        
         - Enter the password **new2new2**
+        
         - Click **Submit**
 
     - **Expected Outcome**
 
         - **niels.bohr@anyuniversity.com** is sucessfully logged in
+    
         - The navigation bar displays the options assocaited with a user
 
     - **Tested Outcome**
@@ -287,16 +308,23 @@ The following test steps setup an initial user with admin rights, isotopes and s
     - **Test Method**
 
         - Enter the new password **new3new3**
+    
         - Enter the department **Chemistry**
+    
         - Enter the Research Group **Electron_spin**
+    
         - click **submit**
+    
         - select the **logout** navigation bar item
+    
         - Attempt to login using the password of **new2new2**
+    
         - Attempt to login using the password of **new3new3**
 
     - **Expected Outcome**
 
         - A message should flash indicating that an incorrect password has been entered
+    
         - Entering the correct password should allow login to succeed. 
 
     - **Tested Outcome**
@@ -309,7 +337,9 @@ The following test steps setup an initial user with admin rights, isotopes and s
 6. As a user, I want to search for different types of sources that I will need for my research work in the future and view the results.
 
     - **Test Method**
-
+        
+        - Login with the username **niels.bohr@anyuniversity.com** and password **new3new3**
+        
         - Select the navigation item **Source Request**
 
         - Hover over the search box icon and confirm that a tooltip appears
@@ -320,7 +350,9 @@ The following test steps setup an initial user with admin rights, isotopes and s
         
         - Click **Find**
         
-        - Request source **sc001** 
+        - Request source **sc001**
+
+        - logout as user Niels Bohr 
 
     - **Expected Outcome**
 
@@ -338,8 +370,6 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
     - **Test Method**
 
-        - Open another browser window and navigate to the application website
-
         - Login as **fred.hoyle@anyuniversity.com* password: **new2new2**
         
         - Select the navigation item **Source Request**
@@ -352,7 +382,7 @@ The following test steps setup an initial user with admin rights, isotopes and s
 
    - **Expected Outcome**
 
-        - The user is able to select from available sources fitting the search criteria. In this case only source sc002 is available.
+        - The user is able to select from available sources fitting the search criteria. In this case only source sc002 is available, but source sc001 has been requested by user Niels Bohr.
 
     - **Tested Outcome**
 
