@@ -413,15 +413,16 @@ Non functional testing will be based on the non functional requirements set out 
 ## Using the application
 
 
-The application may be accessed **[Here](https://isotope-3.herokuapp.com/)**. Three user accounts have been set up to aid the first time user:
+The application may be accessed **[Here](https://isotope-3.herokuapp.com/)**. Four user accounts have been set up to aid the first time user:
 
 | User Name| User password|Type|
 |---|---|---|
 |**joe.black@anyuniversity.com**|**new2new2**|**admin**|
-|**niels.bohr@anyuniversity.com**|**new2new2**|**user**|
+|**niels.bohr@anyuniversity.com**|**new2new2**|**admin**|
 |**fred.hoyle@anyuniversity.com**|**new2new2**|**user**|
+|**pete.pink@anyuniversity.com**|**new2new2**|**user**|
 
-
+For the sake of simplicity each account has been set up with the same password.
 
 ## Requirements
 
@@ -558,6 +559,24 @@ The following steps are required to clone this project to your GitHub repository
      - 5d
  
      - 5c
+
+## Creating a Mongodb Text Search
+
+This permits the user to use the applications search facility to search for the source to be **Requested**, **Updated** or **Deleted**.
+
+-  Open the IDE terminal window and enter the following commands:
+
+    - **python3 app.py** *to run the application* 
+
+    - **ctrl C** *to stop the application*
+
+    - **python3**  *to enter the python interpreter*
+
+    - **from app import mongo**
+
+    -  **mongo.db.sources.create_index ([("serial_number","text" ), ("department","text" ), ("laboratory","text" ), ("location","text" ), ("isotope","text" ), ("half_life","text" ), ("type", "text"),("original_activity","text"),])**
+
+    The text search of collection **sources** should now be active.
 
 ## Running the application for the first time
 

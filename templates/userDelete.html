@@ -9,26 +9,24 @@
         <span class="card-title">Delete User Account</span>
         <div class="card white black-text">
           <div class="row">
-            <div class="col l3 m6 s12">
+            <div class="col l6 m6 s12">
               <h5 class="del-card-ul">User Name: </h5>
               <!--Styling only works if used locally-->
               <p class="del-card-ul" style="margin-left: 50px;">{{existing_user.first}} {{existing_user.last}}</p>
               <hr class="del-card-ul del-card-item ">
             </div>
-            <div class="col l3 m6 s12">
+            <div class="col l6 m6 s12">
               <h5 class="del-card-ul">User Email: </h5>
               <!--Styling only works if used locally-->
               <p class="del-card-ul" style="margin-left: 50px;">{{existing_user.email}}</p>
               <hr class="del-card-ul del-card-item ">
             </div>
-            <div class="card-action col s12 l3 m6 center-align">
+            <div class="card-action col s12 l12 m12 ">
               <a href="{{ url_for('delete_user_resp', user_email=existing_user.email) }}"
                 class="btn-large  deep-orange accent-3 lg-btn-add">
                 <i class="fas fa-trash-restore-alt"></i> Delete</a>
-            </div>
-            <div class="card-action col s12 l3 m6 center-align">
               <a href="{{ url_for('get_user') }}" class="lg-btn-add btn-large deep-green accent-3">
-                <i class="fas fa-trash-restore-alt"></i> Clear</a>
+                <i class="fas fa-times-circle left"></i> Cancel</a>
             </div>
           </div>
         </div>

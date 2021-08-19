@@ -7,11 +7,12 @@
         <div class="card blue lighten-3">
             <div class="card-content black-text"> 
                 <span class="card-title">Update Source</span>    
-                <form method="POST" action="{{ url_for('update_source_activate')}}" id="update_source_activate" class="form-horizontal"> 
+                <form method="POST" action="{{ url_for('update_source_activate')}}" id="update_source_activate" class="form-horizontal">
+                    <!--Build up form row by row--> 
                     <div class="card white black-text">
                         <div class="row input-pad">
                             <div class="input-field col l3 m6 s12">
-                                <input id="serial_number" name="serial_number" type="text" class="validate" style="height: 4rem;" readonly  
+                                <input id="serial_number" name="serial_number" type="text" class="validate " style="height: 4rem;" readonly  
                                 value ="{{existing_source.serial_number}}">
                                 <label for="serial_number">Serial Number</label>
                             </div>
@@ -36,7 +37,7 @@
                                 <label for="laboratory">Laboratory</label>
                             </div>
                         
-                            <div class="input-field col l3 m6" >
+                            <div class="input-field col l3 m6 s12" >
                                 <select id="location" name="location" class="validate">
                                     <option value="{{ existing_source.location }}" selected>{{ existing_source.location }}</option>
                                 {% for location in locations %}
@@ -46,8 +47,9 @@
                                 <label for="location">Location</label>          
                             </div>
                         </div>
+
                         <div class="row input-pad">
-                            <div class="input-field col l3 m6" >
+                            <div class="input-field col l3 m6 s12" >
                                 <select id="isotope" name="isotope" class="validate" >
                                     <option value="{{ existing_source.isotope }}" selected>{{ existing_source.isotope }}</option>
                                 {% for isotope in isotope_category %}
@@ -56,30 +58,30 @@
                                     </select>
                                 <label for="isotope">Isotope</label>                      
                             </div>
-
-                            <div class="input-field col l3 s8 m4">
-                                <input id="original_activity" name="original_activity" type="text" class="validate" 
-                                pattern="^[0-9.]{2,}[0-9]{1,}$" value= "{{existing_source.original_activity}}" style="height: 4rem;">
-                                <label for="original_activity">Original Activity</label>
-                            </div>
-                            <div class="input-field col l2 s4 m4">
-                                <p>
-                                    <label>
-                                        <input name="original_activity_units" type="radio" value="kBq"
-                                        {% if existing_source.original_activity_units == "kBq" %}
-                                            checked
-                                        {% endif %}/>
-                                        <span>kBq</span>
-                                    </label>
-                                    <label>
-                                        <input name="original_activity_units" value="MBq" type="radio"
-                                        {% if existing_source.original_activity_units == "MBq" %}
-                                            checked  value="kBq"
-                                        {% endif %}/>
-                                        <span>MBq</span>
-                                    </label>
-                                </p>
-                            </div>
+                                <!--Only local styling appears to work-->
+                                <div class="input-field col l3 s8 m4">
+                                    <input id="original_activity" name="original_activity" type="text" class="validate" 
+                                    pattern="^[0-9.]{2,}[0-9]{1,}$" value= "{{existing_source.original_activity}}" style="height: 4rem;">
+                                    <label for="original_activity">Original Activity</label>
+                                </div>
+                                <div class="input-field col l2 s4 m2">
+                                    <p>
+                                        <label>
+                                            <input name="original_activity_units" type="radio" value="kBq"
+                                            {% if existing_source.original_activity_units == "kBq" %}
+                                                checked
+                                            {% endif %}/>
+                                            <span>kBq</span>
+                                        </label>
+                                        <label>
+                                            <input name="original_activity_units" value="MBq" type="radio"
+                                            {% if existing_source.original_activity_units == "MBq" %}
+                                                checked  value="kBq"
+                                            {% endif %}/>
+                                            <span>MBq</span>
+                                        </label>
+                                    </p>
+                                </div>  
                             <div class="input-field col l3 s12 m4">
                                 <input type="text" id="activation_date" name="activation_date" 
                                 class="datepicker"  value= "{{existing_source.activation_date}}" style="height: 4rem;">
@@ -97,6 +99,7 @@
                                 </select>
                                 <label for="encapsulation">Encapsulation</label>
                             </div>
+
                             <div class="input-field col s12 m6 l4">
                                 <select id="security_group" name="security_group" class="validate">
                                     <option value="{{ existing_source.security_group }}"  selected>{{ existing_source.security_group }}</option>
@@ -107,8 +110,9 @@
                                 <label for="security_group">Security Group</label>
                             </div>
                         </div>
+                        
                         <div class="row input-pad">
-                            <div class = "input-field col s12 m6 l6">   
+                            <div class = "input-field col s12 m12 l6">   
                                 <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action">
                                     <i class="fas fa-cloud-upload-alt"></i> Update
                                 </button>  
