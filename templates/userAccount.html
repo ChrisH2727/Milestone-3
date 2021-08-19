@@ -53,7 +53,7 @@
                 <select id="department" name="department" class="validate capitalize">
                   <option value="{{ user.department }}" selected class="capitalize">{{ user.department }}</option>
                   {% for department in departments %}
-                    <option value="{{ department.department }}">{{ department.department }}</option>
+                    <option class="capitalize" value="{{ department.department }}">{{ department.department }}</option>
                   {% endfor %}
                 </select>
                 <label for="department">Department</label>

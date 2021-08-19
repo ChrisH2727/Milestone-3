@@ -110,14 +110,18 @@
                                 <label for="security_group">Security Group</label>
                             </div>
                         </div>
-                        
                         <div class="row input-pad">
                             <div class = "input-field col s12 m12 l6">   
                                 <button class="btn-large light-blue darken-4 lg-btn-add" type="submit" name="action">
                                     <i class="fas fa-cloud-upload-alt"></i> Update
-                                </button>  
-                                <a href="{{ url_for('update_source') }}"
-                                class="btn-large deep-green accent-3 lg-btn-add"><i class="fas fa-times-circle left"></i> Cancel</a> 
+                                </button>
+                                {% if session["routing"] == "inventory" %}
+                                    <a href="{{ url_for('get_sources') }}"
+                                    class="btn-large deep-green accent-3 lg-btn-add"><i class="fas fa-times-circle left"></i> Cancel</a>
+                                {% else %}
+                                    <a href="{{ url_for('update_source') }}"
+                                    class="btn-large deep-green accent-3 lg-btn-add"><i class="fas fa-times-circle left"></i> Cancel</a>
+                                {% endif %}
                             </div> 
                         </div>
                     </div>

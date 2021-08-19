@@ -6,10 +6,6 @@
 }
 
 /********************General Styling To Augment Materialize*****************************/
-.input-field>label{
-  font-size: 1.2rem;
-  padding-left: 5px;
-}
 .input-pad{
   padding-left: 10px; 
   padding-right: 10px;
@@ -21,8 +17,8 @@ nav ul a{
   padding-top: 10px;
 }
 .icon-shift{
-    padding-top: 0px;
-    padding-left:5px;
+  padding-top: 0px;
+  padding-left:5px;
 }
 .logo-shift{
   margin-left: 5px;
@@ -123,6 +119,10 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, ta
 .adlabel{
   font-size: 24px;
 }
+.input-field>label {
+  font-size: 1.64rem;
+}
+
 
 /*********************************Nav Bar Augments Materialize CSS**********************/
 nav .nav-title {

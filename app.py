@@ -103,6 +103,8 @@ def logout():
         session.pop("in_use")
     if session.get("email"):
         session.pop("email")
+    if session.get("routing"):
+        session.pop("routing")
 
     return render_template("login.html")
 
@@ -632,6 +634,9 @@ def get_sources():
         mongo.db.sources.find_one_and_update(
             {"serial_number": serial_number}, {'$set': source_new_act})
 
+        # set routing flag
+        session["routing"] = "inventory"
+
         return render_template("inventory.html", sources=sources)
 
 
@@ -807,6 +812,7 @@ def update_source():
     if session["role"] == "admin":
         query = request.form.get("query")
         mode = "update"
+        session["routing"] = "direct"
         if query:
             sources = list(mongo.db.sources.find(
                 {"$text": {"$search": query}}))
@@ -883,8 +889,10 @@ def update_source_activate():
             flash("Database error source data\
                  has not been updated. Refer to admin user.")
 
-        return redirect(url_for("get_sources"))
-
+        if session["routing"] == "inventory":
+            return redirect(url_for("get_sources"))
+        else:
+            return redirect(url_for("update_source"))
 
 @ app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def update_source_resp(source_serial_no):
@@ -936,6 +944,7 @@ def delete_source():
 
     query = request.form.get("query")
     mode = "delete"
+    session["routing"] = "direct"
     if query:
         # line of code from Code Institute
         # tuition Data "Centric Design Mini Project"
@@ -984,7 +993,11 @@ def del_source_conf(source_serial_no):
         mongo.db.sources.delete_one({"serial_number": source_serial_no})
         flash("Source: {} has been deleted".format(source_serial_no))
 
-    return redirect(url_for("get_sources"))
+    # return redirect(url_for("get_sources"))
+    if session["routing"] == "inventory":
+        return redirect(url_for("get_sources"))
+    else:
+        return redirect(url_for("delete_source"))
 
 
 @ app.route("/userAccount", methods=["GET", "POST"])
