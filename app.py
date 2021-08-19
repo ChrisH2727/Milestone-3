@@ -338,7 +338,6 @@ def return_source_resp(source_serial_no):
          {"date_in": ""}]}, {'$set': submit})
 
     # Check if the source has been deleted from the inventory
-
     if mongo.db.sources.find_one({"serial_number": source_serial_no}):
         # Update the  source document in mongodb with
         # return date and removal approval status
@@ -377,11 +376,11 @@ def delete_source_resp(source_serial_no):
     used_times = mongo.db.source_history.count_documents(
         {"serial_number": source_serial_no})
     flash("Your are about to delete source: {}".format(source_serial_no))
+
     return render_template(
         "deleteSource.html",
         existing_source=existing_source,
         used_times=used_times)
-
 
 # ----------------Create Read Update Delete User Accounts---
 
@@ -836,7 +835,6 @@ def update_source_activate():
     #
 
     if request.method == "POST":
-
         # Get source from mongo db
         existing_source = mongo.db.sources.find_one(
             {"serial_number": request.form.get("serial_number")})
@@ -1039,8 +1037,9 @@ def userAccount():
         departments=departments,
         showtable=showtable)
 
-
 # -------------------------Manage isotope types------------------------
+
+
 @app.route("/manage_isotopes", methods=["GET", "POST"])
 def manage_isotopes():
     #

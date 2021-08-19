@@ -6,9 +6,9 @@
 
 ![Portfolio website](readmeimg/isotope.jpg)
 
-A university physics faculty is required to maintain stock of radioactive sources for teaching and research purposes.
+A university physics department is required to maintain stock of radioactive sources for teaching and research purposes.
 
-While individule radioactive sources do not pose a risk to health of students using them, collectively and in the wrong hands they could become a danger to the student community and security risk.
+While individual radioactive sources do not pose a risk to the health of students using them, collectively and in the wrong hands they could become a danger to the student community and security risk.
 
 It is therefore crutial that the scientific staff contol student or academic staff usage of these radioactive sources.
 
@@ -45,16 +45,16 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 ### 1.1 Project goals 
 
-- Develop a full-stack application that allows users to access a common dataset.
+- Develop a full-stack application that allows users to access a common dataset .
 - Develop a full-stack site that uses HTML, CSS, JavaScript, Python+Flask, MongoDB.
 
 - Creat a website where students and accademic staff can:
     - register and be approved to use radioactive sources
-    - see and select a radioactive source from a list of available radioactive sources and submit a request to use one.
+    - search for and select a radioactive source from a list of available radioactive sources and submit a request to use one.
 
 - Create a website through which scientific staff can:
     - manage radioactive source allocation to students and accademic staff
-    - Create Read Update and Delete radioactive source characteristic details
+    - Create Read Update radioactive source characteristic details and Delete them
      
 - Creating a website that is:
     - Simple to understand and easy to navigate
@@ -66,7 +66,7 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 **First time user goals:**
 
-1. As a first time user, I want to be able to register with the application so that I am authorised to use the radioactive sources available in the faculty.
+1. As a first time user, I want to be able to register with the application so that I am authorised to loan the radioactive sources available in the department.
 
 **Existing user goals:** 
  
@@ -76,7 +76,7 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 4. As a user, I want to change my password, department and research group.
 
-5. As a user, I want to search for different types of sources that I will need for my research work in the future and view the results.
+5. As a user, I want to search for different sources with different characteristics that I will need for my research work in the future and view the results.
 
 6. As a user, I want to view all the sources that I have loaned so that I can determine which ones I need to return.
 
@@ -92,43 +92,43 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 2. As an admin user, I want to approve user each registration request so that I can ensure that the correct Health and Safety briefing has been given.
 
-3. As an admin user, I want to view the registration status of all other users.
+3. As an admin user, I want to view the registration status of all users.
 
-4. As an admin user, I want to update the access rights of  other users to that of admin to create deputies
+4. As an admin user, I want to update the access rights of  other users to that of admin to create deputies.
 
 5. As an admin user, I want to suspend a user account to prevent a user from loaning more sources.
 
-6. As an admin user, I want to permanently delete as user acccount, but only if the user has returned all loaned sources
+6. As an admin user, I want to permanently delete as user acccount, but only if the user has returned all loaned sources.
 
-7. As an admin user, I want to view the technical characteristices of all sources so that users can be advised on their selection.
+7. As an admin user, I want to view the technical characteristics of all sources so that users can be advised on their selection.
 
-8. As an admin user, I want to view the location of all sources on inventory to satisfy a security audit.
+8. As an admin user, I want to view the stoarge location of all sources on inventory to satisfy a security audit.
 
-9. As an admin user, I want to create a new entry source entry with the same or different technical charateristc but with a unique serial number.
+9. As an admin user, I want to create a new source entry with the same or different technical charateristc but with a unique serial number.
 
-10. As an admin user, I want to update the technical characteristics of an existing source if there is an error either by selecting from the full inventory or by searching on the serial number.
+10. As an admin user, I want to update the technical characteristics of an existing source if there is an error either by selecting from the full inventory or by searching on the serial number or other characteristic.
 
-11. As an admin user, I want to delete a source from the inventory either by selecting from the full inventory or by searching on the serial number, but only if that source has been returned to the inventory.
+11. As an admin user, I want to delete a source from the inventory either by selecting from the full inventory or by searching on the serial number or other characteristic, but only if that source has been returned to the inventory.
 
-12. As an admin user, I want to view all the isotope types available
+12. As an admin user, I want to view all the isotope types available.
 
-13. As an admin user I want to add isotope types and its respective half life to the list.
+13. As an admin user I want to add an isotope type and its respective half life to the list.
 
 14. As an admin user I want to update information assocaited with an isotope.
 
 15. As an admin user I want to delete isotope types, but only if all sources of that isotope type are not on loan.
 
-16. As an admin user, I want to view the full history of source loans so that I can spot any patterns.
+16. As an admin user, I want to view the full history of source loans so that I can spot usage patterns.
 
 17. As an admin user, I want to view how many times a source has been loaned by isotope type so that I can dispose of sources that are not being loaned.
 
-18. As an admin user, I want to view how user logins there have been on a given date so that I can assses how the service is being used.  
+18. As an admin user, I want to view the volume of user logins by date so that I can assses how the application is being used.  
 
-**Goals that would appeal to Scientists:**
+**Goals that appeal to Scientists:**
 
 1. As a scientist, I want to see information presented in a tabular form where possible so that I can spot patterns in the data.
 
-**Goals that would appeal to the general user:** 
+**Goals that appeal to the general user:** 
 
 1. As a user or admin user, I may want to view information on small screen width devices which do not lend themselves to displaying data in tabular form.
 
@@ -140,13 +140,13 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 - #### Colour scheme 
 
-    The three colours that are used for the radioactive inventory website chosen not to detract from the important information that is presented.
+    The three colours that are used for the radioactive inventory website are chosen not to detract from the important information that is presented.
 
     - **Light yellow** is used for the background to provide contrast for the blue **[Marterialize](https://materializecss.com/cards.html)** cards 
 
     - **Mid Blue** is used for the header and footer. 
 
-    - **Light Blue** is used for the card panels and these are further inset with **white** cards panels to provide a heading for the page of section and to focus in on the form or table dispayed. 
+    - **Light Blue** is used for the card panels and these are further inserted with **white** cards panels to provide a heading for the page and to focus in on the form or table dispayed within it. 
 
 - #### Fonts
 
@@ -176,7 +176,7 @@ s
 
 The collections **source** and **user** provide the two main data repositories with collections **department**, **location**, **laboratories**, **encapsuationtype** and **security group** providing a repository for constant data.
 
-The collection **source history** and **login history** provide a an activity log allowing admin users to determine which users have loaned sources and how frequently the site is being visited.
+The collection **source history** and **login history** provide an activity log allowing admin users to determine which users have loaned sources and how frequently the site is being visited.
 
 The collection **isotope** is considered to be semi permanent data. Over time changing usage patterns may result in some sources of specific isotope type being removed from circuation.
 
@@ -207,11 +207,12 @@ The navigation structure shown above is reflected in the side bar visible on sma
 - Where information is presented in a tabular for for large screen devices, it is then also presented as collapsible for small screen devices.
 
 #### Users:
+
 - Users must first register to use the service and users accounts must be approved by an admin user.
 
-- A user may search the database for a source type and may request its loan. Only sources that are available will be presented. Although the search facility is provided with a tooltip, it is assumed that accademic staff will know the characteristics of the source that they requre.
+- A user may search the database by source characteristic and may request its loan. Only sources that are available will be presented to the user. Although the search facility is provided with a tooltip, it is assumed that accademic staff and students will know the characteristics of the source that they requre.
 
-- The user may delete the loan request if this has not been approved
+- The user may delete the loan request if this has not been approved.
 
 - A user may change their password, select another department or enter an new research group.
 
@@ -223,7 +224,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
 - An admin user must be promotes to admin status by another admin user.
 
-- An admin user may **suspend** a users account and subsequently reistate it 
+- An admin user may **suspend** a users account and subsequently reistate it. 
 
 - An admin user may delete a user account, but only is the user has returned all sources loaned by him/her.
 
@@ -237,7 +238,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
 - An admin user may view the list of isotopes types available.
 
-- An admin user may add and update delete an isotope type. Deletion is only possible where sources of that isotope type have been returned to the inventory. 
+- An admin user may add, update and delete an isotope type. Deletion is only possible where sources of that isotope type have been returned to the inventory. 
 
 - Quick User Guide
     
@@ -251,17 +252,17 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
     - Selecting **Source Request** permits the admin user to search for an available source. 
 
-    - Selecting **User Access** permits the admin user **approve** a user account to **suspend** another user account and **delete** a user account.
+    - Selecting **User Access** permits the admin user **approve** a user account, to **suspend** another user account and **delete** a user account.
 
     - Selecting **Inventory** and then **Inventory List** allows the admin user to **view** all sources on inventory, **update** sources and **delete** sources that are not out on loan.
 
     - Selecting **Inventory** and then **Usage Report** allows the admin user to see how the service is being used.
 
-    - Selecting  **Inventory** and then **Approve Request** allows the admin user to **approve** a request for a source and also its **return**
+    - Selecting  **Inventory** and then **Approve Request** allows the admin user to **approve** a request for a source and also notify its **return**.
 
     - Selecting **Sources** allows the admin user to **add** a new source to the inventory, **update** an existing source and **delete** a source.
 
-    -Selecting **Settings** and then **Isotopes** allows the admin user to view all isotopes, **add** an isotope, **update** an isotope and **delete** an isotope.  
+    -Selecting **Settings** and then **Isotopes** allows the admin user to view all isotope types, **add** an isotope, **update** an isotope and **delete** an isotope.  
 
     After sucessfully logging in the admin user lands on his profile page and be exposed to the following navigation options:
 
@@ -330,15 +331,15 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
     - [Gitpod](https://www.gitpod.io/) 
 
-        - The GitPod provides the development environment.
+        - GitPod provides the development environment.
 
     - [Git](https://git-scm.com/)
 
-        - The Git was used for version control to commit to Git and push to GitHub.
+        - Git provides version control.
 
     - [GitHub](https://github.com/)
 
-        - The GitHub is used as the project repository.
+        - The GitHub is used as the file project repository.
 
     - [Balsamiq](https://balsamiq.com/)
 
@@ -354,7 +355,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
     - [Heroku](https://dashboard.heroku.com/)
 
-        - Heroki is the cloud platform used to deploy the service.
+        - Heroku is the cloud platform used to deploy the application.
 
     - [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
@@ -370,11 +371,11 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
     - [Cloud Tables](https://cloudtables.com/)
 
-        - Used to generate the tables that are rendered
+        - Cloudtables is ssed to generate the tables that are rendered
 
     - [Matplotlib](https://matplotlib.org/)
 
-        - Python libraries used to generate histograms
+        - Matplotlib is used to generate histograms
 
 - **Testing tools used** 
 
@@ -452,23 +453,25 @@ The following steps are required to clone this project to your GitHub repository
 
 - Navigate to your new git repository and check that the files are present.
 
-## Getting started in your local IDE
+## Getting started in your local development environment
 
-- Within your local IDE create a new workspace
+- Within your local development environment create a new workspace
 
-- At the terminal window enter the command **git init** (may not be required)
+- At the terminal window enter the command sequence: 
 
-- At the terminal window enter the command **git clone** and the URL for the GitHub repository to which cloned the Milestone-3 project above  
+    - **git init** (may not be required)
 
-- At the terminal window enter the command  **pip3 install -r requirements.txt**.
+    - **git clone** and the URL for the GitHub repository to which cloned the Milestone-3 project above  
 
-- At the terminal window enter the command **pip3 install matpplotlib**
+    - **pip3 install -r requirements.txt**.
 
-- At the terminal window enter the command **pip3 install flask**
+    - **pip3 install matpplotlib**
 
-- At the terminal window enter the command **pip3 install flask_pymong**
+    - **pip3 install flask**
 
-- At the terminal window enter the command **pip3 install dnspython**
+    - **pip3 install flask_pymong**
+
+    - **pip3 install dnspython**
 
 - Create the file **env.py** and add the following environmental variables:
     
@@ -478,13 +481,14 @@ The following steps are required to clone this project to your GitHub repository
 
         os.environ.setdefault("PORT", PORT address in the form "5000")
     
-        os.environ.setdefault("SECRET_KEY", sequence of alfanumeric characters chosen by the developer "?????????")
+        os.environ.setdefault("SECRET_KEY", sequence of alphanumeric characters chosen by the developer "?????????")
     
         os.environ.setdefault("MONGO_URI", ""mongodb+srv://*username*:*password*>@cluster0.hfxth.mongodb.net/*database-name*retryWrites=true&w=majority")Added by developer")
     
         os.environ.setdefault("MONGO_DBNAME", "*database-name*")
 
-  
+  *username* and *password* are the username and password for the database and not the Mongodb login username and password
+
   *database-name* should be the same as the database name created in section **Creating a MongoDB database** 
 
 - Create a .gitignore file in the root directory of the project and  the **env.py** file in the .gitignore.  Add anyother file names that you do not wish to be uploaded to GitHub.
@@ -492,6 +496,8 @@ The following steps are required to clone this project to your GitHub repository
 ### Creating a MongoDB database
 
 - Login to your MongoDB account.
+
+- If required add a database user and with *username* and *password* 
 
 - select **Create a Database**
 
@@ -564,7 +570,7 @@ The following steps are required to clone this project to your GitHub repository
 
 This permits the user to use the applications search facility to search for the source to be **Requested**, **Updated** or **Deleted**.
 
--  Open the IDE terminal window and enter the following commands:
+-  Open the development environment terminal window and enter the following commands:
 
     - **python3 app.py** *to run the application* 
 
@@ -575,6 +581,8 @@ This permits the user to use the applications search facility to search for the 
     - **from app import mongo**
 
     -  **mongo.db.sources.create_index ([("serial_number","text" ), ("department","text" ), ("laboratory","text" ), ("location","text" ), ("isotope","text" ), ("half_life","text" ), ("type", "text"),("original_activity","text"),])**
+
+    -  **ctrl D** to exit the Python interpreter
 
     The text search of collection **sources** should now be active.
 
@@ -699,7 +707,7 @@ Author's Github:https://github.com/geongeorge/i-hate-regex
 
 <h1>7. Acknowledgements </h1>
 
-- To my mentor **Precious Ljege** for help in understanding security requirements
+- To my mentor **Precious Ljege** for help in understanding security requirements and README.MD/TEST.MD document requirements 
 
 - To all the staff Code Institute providing **Tutor Assistance** 
 
@@ -707,4 +715,4 @@ Author's Github:https://github.com/geongeorge/i-hate-regex
 
 <h1>8. Disclaimer </h1>
 
-While the requirements for this project are based on an actual requirement, for security reasons, the information regarding radioactive sources is fictitious
+While the requirements for this project are based on an actual needs, for security reasons, the information regarding radioactive sources and users is fictitious.
