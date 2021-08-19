@@ -168,7 +168,7 @@
     
         - The users profile page is displayed
     
-        - The user has admin rights  
+        - The user has admin rights *The first user is automatically provided with Admin rights and approved* 
 
     - **Tested Outcome**
 
@@ -222,7 +222,7 @@
 
     - **Test Method**
     
-        Select the **logout*
+        Select the **logout**
 
 2. As a first time user, I want to be able to register with the application so that I am authorised to use the radioactive sources available in the faculty.
 
@@ -230,9 +230,9 @@
 
         - Launch the application
     
-        - confirm that the login page is displayed
+        - Confirm that the login page is displayed
     
-        - click on **Register Your Account**
+        - Click on **Register Your Account**
     
         - Enter the following registration details:
     
@@ -248,7 +248,7 @@
     
         - Click **Submit**
 
-        - Click on **Register Your Account**
+        - From the login page click on **Register Your Account**
     
         - Enter the following registration details:
     
@@ -280,6 +280,16 @@
 
     - **Test Method**
 
+        - Login with username **joe.black@anyuniversity.com** and password **new2new2**
+
+        - Navigate to the **User Access** page
+
+        - Click on the **Approve** button for both user Niels Bohr and Fred Hoyle. 
+
+        - Confirm that the button changes from **Approve** to **Approved**
+
+        - logout
+
         - Enter the username **niels.bohr@anyuniversity.com**
         
         - Enter the password **new2new2**
@@ -288,6 +298,8 @@
 
     - **Expected Outcome**
 
+        - The user accounts for both Fred Hoyle and Niels Bohr are approved 
+        
         - **niels.bohr@anyuniversity.com** is sucessfully logged in
     
         - The navigation bar displays the options assocaited with a user
@@ -301,7 +313,7 @@
 
 4. As a user, I want to view my registration profile.
 
-    - Tested in 3. (above)
+    - Tested in 3. (above). *User Niels Bohr is able to login* 
 
 5. As a user, I want to change my password, department and research group.
 
@@ -364,7 +376,7 @@
 
         - The tooltip appears 
 
-        - The user is able to search for available sources
+        - User Niels Bohr is able to search for available sources and select source sc001
 
             ![Niels Search](testimg/searchSource.png)
 
@@ -378,7 +390,11 @@
         
         - Click **Find**
         
+        - Confirm that only source sc002 is available for selection
+
         - Request source **sc002**
+
+        - logout
 
    - **Expected Outcome**
 
@@ -396,19 +412,23 @@
 
     - **Test Method**
 
-        - Select user profile for Niels
+        - login with the username **niels.bohr@anyuniversity.com** and password **new3new3**
         
-        - Confirm that Niels has requested source SC001 from the **Loan Sources** table.
+        - From his profile page confirm that Niels has requested source SC001 from the **Loan Sources** table.
         
         - click **Delete**
         
-        - Select the user profile for Fred
+        - logout
+
+        - login with the username **fred.hoyle@anyuniversity.com** and password **new2new2**
         
         - Select the Navigation item **Source Request**
         
         - Enter the search criteria **Disk**
         
-        - Confirm that source **SC001** is again available 
+        - Confirm that source **SC001** is again available
+
+        - logout 
 
     - **Expected Outcome**
         
@@ -420,7 +440,7 @@
 
     - **Tested Outcome**
 
-        - Source Loan status
+        - Source Loan status for users Niels Bohr and Fred Hoyle
 
             ![Niels Loan](testimg/NielsLoan.png)
 
@@ -430,13 +450,13 @@
         
         **The loan status of a source is immediatelly reflected after users actions** 
 
-7. As an user, I want the present activity of the source to be calculated and displayed so that I can confirm that it will be suitable for my work.
+8. As an user, I want the present activity of the source to be calculated and displayed so that I can confirm that it will be suitable for my work.
 
     - **Tested Outcome**
 
         Test in 6 above. Note the difference between the original activity of source SC001 and its activity now (234kBq then and 152.46kBq). No wonder Niels though again about his source request!
 
-8. As a user, I want to create a request for a sources of the required type from the inventory of available sources and have my request approved.
+9. As a user, I want to create a request for a sources of the required type from the inventory of available sources and have my request approved.
 
     - **Test Method**
 
@@ -446,23 +466,25 @@
 
         - Click on the button to approve the loan request for source **SC002**
 
+        - logout
+
         - Login as **fred.hoyle@anyuniversity.com** with password **new2new2**
 
         - On Fred's profile page check that the source loan has been approved
 
-        - Log out Joe and Fred
+        - Logout
 
     - **Expected Outcome**
 
-        - Fred's loan of source **SC002** has been approved 
+        - User Fred Hoyle's request for the loan of source **SC002** has been approved 
 
     - **Tested Outcome**
 
-        -  Approval of Fred's loan of source **SC002** by Joe.
+        -  Approval for the loan of source **SC002** by user Fred Hoyle has been approved by admin user Joe Black.
 
             ![Source Approval](testimg/approveRequest.png)
 
-        - Fred's profile showing the loan of source **SC002**
+        - User Fred Hoyle's profile showing the loan of source **SC002**
 
             ![Source Approval](testimg/fredsapproval.png)
 
@@ -472,7 +494,7 @@
 
 10. As an admin user, I want to approve user each registration request so that I can ensure that the correct Health and Safety briefing has been given.
 
-    Tested in 2.
+    Tested in 8.
 
 11. As an admin user, I want to view the registration status of all other users.
 
@@ -482,13 +504,13 @@
 
         - Select **User Access** from the navigation bar
 
-        - click on the **approved** button to suspend Fred's account
+        - click on the **approved** button to **suspend** Fred Hoyle's account
 
-        - click on **user** button to promote Joe's  account to admin
+        - click on **user** button to promote user Niels Bohr to an **admin** account
 
-        - log out of Joe's account
+        - log out
 
-        - Attempt to login to Fred's account with username **fred.hoyle@anyuniversity.com** and password **new2new2**
+        - Attempt to login to user Fred Hoyle's account with username **fred.hoyle@anyuniversity.com** and password **new2new2**
 
         - Attempt to login to Niels' account with username **niels.bohr@anyuniversity.com** and password **new3new3**  
 
@@ -504,15 +526,13 @@
         
             ![User Access Change](testimg/userAccessChange.png)
         
-        - Fred is not able to log into his account
+        - User Fred Hoyle is not able to log into his account
 
             ![Fred Suspended](testimg/fredSusp.png)
 
-        - Niels has admin rights
+        - User Niels Bohr has admin rights
 
             ![User Niels admin](testimg/nielsAdmin.png)
-
-
 
 12. As an admin user, I want to update the access rights of  other users to that of admin to create deputies
 
@@ -542,15 +562,15 @@
 
         - Navigate to **User Access**
 
-        - Click on **Delete** against Fred Hoyle
+        - Click on **Delete** against user Fred Hoyle
 
-        - Confirm that it is not possible to delete Fred Hoyle's account unless it has been suspended.
+        - Confirm that it is not possible to delete user Fred Hoyle's account unless it has been suspended.
 
-        - Click on the **Approved** button against Fred Hoyle's account to suspend the account.
+        - Click on the **Approved** button against user Fred Hoyle's account to suspend the account.
 
-        - Click on the **Delete** button against Fred Hoyle's account.
+        - Click on the **Delete** button against user Fred Hoyle's account.
 
-        - Confirm that it is not possible to delete Fred Hoyle's account as he still has a source on loan.
+        - Confirm that it is not possible to delete user Fred Hoyle's account as he still has a source on loan.
 
         - Navigate to **Inventory** and then **Approve Request**
 
@@ -614,7 +634,7 @@
 
         - Login as **fred.hoyle@anyuniversity.com** with password **new2new2**
 
-        - Confirm that user Fred Hoyle is not able to navigate to  **Inventory** and then **Inventory List**
+        - Confirm that user Fred Hoyle is not able to navigate to  **Inventory** and then **Inventory List** as his account does not have admin rights.
 
     - **Expected Outcome**
 
@@ -623,16 +643,17 @@
         - A source list is not available to non admin users
 
     - **Tested Outcome**
-        - Complete inventory of sources and currect users. The view is available to both Niels Bohr and Joe Black 
+
+        - Complete inventory of sources and currect users. The view is available to both users Niels Bohr and Joe Black 
 
             ![Sources and users](testimg/sourceOnLoan.png)
 
-        - The inventory view is not available to user Fred Hoyle as a user
+        - The inventory view is not available to user Fred Hoyle as it does not have admin rights
 
             ![Sources and users](testimg/FredsLoan.png)
 
 
-16. As an admin user, I want to view the location of all sources on inventory to satisfy a security audit.
+16. As an admin user, I want to view the user of all sources on inventory to satisfy a security audit.
 
     Tested in 15
 
@@ -660,7 +681,7 @@
 
     - **Expected Outcome**
 
-        - The can be no duplicate source serial numbers
+        - There can be no duplicate source serial numbers
 
         - Sources **sc001** and **sc006** have the same specification
 
@@ -686,6 +707,8 @@
 
         - Change the **Laboratory** from **lab 1** to **lab 2** and click on **Update**
 
+        - Confirm that every parameter associated with source **sc005** may be updated by alternatively making the change and then viewing the **Inventory List** to confirm that the update has been made. 
+
         - Navigate to **Sources** and then **Update Source**
 
         - In the search box enter **I131** and click on **Find**
@@ -696,9 +719,13 @@
 
         - Confirm that source **sc005** has been updated to **Lab 2** and that source **sc007** has been updated to **Lab 3**
     
+        - logout
+
     - **Expected Outcome**
 
         - Source **sc005** has been updated to **Lab 2** and that source **sc007** has been updated to **Lab 3**
+
+        - Every parameter with the exception of the source serial number may be updated
 
     - **Tested Outcome**
 
@@ -712,12 +739,11 @@
 
             ![Sources post update](testimg/updateSource2.png)
 
-
 19. As an admin user, I want to delete a source from the inventory either by selecting from the full inventory or by searching on the serial number, but only if that source has been returned to the inventory.
 
     - **Test Method**
 
-        - Login as **joe.black@anyuniversity.com** with password **new2new2**
+        - Login as user **joe.black@anyuniversity.com** with password **new2new2**
 
         - Navigate to **Inventory** and then **Inventory List**
 
@@ -750,6 +776,8 @@
         - Click on **Delete** again to confirm
 
         - Confirm that sources **sc007** and **sc002** have been deleted
+
+        - logout
     
     - **Expected Outcome**
 
@@ -847,9 +875,35 @@
 
     - **Test Method**
 
+        - Login as **niels.bohr@anyuniversity.com** with password **new2new2**
+
+        - Request the loan of a source with isotope U238
+
+        - As an admin user, approve the loan
+        
+        - Navigate to **Settings** and then **Isotopes**
+
+        - Click the **Delete** button against isotope U238.
+
+        - Confirm that isotope U238 cannot be deleted, because source sc001 is on loan
+
+        - Click the **Delete** button against isotope Fe55.
+
+        - Confirm that Isotope Fe55 has been deleted
+
+        - logout 
+
     - **Expected Outcome**
 
+        - Isotopes where source is out on loan cannot be deleted
+
+        - Isotopes where no sources are on loan can be deleted.
+
     - **Tested Outcome**
+
+        - Isotope U238 has not been deleted
+
+        - Isotope Fe55 has been deleted
 
 24. As an admin user, I want to view the full history of source loans so that I can spot any patterns.
 
