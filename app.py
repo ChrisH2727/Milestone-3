@@ -19,16 +19,17 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
+# -------------------------User Login and Registration--------
+
 
 @app.route("/")
-# -------------------------User Login and Registration--------
 @app.route("/login", methods=["GET", "POST"])
 def login():
     #
     # Function called when the user first logs in
     #
 
-    # Ensure only login and register nav bar options are available
+    # Ensure only login and register nav bar options are not available
     if session.get("in_use"):
         session.pop("in_use")
 
@@ -94,7 +95,8 @@ def logout():
     # Code line from Code Institute Mini Project
     flash("Goodbye {} you have logged out".format(
         (session["user"]).capitalize()))
-    # Remove user from session cookies if active
+
+    # Clear down session variables if active
     if session.get("user"):
         session.pop("user")
     if session.get("role"):
@@ -115,6 +117,13 @@ def register():
     # Called to register a new user
     #
 
+    # Do basic check to confirm that the Mongodb is connected
+    if mongo.db.departments.count_documents({}) != 0:
+        departments = list(
+            mongo.db.departments.find())
+    else:
+        flash("Server error detected, please refer to admin user")
+
     if request.method == "POST":
         # check if user email already exists in db.
         existing_user = mongo.db.users.find_one(
@@ -129,6 +138,7 @@ def register():
             flash("Password entries must match, please try again")
             return redirect(url_for("register"))
 
+        # Set up user account details in mongodb
         register = {
             "first": request.form.get("first_name").lower(),
             "last": request.form.get("last_name").lower(),
@@ -146,13 +156,6 @@ def register():
                 wait for your request to be approved")
         return render_template("login.html")
 
-    # Get all departments and check is collection is empty
-    if mongo.db.departments.count_documents({}) != 0:
-        departments = list(
-            mongo.db.departments.find())
-    else:
-        flash("Database error detected, please refer to admin user")
-        departments = []
     return render_template("register.html", departments=departments)
 
 # -------------------------Report Generation-----------------------------------
@@ -199,7 +202,7 @@ def usage_report():
     try:
         # generate plots
         plt.bar(source_types, source_num, color='green')
-        plt.yticks(np.arange(0, 5, 1))
+        plt.yticks(np.arange(0, 10, 1))
         plt.title("Sources by Isotope")
         plt.savefig('static/assets/sourceUsed.png')
         plt.close()
@@ -218,7 +221,7 @@ def usage_report():
         plt.close()
 
     except Exception:
-        flash("Database error, unable to generate new reports")
+        flash("Server error, unable to generate new reports")
 
     # Get all source loan histories
     source_histories = list(mongo.db.source_history.find())
@@ -535,7 +538,7 @@ def delete_user_resp(user_email):
     if (session["role"] == "user"):
         return render_template("errorPage.html")
 
-    # Check is user has a source on loan
+    # Check if user has a source on loan
     source_user = mongo.db.sources.find_one({"user": user_email})
 
     if source_user:
@@ -634,7 +637,7 @@ def get_sources():
         mongo.db.sources.find_one_and_update(
             {"serial_number": serial_number}, {'$set': source_new_act})
 
-        # set routing flag
+        # set routing flag to ensure return to the inventory listing page
         session["routing"] = "inventory"
 
         return render_template("inventory.html", sources=sources)
@@ -792,6 +795,7 @@ def req_source_conf(source_serial_no):
     flash("Source has been requested - please\
          wait for your request to be approved")
 
+    # Setup html template for allowing user to search for a source
     showsources = "false"
     sources = ""
     mode = "request"
@@ -813,6 +817,8 @@ def update_source():
         query = request.form.get("query")
         mode = "update"
         session["routing"] = "direct"
+
+        # Query the source collection
         if query:
             sources = list(mongo.db.sources.find(
                 {"$text": {"$search": query}}))
@@ -893,6 +899,7 @@ def update_source_activate():
             return redirect(url_for("get_sources"))
         else:
             return redirect(url_for("update_source"))
+
 
 @ app.route("/update_source_resp/<source_serial_no>", methods=["GET", "POST"])
 def update_source_resp(source_serial_no):
@@ -993,7 +1000,8 @@ def del_source_conf(source_serial_no):
         mongo.db.sources.delete_one({"serial_number": source_serial_no})
         flash("Source: {} has been deleted".format(source_serial_no))
 
-    # return redirect(url_for("get_sources"))
+    # Direct return to source table or find source
+    # for deletion
     if session["routing"] == "inventory":
         return redirect(url_for("get_sources"))
     else:
@@ -1070,6 +1078,7 @@ def manage_isotopes():
         return render_template("errorPage.html")
 
     if request.method == "POST":
+        # Check for duplicate isotope entry 
         existing_isotope = mongo.db.isotope_category.find_one(
             {"isotope": request.form.get("isotope")})
         if existing_isotope:
@@ -1112,7 +1121,7 @@ def delete_isotope_resp(isotope):
     # Called to  confirm deletion of an isotope from the list in mongo db
     #
 
-    # Do not delete source is still on loan
+    # Do not delete isotote source is still on loan
     sources = list(mongo.db.sources.find(
         {"$and": [{"$or": [
             {"approved": "yes"}, {"requested": "true"}]},

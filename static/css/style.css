@@ -40,7 +40,8 @@ body {
   border: 2px solid blue;
 }
 [type="radio"]:not(:checked)+span, [type="radio"]:checked+span {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 .btn-large{
   margin: 10px;
