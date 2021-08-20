@@ -80,6 +80,14 @@ letter-spacing: 0px;
 .del-card{
   margin-left: 50px
 }
+.input-mod{
+  height:4rem !important
+}
+.card-mod{
+  text-align:left;
+  margin-left: 20px;
+  padding-left:20px !important;
+}
 
 /****************************Collapsable Body******************************/
 table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, table.dataTable tfoot th {

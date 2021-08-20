@@ -10,50 +10,50 @@
                     <div class="card white black-text">
                         <div class="row">
                             <div class="col l3 m6 s12">
-                                <h5 class="del-card-ul">Serial Number: </h5>
+                                <h6 class="del-card-ul">Serial Number: </h5>
                                 <!--Only local styling appears to work!-->
-                                <p class="del-card-ul" style="margin-left: 20px;">{{ existing_source.serial_number }}
+                                <p class="card-mod">{{ existing_source.serial_number }}
                                 </p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
 
                             <div class="col l3 m6 s12">
                                 <h5 class="del-card-ul">Department: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{ existing_source.department }}</p>
+                                <p class="card-mod">{{ existing_source.department }}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                             <div class="col l3 m6 s12">
                                 <h5 class="del-card-ul">Laboratory: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{ existing_source.laboratory }}</p>
+                                <p class="card-mod">{{ existing_source.laboratory }}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                             <div class="col l3 m6 s12">
                                 <h5 class="del-card-ul">Location: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{ existing_source.location }}</p>
+                                <p class="card-mod">{{ existing_source.location }}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                         </div>
                         <div class="row">
                             <div class=" col l3 s12 m6">
                                 <h5 class="del-card-ul">Isotope: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{ existing_source.isotope }}</p>
+                                <p class="card-mod">{{ existing_source.isotope }}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                             <div class="col l3 s12 m6">
                                 <h5 class="del-card-ul">Original Activity: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{existing_source.original_activity}}
+                                <p class="card-mod">{{existing_source.original_activity}}
                                     {{existing_source.original_activity_units}}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                             <div class="col l3 s12 m6">
                                 <h5 class="del-card-ul">Activation Date: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{ existing_source.activation_date }}
+                                <p class="card-mod">{{ existing_source.activation_date }}
                                 </p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                             <div class="col l3 s12 m6">
                                 <h5 class="del-card-ul">Half Life: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{existing_source.half_life}}
+                                <p class="card-mod">{{existing_source.half_life}}
                                     {{existing_source.half_life_units}}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
@@ -62,26 +62,26 @@
                         <div class="row">
                             <div class="col l3 s12 m6">
                                 <h5 class="del-card-ul">Encapsulation: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{existing_source.type}}</p>
+                                <p class="card-mod">{{existing_source.type}}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                             <div class="col l3 s12 m6">
                                 <h5 class="del-card-ul">Last used: </h5>
                                 {% if existing_source.last_used != "" %}
-                                    <p class="del-card-ul" style="margin-left: 20px;">{{existing_source.last_used}}</p>
+                                    <p class="card-mod">{{existing_source.last_used}}</p>
                                 {% else %}
-                                    <p class="del-card-ul" style="margin-left: 20px;">&nbsp</p>
+                                    <p class="del-card-ul">&nbsp</p>
                                 {% endif %}
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                             <div class="col l3 s12 m6">
                                 <h5 class="del-card-ul">Used: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{ used_times}}</p>
+                                <p class="card-mod">{{ used_times}}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                             <div class="col l3 s12 m6">
                                 <h5 class="del-card-ul">Security Group: </h5>
-                                <p class="del-card-ul" style="margin-left: 20px;">{{existing_source.security_group}}</p>
+                                <p class="card-mod">{{existing_source.security_group}}</p>
                                 <hr class="del-card-ul del-card-item ">
                             </div>
                         </div>

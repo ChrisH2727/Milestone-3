@@ -9,11 +9,11 @@
                 <form method="POST" action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">
                     <div class="card white black-text">
                         <div class="row input-pad">
-                            <div class="input-field col l3 m6">
-                                <input id="serial_number" name="serial_number" type="text" class="validate"
-                                    style="height: 4rem;" required minlength="2" maxlength="24"
+                            <div class="input-field col l3 m6" >
+                                <input id="serial_number" name="serial_number" type="text" class="validate input-mod"
+                                    required minlength="2" maxlength="24" 
                                     pattern="^[a-zA-Z0-9_-]{3,40}$">
-                                <label for="serial_number">Serial Number</label>
+                                <label for="serial_number" >Serial Number</label>
                             </div>
 
                             <div class="input-field col l3 m6">
@@ -54,29 +54,26 @@
                                 </select>
                                 <label for="isotope">Isotope</label>
                             </div>
-                            <!--Only local height style appears to work here-->
                             <div class="input-field col l3 s8 m4">
-                                <input id="original_activity" name="original_activity" type="text" class="validate"
-                                pattern="^[0-9.]{2,}[0-9]{1,}$" required style="height: 4rem;">
+                                <input id="original_activity" name="original_activity" type="text" class="validate input-mod"
+                                pattern="^[0-9.]{2,}[0-9]{1,}$" required >
                                 <label for="original_activity">Original Activity</label>
                             </div>
                             <div class="input-field col l2 s4 m2">
                                 <p>
                                     <label>
-                                        <input name="original_activity_units" type="radio" value="kBq" checked
-                                            style="height: 4rem;" />
+                                        <input name="original_activity_units" type="radio" value="kBq" checked/>
                                         <span>kBq</span>
                                     </label>
                                     <label>
-                                        <input name="original_activity_units" value="MBq" type="radio"
-                                            style="height: 4rem;" />
+                                        <input name="original_activity_units" value="MBq" type="radio"/>
                                         <span>MBq</span>
                                     </label>
                                 </p>
                             </div>
                             <div class="input-field col l3 s12 m4">
-                                <input type="text" id="activation_date" name="activation_date" class="datepicker "
-                                    required style="height: 4rem;">
+                                <input type="text" id="activation_date" name="activation_date" class="datepicker input-mod"
+                                    required >
                                 <label for="activation_date">Activation Date</label>
                             </div>
                         </div>

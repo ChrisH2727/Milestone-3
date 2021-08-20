@@ -1127,4 +1127,5 @@
 |15|Defect variable "date_out" spelt "data_out" caused db error|Corrected spelling in python code and validate functionality|
 |16|Source search criteria prior to the deletion of an isotope type inadequate|Update search criteria to make sure that both requested or aproved source loans are covered for a given isotope type|
 |17|No tools on Source search|Materialize tool tip sourch search icon|
-|18|CloudTables are rendered with a label "show entries". It appears not to be possible to remove this without removing many of the other table features|Not fixed|    
+|18|Selecting the cancel button from source update and delete did not always route back to the correct parent page| Fixed by adding routing to the html code depending on where the request originated|
+|19|CloudTables are rendered with a label "show entries". It appears not to be possible to remove this without removing many of the other table features|Not fixed|    
