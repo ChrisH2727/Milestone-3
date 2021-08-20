@@ -10,15 +10,15 @@
           <div class="row input-pad">
             <div class="input-field col s12 m4">
               <input id="username" type="text" value=" {{ user.first }} {{user.last}}" class="capitalize" disabled>
-              <label for="username">Name:</label>
+              <label for="username"class="card-bold" >Name:</label>
             </div>
             <div class="input-field col s12 m4">
               <input id="useremail" type="text" value="{{ user.email }}" disabled>
-              <label for="useremail">Email:</label>
+              <label for="useremail"class="card-bold" >Email:</label>
             </div>
             <div class="input-field col s12 m4">
               <input id="userrole" type="text" value=" {{ user.role }}" class="capitalize" disabled>
-              <label for="userrole">Role:</label>
+              <label for="userrole"class="card-bold" >Role:</label>
             </div>
           </div>
         </div>
@@ -49,19 +49,19 @@
             </div>
 
             <div class="row input-pad">
-              <div class="input-field col l12 m12 s12">
+              <div class="input-field col l6 m6 s12">
                 <select id="department" name="department" class="validate capitalize">
                   <option value="{{ user.department }}" selected class="capitalize">{{ user.department }}</option>
                   {% for department in departments %}
                     <option class="capitalize" value="{{ department.department }}">{{ department.department }}</option>
                   {% endfor %}
                 </select>
-                <label for="department">Department</label>
+                <label for="department"class="card-bold" >Department:</label>
               </div>
-              <div class="input-field col l12 m12 s12">
+              <div class="input-field col l6 m6 s12">
                 <input id="research_group" type="text" value="{{user.research_group}}" name="research_group"
                   class="validate capitalize">
-                <label for="research_group">Research Group</label>
+                <label for="research_group" class="card-bold" >Research Group:</label>
               </div>
             </div>
             <div class="card-action">

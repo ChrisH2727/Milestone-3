@@ -51,14 +51,6 @@ body {
 .card .card-content{
   padding: 5px; /* changes Materialize card padding from 28px to 5px*/
 }
-@media only screen and (min-width: 0) {html
-  {
-  font-size: 16px; /* changes Materialize card font size at min screen width from 14px to 16px*/
-}}
-.select-wrapper input.select-dropdown{
-  font-size: 20px;
-  height:4rem;
-}
 .btn, .btn-large, .btn-small {
 letter-spacing: 0px;
 }
@@ -79,9 +71,6 @@ letter-spacing: 0px;
 }
 .del-card{
   margin-left: 50px
-}
-.input-mod{
-  height:4rem !important
 }
 .card-mod{
   text-align:left;
@@ -113,6 +102,9 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, ta
 .del-card-ul{
   text-align:left;
   margin-left: 20px;
+  font-size: 0.8rem;
+  color: black;
+  font-weight: bold;
 }
 .del-card-item{
   width:80%;
@@ -124,13 +116,12 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tbody td, ta
   font-size: larger;
   font-weight: bold;
 }
-.adlabel{
+/*.adlabel{
   font-size: 24px;
+}*/
+.card-bold {
+  font-weight: bolder;
 }
-.input-field>label {
-  font-size: 1.64rem;
-}
-
 
 /*********************************Nav Bar Augments Materialize CSS**********************/
 nav .nav-title {
