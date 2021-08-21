@@ -7,6 +7,7 @@
             <div class="card-content black-text">
                 <span class="card-title ">Add Source</span>
                 <form method="POST" action="{{ url_for('add_source')}}" id="addsource" class="form-horizontal">
+                    <!--Build up form row by row-->
                     <div class="card white black-text">
                         <div class="row input-pad">
                             <div class="input-field col l3 m6" >
@@ -25,6 +26,7 @@
                                 </select>
                                 <label for="department" class="card-bold">Department:</label>
                             </div>
+
                             <div class="input-field col l3 m6">
                                 <select id="laboratory" name="laboratory" class="validate" required>
                                     <option value="" disabled selected>Select Laboratory</option>
@@ -34,6 +36,7 @@
                                 </select>
                                 <label for="laboratory" class="card-bold">Laboratory:</label>
                             </div>
+
                             <div class="input-field col l3 m6">
                                 <select id="location" name="location" class="validate" required>
                                     <option value="" disabled selected>Select Location</option>
@@ -41,9 +44,10 @@
                                         <option value="{{ location.location }}">{{ location.location }}</option>
                                     {% endfor %}
                                 </select>
-                                <label for="location"class="card-bold" >Locations:</label>
+                                <label for="location" class="card-bold" >Locations:</label>
                             </div>
                         </div>
+
                         <div class="row input-pad">
                             <div class="input-field col l3 m6">
                                 <select id="isotope" name="isotope" class="validate" required>

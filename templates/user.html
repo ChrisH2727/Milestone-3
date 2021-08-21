@@ -6,7 +6,7 @@
             <div class="card-content black-text">
             <span class="card-title">User Access Management</span>
                 <form method="POST" action="{{ url_for('get_user') }}">
-                    <table id="inventory" class="table table-striped table-bordered tblwd">
+                    <table id="inventory" class="display tblwd">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -22,6 +22,7 @@
                         </thead>
                         <tbody>
                             {% for user in users %}
+                            <!--Button control-->
                                 <tr>
                                 <td class= "capitalize">{{ user.first }} {{ user.last }}</td>
                                 <td> {{ user.email }}</td>
@@ -73,6 +74,7 @@
         </div>
     </div>
 </div>
+<!--Collapsible for medium and small screen devices-->
 <div class="row hide-on-large-only">
     <div class="col s12 m12">
       <div class="card blue lighten-3">

@@ -369,9 +369,9 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
         - Werkzeug is used for password hashing.
 
-    - [Cloud Tables](https://cloudtables.com/)
+    - [Cloud Tables](https://datatables.net/)
 
-        - Cloudtables is ssed to generate the tables that are rendered
+        - Cloudtables is used to generate the tables that are rendered
 
     - [Matplotlib](https://matplotlib.org/)
 

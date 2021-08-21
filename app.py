@@ -117,13 +117,6 @@ def register():
     # Called to register a new user
     #
 
-    # Do basic check to confirm that the Mongodb is connected
-    if mongo.db.departments.count_documents({}) != 0:
-        departments = list(
-            mongo.db.departments.find())
-    else:
-        flash("Server error detected, please refer to admin user")
-
     if request.method == "POST":
         # check if user email already exists in db.
         existing_user = mongo.db.users.find_one(
@@ -155,7 +148,9 @@ def register():
         flash("You have sucessfully registered, please\
                 wait for your request to be approved")
         return render_template("login.html")
-
+    
+    departments = list(
+            mongo.db.departments.find())
     return render_template("register.html", departments=departments)
 
 # -------------------------Report Generation-----------------------------------

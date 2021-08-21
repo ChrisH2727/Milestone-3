@@ -10,15 +10,15 @@
           <div class="row input-pad">
             <div class="input-field col s12 m4">
               <input id="username" type="text" value=" {{ user.first }} {{user.last}}" class="capitalize" disabled>
-              <label for="username"class="card-bold" >Name:</label>
+              <label for="username" class="card-bold" >Name:</label>
             </div>
             <div class="input-field col s12 m4">
               <input id="useremail" type="text" value="{{ user.email }}" disabled>
-              <label for="useremail"class="card-bold" >Email:</label>
+              <label for="useremail" class="card-bold" >Email:</label>
             </div>
             <div class="input-field col s12 m4">
               <input id="userrole" type="text" value=" {{ user.role }}" class="capitalize" disabled>
-              <label for="userrole"class="card-bold" >Role:</label>
+              <label for="userrole" class="card-bold" >Role:</label>
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
                     <option class="capitalize" value="{{ department.department }}">{{ department.department }}</option>
                   {% endfor %}
                 </select>
-                <label for="department"class="card-bold" >Department:</label>
+                <label for="department" class="card-bold" >Department:</label>
               </div>
               <div class="input-field col l6 m6 s12">
                 <input id="research_group" type="text" value="{{user.research_group}}" name="research_group"
@@ -85,7 +85,7 @@
       <div class="card blue lighten-3">
         <div class="card-content">
           <span class="card-title">Loan Sources</span>
-          <table id="inventory" class="table table-striped table-bordered tblwd">
+          <table id="inventory" class="display tblwd">
             <thead>
               <tr>
                 <th>Serial No.</th>
