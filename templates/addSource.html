@@ -10,14 +10,14 @@
                     <!--Build up form row by row-->
                     <div class="card white black-text">
                         <div class="row input-pad">
-                            <div class="input-field col l3 m6" >
+                            <div class="input-field col l3 m6 s12" >
                                 <input id="serial_number" name="serial_number" type="text" class="validate"
                                     required minlength="2" maxlength="24" 
                                     pattern="^[a-zA-Z0-9_-]{3,40}$">
                                 <label for="serial_number">Serial Number:</label>
                             </div>
 
-                            <div class="input-field col l3 m6">
+                            <div class="input-field col l3 m6 s12">
                                 <select id="department" name="department" class="validate" required>
                                     <option value="" disabled selected>Select Department</option>
                                     {% for department in departments %}
@@ -27,7 +27,7 @@
                                 <label for="department" class="card-bold">Department:</label>
                             </div>
 
-                            <div class="input-field col l3 m6">
+                            <div class="input-field col s12 l3 m6">
                                 <select id="laboratory" name="laboratory" class="validate" required>
                                     <option value="" disabled selected>Select Laboratory</option>
                                     {% for laboratory in laboratories %}
@@ -37,7 +37,7 @@
                                 <label for="laboratory" class="card-bold">Laboratory:</label>
                             </div>
 
-                            <div class="input-field col l3 m6">
+                            <div class="input-field col l3 m6 s12">
                                 <select id="location" name="location" class="validate" required>
                                     <option value="" disabled selected>Select Location</option>
                                     {% for location in locations %}
@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="row input-pad">
-                            <div class="input-field col l3 m6">
+                            <div class="input-field col l3 m6 s12">
                                 <select id="isotope" name="isotope" class="validate" required>
                                     <option value="" disabled selected>Select Isotope</option>
                                     {% for isotope in isotope_category %}
@@ -75,7 +75,7 @@
                                     </label>
                                 </p>
                             </div>
-                            <div class="input-field col l3 s12 m4">
+                            <div class="input-field col l3 s12 m6">
                                 <input type="text" id="activation_date" name="activation_date" class="datepicker input-mod"
                                     required >
                                 <label for="activation_date" >Activation Date:</label>
@@ -83,7 +83,7 @@
                         </div>
 
                         <div class="row input-pad">
-                            <div class="input-field col l4 m4 s8">
+                            <div class="input-field col l4 m6 s12">
                                 <select id="encapsulation" name="encapsulation" class="validate" required>
                                     <option value="" disabled selected>Select Encapsulation</option>
                                     {% for encapsulation in encapsulations %}

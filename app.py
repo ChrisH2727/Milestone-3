@@ -148,7 +148,7 @@ def register():
         flash("You have sucessfully registered, please\
                 wait for your request to be approved")
         return render_template("login.html")
-    
+
     departments = list(
             mongo.db.departments.find())
     return render_template("register.html", departments=departments)
@@ -1073,7 +1073,7 @@ def manage_isotopes():
         return render_template("errorPage.html")
 
     if request.method == "POST":
-        # Check for duplicate isotope entry 
+        # Check for duplicate isotope entry
         existing_isotope = mongo.db.isotope_category.find_one(
             {"isotope": request.form.get("isotope")})
         if existing_isotope:
@@ -1174,7 +1174,7 @@ def isotopes_update_conf(isotope_id):
              {"isotope": request.form.get("isotope")}]}))
         if existing_source:
             flash("Isotope {} is still on loan and \
-                cannot be updated".format(isotope_id))
+                cannot be updated".format(request.form.get("isotope")))
         else:
             isotope_update = {
                 "isotope": request.form.get("isotope"),

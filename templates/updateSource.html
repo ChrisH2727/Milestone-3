@@ -80,7 +80,7 @@
                                         </label>
                                     </p>
                                 </div>  
-                            <div class="input-field col l3 s12 m4">
+                            <div class="input-field col l3 s12 m6">
                                 <input type="text" id="activation_date" name="activation_date" 
                                 class="datepicker"  value= "{{existing_source.activation_date}}">
                                 <label for="activation_date" class="card-bold" >Activation Date:</label>
@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="row input-pad ">
-                            <div class="input-field col l4 m4 s8">
+                            <div class="input-field col l4 m6 s12">
                                 <select id="encapsulation" name="encapsulation" class="validate">
                                 <option value="{{ existing_source.type }}"  selected>{{ existing_source.type }}</option>
                                 {% for encapsulation in encapsulations %}
