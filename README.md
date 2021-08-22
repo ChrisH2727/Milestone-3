@@ -48,17 +48,22 @@ It is therefore crutial that the scientific staff contol student or academic sta
 - Develop a full-stack application that allows users to access a common dataset .
 - Develop a full-stack site that uses HTML, CSS, JavaScript, Python+Flask, MongoDB.
 
-- Creat a website where students and accademic staff can:
-    - register and be approved to use radioactive sources
+- Create a website where students and academic staff can:
+
+    - register, and be approved, to use radioactive sources
+
     - search for and select a radioactive source from a list of available radioactive sources and submit a request to use one.
 
 - Create a website through which scientific staff can:
-    - manage radioactive source allocation to students and accademic staff
-    - Create Read Update radioactive source characteristic details and Delete them
+
+    - Manage radioactive source allocation to students and academic staff
+
+    - **Create Read Update** radioactive source characteristic details and **Delete** them
      
 - Creating a website that is:
     - Simple to understand and easy to navigate
-    - Presents different levels of access to information for students/accademics and scientific staff.
+
+    - Presents different levels of access to information for students/academics and scientific staff.
 
 <span id="ux-stories"></span>
 
@@ -70,7 +75,7 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 **Existing user goals:** 
  
-2. As a user, I want to login and out of the web application securely
+2. As a user, I want to login and out of the web application securely.
 
 3. As a user, I want to view my registration profile.
 
@@ -78,19 +83,19 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 5. As a user, I want to search for different sources with different characteristics that I will need for my research work in the future and view the results.
 
-6. As a user, I want to view all the sources that I have loaned so that I can determine which ones I need to return.
+6. As a user, I want to view all the sources that I have on loan so that I can determine which ones I need to return.
 
 7. As an user, I want the present activity of the source to be calculated and displayed so that I can confirm that it will be suitable for my work.
 
-8. As a user, I want to create a request for a sources of the required type from the inventory of available sources and have my request approved. Note, that it is assumed that accademic staff will know the characteristics of the source that they are searching for. 
+8. As a user, I want to create a request for a sources of the required type from the inventory of available sources and have my request approved. Note, that it is assumed that academic staff will know the characteristics of the source that they are searching for. 
 
 9. As a user I want to delete my request prior to its approval if I change my mind regarding the type of source.
 
 **Admin user goals:**
 
-1. As an admin user I want a simple to setup procedure to permit others users to access the application.  
+1. As an admin user I want a simple to setup procedure to permit other users to access the application.  
 
-2. As an admin user, I want to approve user each registration request so that I can ensure that the correct Health and Safety briefing has been given.
+2. As an admin user, I want to approve each user registration request so that I can ensure that the correct Health and Safety briefing has been given.
 
 3. As an admin user, I want to view the registration status of all users.
 
@@ -98,13 +103,13 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 5. As an admin user, I want to suspend a user account to prevent a user from loaning more sources.
 
-6. As an admin user, I want to permanently delete as user acccount, but only if the user has returned all loaned sources.
+6. As an admin user, I want to permanently delete a user account, but only if the user has returned all loaned sources.
 
 7. As an admin user, I want to view the technical characteristics of all sources so that users can be advised on their selection.
 
-8. As an admin user, I want to view the stoarge location of all sources on inventory to satisfy a security audit.
+8. As an admin user, I want to view the storage location of all sources on inventory to satisfy a security audit.
 
-9. As an admin user, I want to create a new source entry with the same or different technical charateristc but with a unique serial number.
+9. As an admin user, I want to create a new source entry with the same or different technical charateristic but with a unique serial number.
 
 10. As an admin user, I want to update the technical characteristics of an existing source if there is an error either by selecting from the full inventory or by searching on the serial number or other characteristic.
 
@@ -114,7 +119,7 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 13. As an admin user I want to add an isotope type and its respective half life to the list.
 
-14. As an admin user I want to update information assocaited with an isotope.
+14. As an admin user I want to update information associated with an isotope.
 
 15. As an admin user I want to delete isotope types, but only if all sources of that isotope type are not on loan.
 
@@ -122,7 +127,7 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 17. As an admin user, I want to view how many times a source has been loaned by isotope type so that I can dispose of sources that are not being loaned.
 
-18. As an admin user, I want to view the volume of user logins by date so that I can assses how the application is being used.  
+18. As an admin user, I want to view the volume of user logins by date so that I can asses how the application is being used.  
 
 **Goals that appeal to Scientists:**
 
@@ -132,7 +137,7 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 1. As a user or admin user, I may want to view information on small screen width devices which do not lend themselves to displaying data in tabular form.
 
-2. As a user or admin user, I want to confirm any delete action that results in the permanet removal of information from the data base.
+2. As a user or admin user, I want to confirm any delete action that results in the permanent removal of information from the database.
 
 <span id="ux-design"></span>
 
@@ -162,11 +167,11 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 - #### Tables
 
-    As this website will predominently be utilised by individual from the scientific community, considerable use is made of tables. Scientists like to see information in tables so that they can see patterns of date.  **[Cloud Tables](https://cloudtables.com/)** provides an excelent free to use JQuery plugin for this purpose.
-s
+    As this website will predominently be utilised by individual from the scientific community, considerable use is made of tables. Scientists like to see information in tables so that they can see patterns of data.  **[Cloud Tables](https://cloudtables.com/)** provides an excellent free to use JQuery plugin for this purpose.
+
 - #### Collapsibles
 
-    Unfortunately tables do not render well on smaller screen devices and so use is made of the **[Collapsible](https://materializecss.com/collapsible.html)** provided by **Materialize**
+    Unfortunately tables do not render well on smaller screen devices and so use is made of the **[Collapsible](https://materializecss.com/collapsible.html)** provided by **Materialize**.
 
 <span id="info-architecture"></span>
 
@@ -174,25 +179,25 @@ s
 
 ![Information Architecture](readmeimg/datastructure.png)
 
-The collections **source** and **user** provide the two main data repositories with collections **department**, **location**, **laboratories**, **encapsuationtype** and **security group** providing a repository for constant data.
+The collections **source** and **user** provide the two main data repositories with collections **department**, **location**, **laboratories**, **encapsuation** and **security group** providing a repository for constant data.
 
 The collection **source history** and **login history** provide an activity log allowing admin users to determine which users have loaned sources and how frequently the site is being visited.
 
-The collection **isotope** is considered to be semi permanent data. Over time changing usage patterns may result in some sources of specific isotope type being removed from circuation.
+The collection **isotope** is considered to be semi permanent data. Over time changing usage patterns may result in some sources of specific isotope type being removed from circulation.
 
 **Why MongoDB** 
 
-- Data requires only key-value pairs - no complex interrelated tables
+- Data requires only key-value pairs - no complex inter-related tables.
 
-- Data is stored as text strings only - no complex data types
+- Data is stored as text strings only - no complex data types.
 
-- A large number of sources in the list - loans could extend to many 100s
+- A large number of sources in the list - loans could extend to many 100.
 
 <span id="wireframes"></span>
 
 ### 1.5 Wire Frames
 
-Wireframes are provide [here](readmeimg/WireFrame/datastructure.png) and are best examined inconjunction with the site navigation structure shown in section 1.6
+Wireframes are provide [here](readmeimg/WireFrame/datastructure.png) and are best examined inconjunction with the site navigation structure shown in section 1.6.
 
 <span id="navigation-structure"></span>
 
@@ -212,33 +217,33 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
 #### General
 
-- Where information is presented in a tabular for for large screen devices, it is then also presented as collapsible for small screen devices.
+- Where information is presented in a tabular for large screen devices, it is then also presented as collapsible for small screen devices.
 
 #### Users:
 
-- Users must first register to use the service and users accounts must be approved by an admin user.
+- Users must first register to use the service and user's accounts must be approved by an admin user.
 
-- A user may search the database by source characteristic and may request its loan. Only sources that are available will be presented to the user. Although the search facility is provided with a tooltip, it is assumed that accademic staff and students will know the characteristics of the source that they requre.
+- A user may search the database by source characteristic and may request its loan. Only sources that are available will be presented to the user. Although the search facility is provided with a tooltip, it is assumed that academic staff and students will know the characteristics of the source that they require.
 
 - The user may delete the loan request if this has not been approved.
 
 - A user may change their password, select another department or enter an new research group.
 
-- A user may view a list of the sources he/she has on loan
+- A user may view a list of the sources he/she has on loan.
 
 #### Admin:
 
 - An admin user must first register as a user.
 
-- An admin user must be promotes to admin status by another admin user.
+- An admin user must be promoted to admin status by another admin user.
 
-- An admin user may **suspend** a users account and subsequently reistate it. 
+- An admin user may **suspend** a user's account and subsequently reistate it. 
 
-- An admin user may delete a user account, but only is the user has returned all sources loaned by him/her.
+- An admin user may delete a user account, but only if the user has returned all sources loaned by him/her.
 
-- An admin user may approve a source load or identify it as returned 
+- An admin user may approve a source loan or identify it as returned. 
 
-- An admin user may view a full history of source loaned to users as well as key statistics on the number of sources of a particular isotope available, user logins per day and source loaned by serial number.
+- An admin user may view a full history of sources loaned to users as well as key statistics on the number of sources of a particular isotope available, user logins per day and source loaned by serial number.
 
 - An admin user may view the full table of sources available in the inventory and from the table update or delete a source. Note that a source may not be deleted if it is on loan.
 
@@ -250,55 +255,59 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
 - Quick User Guide
     
-    After sucessfully logging in the admin user lands on his profile page and be exposed to the following navigation options:
+    - Admin User
 
-    ![Admin navigation](readmeimg/adminNav.png)
+        After successfully logging in, the admin user lands on his profile page and be exposed to the following navigation options:
 
-    - The **Profile Page** permits the admin user to change his/her account details and view the sources he/she has on loan or has requested.It is assumed that admin users may also be academics. 
+        ![Admin navigation](readmeimg/adminNav.png)
 
-    - Selecting **Logout** logs the admin user out
+        - The **Profile Page** permits the admin user to change his/her account details and view the sources he/she has on loan or has requested. It is assumed that admin users may also be academics. 
 
-    - Selecting **Source Request** permits the admin user to search for an available source. 
+        - Selecting **Logout** logs the admin user out.
 
-    - Selecting **User Access** permits the admin user **approve** a user account, to **suspend** another user account and **delete** a user account.
+        - Selecting **Source Request** permits the admin user to search for an available source. 
 
-    - Selecting **Inventory** and then **Inventory List** allows the admin user to **view** all sources on inventory, **update** sources and **delete** sources that are not out on loan.
+        - Selecting **User Access** permits the admin user to **approve** a user account, to **suspend** another user account and **delete** a user account.
 
-    - Selecting **Inventory** and then **Usage Report** allows the admin user to see how the service is being used.
+        - Selecting **Inventory** and then **Inventory List** allows the admin user to **view** all sources on inventory, **update** sources and **delete** sources that are not out on loan.
 
-    - Selecting  **Inventory** and then **Approve Request** allows the admin user to **approve** a request for a source and also notify its **return**.
+        - Selecting **Inventory** and then **Usage Report** allows the admin user to see how the service is being used.
 
-    - Selecting **Sources** allows the admin user to **add** a new source to the inventory, **update** an existing source and **delete** a source.
+        - Selecting  **Inventory** and then **Approve Request** allows the admin user to **approve** a request for a source and also notify its **return**.
 
-    -Selecting **Settings** and then **Isotopes** allows the admin user to view all isotope types, **add** an isotope, **update** an isotope and **delete** an isotope.  
+        - Selecting **Sources** allows the admin user to **add** a new source to the inventory, **update** an existing source and **delete** a source.
 
-    After sucessfully logging in the admin user lands on his profile page and be exposed to the following navigation options:
+        - Selecting **Settings** and then **Isotopes** allows the admin user to view all isotope types, **add** an isotope, **update** an isotope and **delete** an isotope.  
 
-    ![User Navigation](readmeimg/userNav.png)
+    - Ordinary User
 
-    - The **Profile Page** permits the a user to change his/her account details and view the sources he/she has on loan or has requested.
+        - After sucessfully logging in the ordinary user lands on his profile page and be exposed to the following navigation options:
 
-    - Selecting **Logout** logs the user out
+        ![User Navigation](readmeimg/userNav.png)
 
-    - Selecting **Source Request** permits the user to search for an available source. 
+        - The **Profile Page** permits the a user to change his/her account details and view the sources he/she has on loan or has requested.
 
-- Security
+        - Selecting **Logout** logs the user out
 
-    - Password - at least 8 characters of any type except spaces
+        - Selecting **Source Request** permits the user to search for an available source. 
 
-    - email - must be in the form xxxxxxx@xxxxx.xxx
+    - Security
 
-    - Research group - at least 3 alphanumeric characters, spaces hyphons and underscores permitted
+        - Password - at least 8 characters of any type except spaces
 
-    - Source serial number - at least 3 alphanumeric characters no spaces, hyphons and underscores permitted
+        - email - must be in the form xxxxxxx@xxxxx.xxx
 
-    - Original activity - at least 2 numeric chacaters plus decimal point (?.?) only no white spaces   
+        - Research group - at least 3 alphanumeric characters, spaces hyphens and underscores permitted
 
-    - half life - at least 2 numeric chacaters plus decimal point (?.?) only no white spaces
+        - Source serial number - at least 3 alphanumeric characters no spaces, hyphens and underscores permitted
 
-    - Isotopes - at least 1 uppercase alpha followed bt 1 lowercase alpha followed by 1 numeric digit - no decimal points or white spaces
+        - Original activity - at least 2 numeric characters plus decimal point (?.?) no white spaces   
 
-    - Users are prevented from accessing html pages intended for admin users
+        - half life - at least 2 numeric characters plus decimal point (?.?) no white spaces
+
+        - Isotopes - at least 1 uppercase alpha followed by 1 lowercase alpha followed by 1 numeric digit - no decimal points or white spaces
+
+        - Users are prevented from accessing html pages intended for admin users
 
     - A user can only be logged in once.
 
@@ -310,7 +319,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
 - The current implementation is restricted to the creation, read, update and deletion of isotope types only. A future revision could be expanded to include more setting such as laboratory location and source encapsulation type.
 
-- The current implementation does not include a calcuation for source dose. Future implementation could reference dose tables and provide this calculation.
+- The current implementation does not include a calculation for radiation dose received by exposure to the source. Future implementation could reference dose tables and provide this calculation.
 
 - A future implementation could include the sending of emails to inform users that their accounts or requests sources have been approved 
 
@@ -323,7 +332,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
     - [Python](https://www.python.org/)
 
-        - Python provides backend functionality. The math module is used for asorted mathematical operations
+        - Python provides backend functionality. The math module is used for assorted mathematical operations
 
     - [HTML5](https://en.wikipedia.org/wiki/HTML5)
 
@@ -413,7 +422,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
 <h1>4. Test Approach</h1>
 
-Functional testing will be based on <a href="#ux-stories"> 1.2 User stories</a>. The associated test methods, expected outcomes, tested outcomes and results are documented in document [TEST.md](TEST.md)
+Functional testing will be based on section <a href="#ux-stories"> 1.2 User stories</a>. The associated test methods, expected outcomes, tested outcomes and results are documented in document [TEST.md](TEST.md)
 
 Non functional testing will be based on the non functional requirements set out in section 5.0
 
@@ -437,7 +446,7 @@ For the sake of simplicity each account has been set up with the same password.
 
 ## Requirements
 
-To deploy or clone this project an account is required for the following services  
+To deploy or clone this project an account is required for the following services:  
 
 - Github
 
@@ -449,9 +458,9 @@ To deploy or clone this project an account is required for the following service
 
 The following steps are required to clone this project to your GitHub repository: 
 
-- Log in to your GitHub account 
+- Log in to your GitHub account
 
-- Create a new repository.
+- Create a new repository
 
 - Navigate to the new repository
 
@@ -461,7 +470,7 @@ The following steps are required to clone this project to your GitHub repository
 
 - Select the button **Begin Import**
 
-- Navigate to your new git repository and check that the files are present.
+- Navigate to your new git repository and check that the files are present
 
 ## Getting started in your local development environment
 
@@ -471,9 +480,9 @@ The following steps are required to clone this project to your GitHub repository
 
     - **git init** (may not be required)
 
-    - **git clone** and the URL for the GitHub repository to which cloned the Milestone-3 project above  
+    - **git clone** and the URL for the GitHub repository to which cloned the Milestone-3 project above 
 
-    - **pip3 install -r requirements.txt**.
+    - **pip3 install -r requirements.txt**
 
     - **pip3 install matpplotlib**
 
@@ -505,7 +514,7 @@ The following steps are required to clone this project to your GitHub repository
 
 ### Creating a MongoDB database
 
-- Login to your MongoDB account.
+- Login to your MongoDB account
 
 - If required add a database user and with *username* and *password* 
 
@@ -519,7 +528,7 @@ The following steps are required to clone this project to your GitHub repository
 
   - **departments**
 
-  - **encapsulations**
+  - **encapsulation**
 
   - **isotope_category**
 
@@ -578,7 +587,7 @@ The following steps are required to clone this project to your GitHub repository
 
 ## Creating a Mongodb Text Search
 
-This permits the user to use the applications search facility to search for the source to be **Requested**, **Updated** or **Deleted**.
+This permits the user to use the application search facility to search for the source to be **Requested**, **Updated** or **Deleted**.
 
 -  Open the development environment terminal window and enter the following commands:
 
@@ -666,7 +675,7 @@ This permits the user to use the applications search facility to search for the 
 
      - Find the section **Connect to GitHub**
 
-     - Search fo the GitHub **repo name** and select
+     - Search fo the GitHub **repo name** and then select it
 
      - Find the section **Automatic deployments**. 
      
@@ -680,7 +689,7 @@ This permits the user to use the applications search facility to search for the 
 
 **Sources and Radioactive isotopes**
 
-- Basic list of common radioactive isotopes form [Wikipedia](https://en.wikipedia.org/wiki/Radionuclide)
+- Basic list of common radioactive isotopes from [Wikipedia](https://en.wikipedia.org/wiki/Radionuclide)
 
 **Media**
 
