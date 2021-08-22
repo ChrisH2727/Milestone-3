@@ -197,19 +197,22 @@ def usage_report():
     try:
         # generate plots
         plt.bar(source_types, source_num, color='green')
-        plt.yticks(np.arange(0, 10, 1))
+        max_source = np.max(source_num)
+        plt.yticks(np.arange(0, max_source, 1))
         plt.title("Sources by Isotope")
         plt.savefig('static/assets/sourceUsed.png')
         plt.close()
 
         plt.bar(logins, login_num, color='blue')
+        max_login_num = np.max(login_num)
         plt.title("User Logins by Day")
-        plt.yticks(np.arange(0, 20, 1))
+        plt.yticks(np.arange(0, max_login_num, 1))
         plt.savefig('static/assets/loginHistory.png')
         plt.close()
 
         plt.bar(source_loans, loans_num, color='red')
-        plt.yticks(np.arange(0, 10, 1))
+        max_loans_num = np.max(loans_num)
+        plt.yticks(np.arange(0, max_loans_num, 1))
         plt.xticks(rotation='vertical')
         plt.title("Source Loans by Serial Number")
         plt.savefig('static/assets/loanHistory.png')
