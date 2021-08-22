@@ -150,11 +150,11 @@ It is therefore crutial that the scientific staff contol student or academic sta
 
 - #### Fonts
 
-    Very standard -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; 
+    Standard font family -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; 
 
 - #### Icons
 
-    In the project, icons are used that are provided by [Font Awesome](https://fontawesome.com/). The Icons that are used have functional purposes such as the hamburger menu and social media icons. 
+    Icons used  are provided by [Font Awesome](https://fontawesome.com/). The Icons that are used have functional purposes such as the hamburger menu and social media icons. Icons are not used with small buttons as this would clutter the presentation.
 
 - #### Images
 
@@ -179,6 +179,14 @@ The collections **source** and **user** provide the two main data repositories w
 The collection **source history** and **login history** provide an activity log allowing admin users to determine which users have loaned sources and how frequently the site is being visited.
 
 The collection **isotope** is considered to be semi permanent data. Over time changing usage patterns may result in some sources of specific isotope type being removed from circuation.
+
+**Why MongoDB** 
+
+- Data requires only key-value pairs - no complex interrelated tables
+
+- Data is stored as text strings only - no complex data types
+
+- A large number of sources in the list - loans could extend to many 100s
 
 <span id="wireframes"></span>
 
