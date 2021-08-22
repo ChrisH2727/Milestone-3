@@ -37,13 +37,15 @@
           <form method="POST" action="{{ url_for('userAccount') }}">
             <div class="row input-pad">
               <div class="input-field col s12">
-                <input id="password" type="password" name="password" class="validate">
+                <input id="password" type="password" name="password" class="validate" minlength="8"
+                maxlength="24" >
                 <label for="password">Change password</label>
               </div>
             </div>
             <div class="row input-pad ">
               <div class="input-field col s12">
-                <input id="repeat_password" type="password" name="repeat_password" class="validate">
+                <input id="repeat_password" type="password" name="repeat_password" class="validate" minlength="8"
+                maxlength="24">
                 <label for="repeat_password">Repeat password</label>
               </div>
             </div>
@@ -60,7 +62,7 @@
               </div>
               <div class="input-field col l6 m6 s12">
                 <input id="research_group" type="text" value="{{user.research_group}}" name="research_group"
-                  class="validate capitalize">
+                  class="validate capitalize" pattern="^[a-zA-Z]{1}(?:[\w \-]{1,40}[\w\-])?$" minlength="3" maxlength="40" >
                 <label for="research_group" class="card-bold" >Research Group:</label>
               </div>
             </div>

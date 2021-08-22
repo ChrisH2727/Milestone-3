@@ -56,11 +56,10 @@
                 </select>
                 <label for="department">Department</label>
               </div>
-            </div>
-            <div class="row input-pad">
               <div class="input-field col s6 m6 s12">
                 <input id="research_group" type="text" name="research_group" class="validate"
-                  pattern="^[a-zA-Z0-9_-]{3,40}$" minlength="3" maxlength="40" required>
+                  pattern="^[a-zA-Z]{1}(?:[\w \-]{1,40}[\w\-])?$" minlength="3" maxlength="40" required>
+                  <!--"^[a-zA-Z0-9_-]{3,40}$"-->
                 <label for="research_group">Research Group</label>
               </div>
             </div>

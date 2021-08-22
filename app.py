@@ -459,6 +459,7 @@ def get_userc(user_id):
         # User cannot action his/her own account
         if existing_user["email"] == session["email"]:
             flash("You cannot action your own user account")
+
         else:
             # Admin user toggles another user account between admin/user roles
             if existing_user["role"] == "admin":
@@ -595,6 +596,7 @@ def get_sources():
     for source in sources:
         if source["user"]:
             user = (mongo.db.users.find_one({"email": source["user"]}))
+
             # Check that the user still exists
             if user:
                 source.update({"first": user["first"]})
@@ -627,8 +629,8 @@ def get_sources():
             # if calculation unsucessful use existing activity value
             new_act = origin_act
 
+        # Calculation sucessful - update source
         source_new_act = {"activity_now": new_act}
-
         mongo.db.sources.find_one_and_update(
             {"serial_number": serial_number}, {'$set': source_new_act})
 
@@ -733,8 +735,10 @@ def source_request():
         # Find collection of seached sources not already requested
         sources = list(mongo.db.sources.find(
             {"$and": [{"$text": {"$search": query}}, {"requested": "false"}]}))
+
         if sources:
             showsources = "true"
+
         else:
             flash("No matching sequences found.")
             sources = []
@@ -823,6 +827,7 @@ def update_source():
                 showsources=showsources,
                 sources=sources,
                 mode=mode)
+
         else:
             showsources = "false"
             sources = []
@@ -890,6 +895,7 @@ def update_source_activate():
             flash("Database error source data\
                  has not been updated. Refer to admin user.")
 
+        # Return to the correct starting place
         if session["routing"] == "inventory":
             return redirect(url_for("get_sources"))
         else:

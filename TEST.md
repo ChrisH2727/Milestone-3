@@ -717,6 +717,8 @@
 
         - Change the **Laboratory** from **lab 2** to **lab 3** and click on **Update**
 
+        - Navigate to **Inventory** and then **Inventory List**
+
         - Confirm that source **sc005** has been updated to **Lab 2** and that source **sc007** has been updated to **Lab 3**
     
         - logout
@@ -1129,4 +1131,5 @@
 |17|No tools on Source search|Materialize tool tip sourch search icon|
 |18|Selecting the cancel button from source update and delete did not always route back to the correct parent page| Fixed by adding routing to the html code depending on where the request originated|
 |19|CloudTables are rendered with a label "show entries". It appears not to be possible to remove this without removing many of the other table features|Not fixed|
-|20|Source "Delete source request" table header missing|Add the table header validate HTML and re-test|    
+|20|Source "Delete source request" table header missing|Add the table header validate HTML and re-test|
+|21|"Reaserch Group" regex required no spaces|regex improved to allow spaces. validate HTML and re-test|    

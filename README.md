@@ -280,7 +280,7 @@ The navigation structure shown above is reflected in the side bar visible on sma
 
     - email - must be in the form xxxxxxx@xxxxx.xxx
 
-    - Research group - at least 3 alphanumeric characters no spaces, hyphons and underscores permitted
+    - Research group - at least 3 alphanumeric characters, spaces hyphons and underscores permitted
 
     - Source serial number - at least 3 alphanumeric characters no spaces, hyphons and underscores permitted
 
@@ -293,6 +293,8 @@ The navigation structure shown above is reflected in the side bar visible on sma
     - Users are prevented from accessing html pages intended for admin users
 
     - A user can only be logged in once.
+
+    - Users can not access admin user HTML pages.
 
 <span id="features-future"></span>
 
